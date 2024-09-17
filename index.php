@@ -23,6 +23,7 @@
           <li><a href="#">Accesorios</a></li>
           <li><a href="#">Herramientas</a></li>
           <li><a href="#">Contactos</a></li>
+          
         </ul>
       </nav>
 
@@ -31,7 +32,9 @@
       </div>
 
       <div class="action-buttons">
-        <button class="icon-button"></button>
+        <a href="/login.php" button class="icon-button" aria-label="login">
+        <i class="fa fa-sign-in-alt"></i>
+        </a>
         <button class="icon-button"></button>
       </div>
     </div>
