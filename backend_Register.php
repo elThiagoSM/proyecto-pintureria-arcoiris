@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt->execute()) {
        
          // Iniciar sesión exitosamente y redirigir a el login
-         header("Location: Login_P.php?registro=exitoso");
+         header("Location: login.php?registro=exitoso");
          exit();
         
     } else {
