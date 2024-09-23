@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pinturería Arcoiris</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="../css/styles.css" />
 </head>
 
 <body>
@@ -32,7 +32,7 @@
       </div>
 
       <div class="action-buttons">
-        <a href="/login.php" button class="icon-button" aria-label="login">
+        <a href="login.php" button class="icon-button" aria-label="login">
         <i class="fa fa-sign-in-alt"></i>
         </a>
         <button class="icon-button"></button>

@@ -1,9 +1,9 @@
 <?php
-include 'backend_DB.php';
+include 'dattabase.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $username = $_POST['usuario'];
+    $password = $_POST['contraseña'];
 
     // Prevenir inyecciones SQL
     $username = mysqli_real_escape_string($conn, $username);
