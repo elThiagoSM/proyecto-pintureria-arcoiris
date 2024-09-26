@@ -1,0 +1,105 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+.profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  margin: 40px 0;
+  font-size: 18px;
+}
+
+.profile-container {
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 50px;
+  border: 1px solid #d8d8d8;
+  width: 100%;
+  max-width: 800px;
+  border-radius: 10px;
+  gap: 30px;
+}
+
+.profile-picture-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.user-profile-picture {
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  margin-bottom: 20px;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 15px;
+}
+
+.btn {
+  background-color: #68092b;
+  color: white;
+  border: none;
+  padding: 15px 25px;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #540823;
+}
+
+.profile-details-section {
+  flex: 2;
+  text-align: left;
+}
+
+.profile-details-section label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.profile-details-section input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #d8d8d8;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.user-role {
+  font-size: 1em;
+  color: #777;
+}
+
+.registration-info {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 16px;
+  color: #777;
+}

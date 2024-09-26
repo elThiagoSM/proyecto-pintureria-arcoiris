@@ -2,18 +2,18 @@
 include '../database/database.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $email = $_POST['email'];
+    $nombre_usuario = $_POST['nombre_usuario'];
+    $contraseña = $_POST['contraseña'];
+    $correo = $_POST['correo'];
 
     // Prevenir inyecciones SQL
-    $username = mysqli_real_escape_string($conn, $username);
-    $password = mysqli_real_escape_string($conn, $password);
-    $email = mysqli_real_escape_string($conn, $email);
+    $nombre_usuario = mysqli_real_escape_string($conn, $nombre_usuario);
+    $contraseña = mysqli_real_escape_string($conn, $contraseña);
+    $correo = mysqli_real_escape_string($conn, $correo);
 
     // Comprobar si el nombre de usuario o el correo ya existen
-    $checkUserStmt = $conn->prepare("SELECT * FROM usernames WHERE username = ? OR email = ?");
-    $checkUserStmt->bind_param("ss", $username, $email);
+    $checkUserStmt = $conn->prepare("SELECT * FROM Usuarios WHERE nombre_usuario = ? OR correo = ?");
+    $checkUserStmt->bind_param("ss", $nombre_usuario, $correo);
     $checkUserStmt->execute();
     $result = $checkUserStmt->get_result();
 
@@ -21,11 +21,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "El nombre de usuario o correo ya están registrados.";
     } else {
         // Hash de la contraseña
-        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+        $hashed_password = password_hash($contraseña, PASSWORD_BCRYPT);
 
-        // Insertar el nuevo usuario en la base de datos
-        $stmt = $conn->prepare("INSERT INTO usernames (username, password, email) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $username, $hashed_password, $email);
+        // Insertar el nuevo usuario en la base de datos con clasificación predeterminada 'Cliente'
+        $stmt = $conn->prepare("INSERT INTO Usuarios (nombre_usuario, contraseña, correo, clasificación) VALUES (?, ?, ?, 'Cliente')");
+        $stmt->bind_param("sss", $nombre_usuario, $hashed_password, $correo);
 
         if ($stmt->execute()) {
             // Registro exitoso, redirigir al login

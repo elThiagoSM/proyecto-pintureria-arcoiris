@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <?php include 'components/header.html'; ?>
+    <?php include 'components/header.php'; ?>
 
     <section class="accessories">
         <div class="accessories-container">
@@ -80,7 +80,7 @@
         </div>
     </section>
 
-    <?php include 'components/footer.html'; ?>
+    <?php include 'components/footer.php'; ?>
 </body>
 
 </html>

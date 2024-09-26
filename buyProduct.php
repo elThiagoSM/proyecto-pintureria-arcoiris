@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <?php include 'components/header.html'; ?>
+    <?php include 'components/header.php'; ?>
 
     <div class="buy-product">
         <div class="buy-product-container">
@@ -32,9 +32,9 @@
         </div>
     </div>
 
-    <?php include 'components/featuredProducts.html'; ?>
+    <?php include 'components/featuredProducts.php'; ?>
 
-    <?php include 'components/footer.html'; ?>
+    <?php include 'components/footer.php'; ?>
 </body>
 
 </html>

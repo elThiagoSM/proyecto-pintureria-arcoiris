@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <?php include 'components/header.html'; ?>
+    <?php include 'components/header.php'; ?>
 
     <section class="types-paintings">
         <div class="types-paintings-container">
@@ -68,7 +68,7 @@
         </div>
     </section>
 
-    <?php include 'components/footer.html'; ?>
+    <?php include 'components/footer.php'; ?>
 </body>
 
 </html>

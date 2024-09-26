@@ -10,7 +10,7 @@
 </head>
 
 <body>
-  <?php include 'components/header.html'; ?>
+  <?php include 'components/header.php'; ?>
 
   <div class="carousel-product-container">
     <section class="carousel">
@@ -87,9 +87,9 @@
     </section>
   </div>
 
-  <?php include 'components/featuredProducts.html'; ?>
+  <?php include 'components/featuredProducts.php'; ?>
 
-  <?php include 'components/footer.html'; ?>
+  <?php include 'components/footer.php'; ?>
 
   <script>
     let currentIndex = 0;

@@ -1,6 +1,3 @@
-<?php
-session_start();
-?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -12,7 +9,7 @@ session_start();
 </head>
 
 <body>
-  <?php include 'components/header.html'; ?>
+  <?php include 'components/header.php'; ?>
 
   <div class="login">
     <div class="login-container">
@@ -20,11 +17,11 @@ session_start();
       <form action="./codes/codeLogin.php" method="POST">
         <div class="form-group">
           <label for="login_username">Usuario</label>
-          <input type="text" id="login_username" name="username" required>
+          <input type="text" id="login_username" name="nombre_usuario" required>
         </div>
         <div class="form-group">
           <label for="login_password">Contraseña</label>
-          <input type="password" id="login_password" name="password" required>
+          <input type="password" id="login_password" name="contraseña" required>
         </div>
         <button type="submit" class="btn">Ingresar</button>
       </form>
@@ -33,7 +30,7 @@ session_start();
     </div>
   </div>
 
-  <?php include 'components/footer.html'; ?>
+  <?php include 'components/footer.php'; ?>
 </body>
 
 </html>
