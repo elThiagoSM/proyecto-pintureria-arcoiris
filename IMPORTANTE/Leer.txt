@@ -1,1 +1,0 @@
-Cada pagina que esta en 'Diseños de pantallas' se encuentra en la carpeta ./pages con su respectivo archivo css en la pagina ./css
