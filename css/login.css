@@ -1,62 +1,77 @@
-    /*  BODY  */
-body{
-    font-family:'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
-    background-color: whitesmoke;
-    color: whitesmoke;
-    padding-top: 15%;
-    justify-content: center;
-    display: flex;
-
+* {
+  padding: 0;
+  margin: 0;
 }
 
-    /*  Formulario  */
-.contenedor{
-    background-color: rgb(11, 105, 71);
-    border-radius: 7px;
-    padding: 7px;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.6);
-    width: 300px;
-    text-align: center;
+body {
+  font-family: sans-serif;
 }
 
-.botone{
-    margin-bottom: 15px;
+.login,
+.register {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 80vh;
+  margin: 40px 0;
 }
 
-    /*  Texto  */
-.botone label{
-    margin: 5px;
-    display: block;
-    font-size: 17px;
+.login-container,
+.register-container {
+  background-color: #fff;
+  padding: 40px;
+  border: 1px solid #d8d8d8;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
 }
 
-    /*  Campos de texto  */
-.botone input{
-    margin-bottom: 10px;
-    border-radius: 5px;
-    height: 20px;
-    
+.login-container h2 {
+  padding-bottom: 30px;
 }
 
-    /*  Boton "ingresar  "*/
-button{
-    background-color: green;
-    color: white;   
-    cursor: pointer;
-    border-radius: 7px;
-    width: 90%;
-    font-size: 18px;
-    padding: 11px;
-    margin-bottom: 15px;
-    border: 0;
+.form-group {
+  margin-bottom: 20px;
+  width: 100%;
 }
 
-    /*  Links  */
-p a {
-    color: rgb(3, 245, 245);
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  text-align: left;
 }
 
-p a:hover{
-    color:rgb(3, 228, 190);
-    text-decoration: underline;
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.btn {
+  margin-bottom: 20px;
+  background-color: #68092b;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+}
+
+.btn:hover {
+  background-color: #540823;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }

@@ -1,0 +1,76 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: sans-serif;
+  overflow-y: auto;
+}
+
+.site-footer {
+  background-color: #0a6847;
+  color: #fff;
+  padding: 10px;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.footer-logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.logo-and-social {
+  display: flex;
+  flex-direction: column;
+}
+
+.branch-and-payment {
+  display: flex;
+}
+
+.footer-social {
+  margin-top: 10px;
+}
+
+.social-icons i {
+  font-size: 30px;
+  color: #fff;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.footer-branch-payment {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-branch {
+  margin: 0 0 40px 40px;
+}
+
+.footer-payment {
+  margin: 0 0 0 40px;
+}
+
+.footer-contact-help {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.footer-contact {
+  margin: 0 0 40px 40px;
+}
+
+.footer-help {
+  margin: 0 0 0 40px;
+}
