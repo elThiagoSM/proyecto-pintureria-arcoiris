@@ -26,7 +26,7 @@
                         </p>
                         <div id="logo-container">
                             <img
-                                src="https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihbYhsVUhlmxOO0ZDJ0ZZV-JL3eqbOwae7RnUGhmu-6NisR92PToQeFo8pVlSUA7M5bOP1NVYe7hQh6sBwhEc_EV0TZsP3uYMw=w1920-h912-rw-v1"
+                                src="assets/imgs/logoPHAE/Logo-Transparente-Negro.png"
                                 alt="logo Phae" class="logo-img" />
                         </div>
                     </div>
@@ -66,8 +66,8 @@
                                 alt="Foto Thiago Silveira" />
                         </div>
                         <div class="member-info">
-                            <h3>Thiago Silveira M.</h3>
-                            <h4>thiagosm2019@gmail.com</h4>
+                            <h3>Feliciano May Moreira</h3>
+                            <h4>felicianomay735@gmail.com</h4>
                         </div>
                     </div>
                     <div class="member" id="member-thomas-coimbra">
@@ -77,8 +77,8 @@
                                 alt="Foto Thomas Coimbra" />
                         </div>
                         <div class="member-info">
-                            <h3>Thomas Coimbra</h3>
-                            <h4>1234gtoto@gmail.com</h4>
+                            <h3>Sebastián Tabaré Quintana Ribeiro</h3>
+                            <h4>tabaquintana@gmail.com</h4>
                         </div>
                     </div>
                     <div class="member" id="member-thiago-moreira">
@@ -88,19 +88,8 @@
                                 alt="Foto Thiago Moreira" />
                         </div>
                         <div class="member-info">
-                            <h3>Thiago Moreira</h4>
+                            <h3>Thiago Silveira Machado</h4>
                                 <h4>t89217993@gmail.com</h4>
-                        </div>
-                    </div>
-                    <div class="member" id="member-alerson-morales">
-                        <div class="member-photo">
-                            <img
-                                src="https://cdnx.jumpseller.com/caralcl/image/19986444/Liso_Gris_Oscuro_-_Tela_Antimanchas.png?1653626990"
-                                alt="Foto Alerson Morales" />
-                        </div>
-                        <div class="member-info">
-                            <h3>Alerson Morales</h3>
-                            <h4>moralespintosa@gmail.com</h4>
                         </div>
                     </div>
                 </div>
