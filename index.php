@@ -71,18 +71,6 @@
             alt="Lacado" />
           <p>Lacado</p>
         </div>
-        <div class="product-type">
-          <img
-            src="https://static.wixstatic.com/media/3f14c4_c83e5adf0f704f7289e3a08baf4301f9~mv2.jpg/v1/fill/w_500,h_500,al_c,q_80,enc_auto/3f14c4_c83e5adf0f704f7289e3a08baf4301f9~mv2.jpg"
-            alt="Removedor" />
-          <p>Removedor</p>
-        </div>
-        <div class="product-type">
-          <img
-            src="https://static.wixstatic.com/media/3f14c4_c83e5adf0f704f7289e3a08baf4301f9~mv2.jpg/v1/fill/w_500,h_500,al_c,q_80,enc_auto/3f14c4_c83e5adf0f704f7289e3a08baf4301f9~mv2.jpg"
-            alt="Diluyente" />
-          <p>Diluyente</p>
-        </div>
       </div>
     </section>
   </div>

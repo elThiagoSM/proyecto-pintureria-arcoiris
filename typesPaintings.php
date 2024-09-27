@@ -14,57 +14,10 @@
     <section class="types-paintings">
         <div class="types-paintings-container">
             <h2>Pinturas:</h2>
-            <p class="subtext">Seleccione una subcategoría que se adecue al producto que está buscando.</p>
-            <div class="gallery">
-                <div class="paint-type">
-                    <img src="https://pinturassanguino.com/blog/wp-content/uploads/2024/04/colores-de-pintura-para-paredes-de-moda.jpg" alt="Pintura 1">
-                    <p>Pintura Acrílica</p>
-                </div>
-                <div class="paint-type">
-                    <img src="https://pinturassanguino.com/blog/wp-content/uploads/2024/04/colores-de-pintura-para-paredes-de-moda.jpg" alt="Pintura 2">
-                    <p>Pintura al Óleo</p>
-                </div>
-                <div class="paint-type">
-                    <img src="https://pinturassanguino.com/blog/wp-content/uploads/2024/04/colores-de-pintura-para-paredes-de-moda.jpg" alt="Pintura 3">
-                    <p>Pintura de Agua</p>
-                </div>
-                <div class="paint-type">
-                    <img src="https://pinturassanguino.com/blog/wp-content/uploads/2024/04/colores-de-pintura-para-paredes-de-moda.jpg" alt="Pintura 4">
-                    <p>Pintura Epóxica</p>
-                </div>
-                <div class="paint-type">
-                    <img src="https://pinturassanguino.com/blog/wp-content/uploads/2024/04/colores-de-pintura-para-paredes-de-moda.jpg" alt="Pintura 5">
-                    <p>Pintura Esmalte</p>
-                </div>
-                <div class="paint-type">
-                    <img src="https://pinturassanguino.com/blog/wp-content/uploads/2024/04/colores-de-pintura-para-paredes-de-moda.jpg" alt="Pintura 6">
-                    <p>Pintura Latex</p>
-                </div>
-                <div class="paint-type">
-                    <img src="https://pinturassanguino.com/blog/wp-content/uploads/2024/04/colores-de-pintura-para-paredes-de-moda.jpg" alt="Pintura 7">
-                    <p>Pintura para Madera</p>
-                </div>
-                <div class="paint-type">
-                    <img src="https://pinturassanguino.com/blog/wp-content/uploads/2024/04/colores-de-pintura-para-paredes-de-moda.jpg" alt="Pintura 8">
-                    <p>Pintura para Metal</p>
-                </div>
-                <div class="paint-type">
-                    <img src="https://pinturassanguino.com/blog/wp-content/uploads/2024/04/colores-de-pintura-para-paredes-de-moda.jpg" alt="Pintura 9">
-                    <p>Pintura Industrial</p>
-                </div>
-                <div class="paint-type">
-                    <img src="https://pinturassanguino.com/blog/wp-content/uploads/2024/04/colores-de-pintura-para-paredes-de-moda.jpg" alt="Pintura 9">
-                    <p>Pintura Industrial</p>
-                </div>
-                <div class="paint-type">
-                    <img src="https://pinturassanguino.com/blog/wp-content/uploads/2024/04/colores-de-pintura-para-paredes-de-moda.jpg" alt="Pintura 9">
-                    <p>Pintura Industrial</p>
-                </div>
-                <div class="paint-type">
-                    <img src="https://pinturassanguino.com/blog/wp-content/uploads/2024/04/colores-de-pintura-para-paredes-de-moda.jpg" alt="Pintura 9">
-                    <p>Pintura Industrial</p>
-                </div>
-            </div>
+            <p class="subtext">Seleccione una pintura que desea comprar.</p>
+
+            <?php include 'codes/loadPaintings.php'; ?>
+
         </div>
     </section>
 
