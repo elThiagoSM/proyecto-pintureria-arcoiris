@@ -31,9 +31,11 @@
         </ul>
       </nav>
 
-      <div class="search-bar">
-        <input type="text" placeholder="Buscar..." />
-      </div>
+      <form action="productSearched.php" method="GET" class="search-bar">
+        <input type="text" name="query" placeholder="Buscar..." />
+        <button type="submit"><i class="fas fa-search"></i></button>
+      </form>
+
 
       <div class="action-buttons">
         <?php
