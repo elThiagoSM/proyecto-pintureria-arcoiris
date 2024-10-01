@@ -1,5 +1,5 @@
 <?php
-include '../database/database.php';
+include '../database/database.php'; // Conexion a la base de datos
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Guardar datos del usuario en cookies
         setcookie("nombre_usuario", $user['nombre_usuario'], time() + (86400 * 30), "/"); // 86400 = 1 día
         setcookie("correo", $user['correo'], time() + (86400 * 30), "/"); // Cookie para el correo
-        setcookie("clasificacion", $user['clasificación'], time() + (86400 * 30), "/"); // Cookie para la clasificación
+        setcookie("clasificacion", $user['clasificación'], time() + (86400 * 30), "/"); // Cookie para la clasificacin
 
         // Iniciar sesión y redirigir al perfil de usuario
         header("Location: ../userProfile.php");

@@ -1,5 +1,5 @@
 <?php
-include '../database/database.php';
+include '../database/database.php'; // Conexion a la base de datos
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre_usuario = $_POST['nombre_usuario'];
@@ -23,12 +23,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Hash de la contraseña
         $hashed_password = password_hash($contraseña, PASSWORD_BCRYPT);
 
-        // Insertar el nuevo usuario en la base de datos con clasificación predeterminada 'Cliente'
+        // Insertar el nuevo usuario en la base de datos con clasificacion predeterminada 'Cliente'
         $stmt = $conn->prepare("INSERT INTO Usuarios (nombre_usuario, contraseña, correo, clasificación) VALUES (?, ?, ?, 'Cliente')");
         $stmt->bind_param("sss", $nombre_usuario, $hashed_password, $correo);
 
         if ($stmt->execute()) {
-            // Registro exitoso, redirigir al login
+            // Registro exitoso redirigir al login
             header("Location: ../login.php?registro=exitoso");
             exit();
         } else {

@@ -1,7 +1,7 @@
 <?php
-include './database/database.php'; // Conexión a la base de datos
+include './database/database.php'; // Conexion a la base de datos
 
-// Verificar si hay un término de búsqueda
+// Verificar si hay un termino de busqueda
 if (isset($_GET['query'])) {
     $searchQuery = '%' . $_GET['query'] . '%';
 
@@ -20,7 +20,7 @@ if (isset($_GET['query'])) {
               WHERE p.descripción LIKE ?
               AND p.precio BETWEEN ? AND ?";
 
-    // Filtros dinámicos para tipo de producto y marca
+    // Filtros dinamicos para tipo de producto y marca
     if (!empty($tipoFiltro)) {
         $query .= " AND p.tipo_productos = ?";
     }
@@ -31,7 +31,7 @@ if (isset($_GET['query'])) {
     // Preparar la consulta
     $stmt = $conn->prepare($query);
 
-    // Enlazar parámetros dependiendo de si hay filtros o no
+    // Enlazar parametros dependiendo de si hay filtros o no
     if (!empty($tipoFiltro) && !empty($marcaFiltro)) {
         $stmt->bind_param('sddss', $searchQuery, $precioMin, $precioMax, $tipoFiltro, $marcaFiltro);
     } elseif (!empty($tipoFiltro)) {
@@ -58,7 +58,7 @@ if (isset($_GET['query'])) {
         echo "<p>No se encontraron productos que coincidan con la búsqueda.</p>";
     }
 
-    // Cerrar la conexión y la consulta
+    // Cerrar la conexion y la consulta
     $stmt->close();
     $conn->close();
 } else {

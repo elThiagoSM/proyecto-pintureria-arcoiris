@@ -1,5 +1,5 @@
 <?php
-include './database/database.php'; // Conexión a la base de datos
+include './database/database.php'; // Conexion a la base de datos
 session_start();
 
 // Consulta para obtener las pinturas con sus detalles
@@ -16,7 +16,7 @@ if ($result->num_rows > 0) {
     // Abre el contenedor de la galería
     echo '<div class="gallery">';
 
-    // Recorre cada pintura y la muestra en la galería
+    // Recorre cada pintura y la muestra en la galeria
     while ($row = $result->fetch_assoc()) {
         echo '<div class="paint-type">';
         echo '<img src="' . $row['imagen'] . '" alt="Imagen de pintura">';
@@ -25,7 +25,7 @@ if ($result->num_rows > 0) {
         echo '</div>';
     }
 
-    // Cierra el contenedor de la galería
+    // Cierra el contenedor de la galeria
     echo '</div>';
 } else {
     echo "No se encontraron pinturas.";
