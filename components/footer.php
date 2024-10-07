@@ -49,8 +49,8 @@
           </div>
           <div class="footer-help">
             <h4>Ayuda</h4>
-            <p>Términos y condiciones</p>
-            <p>Preguntas frecuentes</p>
+            <li><a href="termsAndConditions.php">Términos y condiciones</a></li>
+            <li><a href="frequentlyAskedQuestions.php">Preguntas frecuentes</a></li>
             <li><a href="aboutUs.php">Sobre nosotros</a></li>
           </div>
         </div>

@@ -1,0 +1,43 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: sans-serif;
+  overflow-y: auto;
+}
+
+.frequently-asked-questions {
+  background-color: #fff;
+  padding: 10px;
+}
+
+.frequently-asked-questions-container {
+  width: 100%;
+  max-width: 1200px;
+  background-color: #d4d4d4;
+  margin: 40px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.frequently-asked-questions-title {
+  margin-bottom: 20px;
+}
+
+.frequently-asked-questions-content {
+  margin-top: 20px;
+}
+
+h1,
+h2 {
+  color: #333;
+}
+
+p {
+  line-height: 1.6;
+}
