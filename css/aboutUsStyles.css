@@ -140,3 +140,198 @@ body {
   margin-bottom: 10px;
   color: #28a745;
 }
+
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: sans-serif;
+  overflow-y: auto;
+}
+
+.about-us {
+  width: 100%;
+  padding: 20px 0;
+}
+
+.about-us-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.main-title,
+.section-title {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.5em;
+  color: #0056b3;
+}
+
+#about-us {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.about-us-text {
+  display: flex;
+  align-items: center;
+  max-width: 800px;
+  font-size: 1.2em;
+  text-align: justify;
+  margin-bottom: 20px;
+}
+
+#logo-container {
+  margin: 20px 0;
+}
+
+.logo-img {
+  width: 250px;
+  height: 250px;
+}
+
+.services-list {
+  max-width: 800px;
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 40px;
+}
+
+.service-item {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f0f8ff;
+  border-radius: 10px;
+}
+
+.service-item:nth-child(odd) {
+  text-align: left;
+}
+
+.service-item:nth-child(even) {
+  text-align: right;
+}
+
+#team-members {
+  margin-bottom: 50px;
+}
+
+.members-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.member {
+  flex: 0 1 calc(25% - 20px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.member-photo img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ddd;
+}
+
+.member-info {
+  margin-top: 10px;
+}
+
+.member-info h4 {
+  font-size: 1em;
+  color: #666;
+}
+
+#contact-info {
+  margin-top: 50px;
+}
+
+.contact-details h4 {
+  text-align: center;
+  margin: 5px 0;
+  font-weight: 400;
+}
+
+#mission-vision {
+  margin-top: 50px;
+}
+
+.mission,
+.vision {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #e9f7ef;
+  border-radius: 10px;
+}
+
+.mission h3,
+.vision h3 {
+  margin-bottom: 10px;
+  color: #28a745;
+}
+
+@media (max-width: 768px) {
+  .about-us-container,
+  .about-us-text,
+  .services-list,
+  .mission,
+  .vision {
+    max-width: 100%;
+    padding: 10px;
+  }
+
+  .main-title,
+  .section-title {
+    font-size: 2em;
+  }
+
+  .about-us-text {
+    flex-direction: column;
+    text-align: left;
+  }
+
+  .service-item:nth-child(odd),
+  .service-item:nth-child(even) {
+    text-align: left;
+  }
+
+  .member {
+    flex: 0 1 calc(50% - 20px);
+  }
+}
+
+@media (max-width: 480px) {
+  .main-title,
+  .section-title {
+    font-size: 1.5em;
+  }
+
+  .logo-img {
+    width: 150px;
+    height: 150px;
+  }
+
+  .member {
+    flex: 0 1 100%;
+  }
+
+  .member-photo img {
+    width: 100px;
+    height: 100px;
+  }
+}

@@ -71,3 +71,108 @@ body {
   font-weight: bold;
   color: #333;
 }
+
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+/* Slider */
+
+.carousel-product-container {
+  background-color: #f0f0f0;
+  padding: 40px;
+}
+
+.carousel-product-container > section {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.carousel {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 1s ease;
+}
+
+.carousel-slide {
+  min-width: 100%;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-types {
+  padding-top: 40px;
+  cursor: pointer;
+}
+
+.product-type-grid {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.product-type {
+  text-align: center;
+  margin: 10px;
+}
+
+.product-type img {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.product-type p {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .carousel-product-container {
+    padding: 20px;
+  }
+
+  .product-type-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .product-type {
+    margin: 20px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-product-container {
+    padding: 10px;
+  }
+
+  .product-type img {
+    width: 90px;
+    height: 90px;
+  }
+
+  .product-type p {
+    font-size: 12px;
+  }
+}
