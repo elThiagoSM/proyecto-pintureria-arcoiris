@@ -1,0 +1,23 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  height: 100vh;
+}
+
+.sale-registration-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.sale-registration-content {
+  flex: 1;
+  background-color: #f0f0f0;
+  padding: 20px;
+}

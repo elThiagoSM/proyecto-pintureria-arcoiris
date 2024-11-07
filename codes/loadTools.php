@@ -1,36 +1,62 @@
 <?php
-include './database/database.php'; // Conexion a la base de datos
+include './database/database.php';
 session_start();
 
-// Consulta para obtener las herramientas con sus detalles
-$query = "SELECT p.id_producto, p.imagen, p.descripción, p.precio 
+// Configuración de paginación
+$toolsPerPage = 10;  // Número de herramientas por página
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;  // Página actual, por defecto es 1
+$offset = ($page - 1) * $toolsPerPage;  // Calcular el desplazamiento
+
+// Consulta con LIMIT y OFFSET para la paginación
+$query = "SELECT p.id_producto, p.imagen, p.nombre, p.descripcion, p.precio 
           FROM Productos p
-          INNER JOIN Mini_ferreteria mf ON p.id_producto = mf.id_producto";
+          INNER JOIN MiniFerreteria mf ON p.id_producto = mf.id_producto
+          LIMIT ? OFFSET ?";
 
 // Prepara la consulta
 $stmt = $conn->prepare($query);
+$stmt->bind_param("ii", $toolsPerPage, $offset);
 $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
-    // Abre el contenedor de la galeria
     echo '<div class="gallery">';
 
-    // Recorre cada herramienta y la muestra en la galeria
+    // Mostrar las herramientas en la página actual
     while ($row = $result->fetch_assoc()) {
+        echo '<a href="buyProduct.php?id_producto=' . $row['id_producto'] . '" class="tool-type-link">';
         echo '<div class="tool">';
-        echo '<img src="' . $row['imagen'] . '" alt="Imagen de la herramienta">';
-        echo '<p class="product-description">' . $row['descripción'] . '</p>';
-        echo '<p class="product-price"><strong>Precio: </strong>$' . $row['precio'] . '</p>';
+        echo '<img src="' . $row['imagen'] . '" alt="' . $row['descripcion'] . '">';
+        echo '<p class="product-name">' . $row['nombre'] . '</p>';
+        echo '<p class="product-description">' . $row['descripcion'] . '</p>';
+        echo '<p class="product-price">$' . $row['precio'] . '</p>';
         echo '</div>';
+        echo '</a>';
     }
 
-    // Cierra el contenedor de la galeria
+    echo '</div>';
+
+    // Consulta para contar el número total de herramientas
+    $countQuery = "SELECT COUNT(*) AS total FROM Productos p INNER JOIN MiniFerreteria mf ON p.id_producto = mf.id_producto";
+    $countResult = $conn->query($countQuery);
+    $totalRows = $countResult->fetch_assoc()['total'];
+    $totalPages = ceil($totalRows / $toolsPerPage);  // Calcular el número total de páginas
+
+    // Mostrar enlaces de paginación con el número de página actual
+    echo '<div class="pagination">';
+    echo '<span>Página ' . $page . ' de ' . $totalPages . '</span><br>';
+
+    if ($page > 1) {
+        echo '<a href="?page=' . ($page - 1) . '">Anterior</a>';
+    }
+    if ($page < $totalPages) {
+        echo '<a href="?page=' . ($page + 1) . '">Siguiente</a>';
+    }
     echo '</div>';
 } else {
     echo "No se encontraron herramientas.";
 }
 
-// Cierra la sentencia y la conexion
+// Cierra la sentencia y la conexión
 $stmt->close();
 $conn->close();

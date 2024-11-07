@@ -1,64 +1,89 @@
 <?php
-include './database/database.php'; // Conexion a la base de datos
+include './database/database.php';
 
-// Verificar si hay un termino de busqueda
 if (isset($_GET['query'])) {
     $searchQuery = '%' . $_GET['query'] . '%';
+    $tipoFiltro = $_GET['tipo-producto'] ?? '';
+    $marcasFiltro = $_GET['marca'] ?? [];
+    $precioMin = (float)($_GET['precio_min'] ?? 1);
+    $precioMax = (float)($_GET['precio_max'] ?? 5000);
+    $unidadFiltro = $_GET['unidad'] ?? [];
+    $stockFiltro = isset($_GET['stock']) ? true : false;
+    $terminacionFiltro = $_GET['terminacion'] ?? '';
+    $funcionAplicacionFiltro = $_GET['funcion_aplicacion'] ?? '';
 
-    // Iniciar variables para los filtros
-    $tipoFiltro = isset($_GET['tipo-producto']) ? $_GET['tipo-producto'] : '';
-    $marcaFiltro = isset($_GET['marca']) ? $_GET['marca'] : '';
-    $precioMin = isset($_GET['precio_min']) ? $_GET['precio_min'] : 0;
-    $precioMax = isset($_GET['precio_max']) ? $_GET['precio_max'] : 1000;
-
-    // Crear la consulta con los filtros
-    $query = "SELECT p.id_producto, p.imagen, p.descripción, p.precio 
+    $query = "SELECT p.id_producto, p.imagen, p.nombre, p.descripcion, p.precio 
               FROM Productos p
               LEFT JOIN Pinturas pt ON p.id_producto = pt.id_producto
               LEFT JOIN Accesorios a ON p.id_producto = a.id_producto
-              LEFT JOIN Mini_ferreteria mf ON p.id_producto = mf.id_producto
-              WHERE p.descripción LIKE ?
+              LEFT JOIN MiniFerreteria mf ON p.id_producto = mf.id_producto
+              WHERE p.nombre LIKE ? 
               AND p.precio BETWEEN ? AND ?";
+    $bindTypes = 'sdd';
+    $bindParams = [$searchQuery, $precioMin, $precioMax];
 
-    // Filtros dinamicos para tipo de producto y marca
-    if (!empty($tipoFiltro)) {
-        $query .= " AND p.tipo_productos = ?";
-    }
-    if (!empty($marcaFiltro)) {
-        $query .= " AND p.marca = ?";
+    if ($tipoFiltro) {
+        switch ($tipoFiltro) {
+            case 'Pinturas':
+                $query .= " AND pt.id_producto IS NOT NULL";
+                if ($terminacionFiltro) {
+                    $query .= " AND pt.terminacion = ?";
+                    $bindTypes .= 's';
+                    $bindParams[] = $terminacionFiltro;
+                }
+                if ($funcionAplicacionFiltro) {
+                    $query .= " AND pt.funcion_aplicacion = ?";
+                    $bindTypes .= 's';
+                    $bindParams[] = $funcionAplicacionFiltro;
+                }
+                break;
+            case 'Accesorios':
+                $query .= " AND a.id_producto IS NOT NULL";
+                break;
+            case 'Mini-ferretería':
+                $query .= " AND mf.id_producto IS NOT NULL";
+                break;
+        }
     }
 
-    // Preparar la consulta
+    if ($marcasFiltro) {
+        $placeholders = implode(',', array_fill(0, count($marcasFiltro), '?'));
+        $query .= " AND p.marca IN ($placeholders)";
+        $bindTypes .= str_repeat('s', count($marcasFiltro));
+        $bindParams = array_merge($bindParams, $marcasFiltro);
+    }
+
+    if ($unidadFiltro) {
+        $placeholders = implode(',', array_fill(0, count($unidadFiltro), '?'));
+        $query .= " AND p.unidad IN ($placeholders)";
+        $bindTypes .= str_repeat('s', count($unidadFiltro));
+        $bindParams = array_merge($bindParams, $unidadFiltro);
+    }
+
+    if ($stockFiltro) {
+        $query .= " AND p.stock_cantidad > 0";
+    }
+
     $stmt = $conn->prepare($query);
-
-    // Enlazar parametros dependiendo de si hay filtros o no
-    if (!empty($tipoFiltro) && !empty($marcaFiltro)) {
-        $stmt->bind_param('sddss', $searchQuery, $precioMin, $precioMax, $tipoFiltro, $marcaFiltro);
-    } elseif (!empty($tipoFiltro)) {
-        $stmt->bind_param('sdds', $searchQuery, $precioMin, $precioMax, $tipoFiltro);
-    } elseif (!empty($marcaFiltro)) {
-        $stmt->bind_param('sdds', $searchQuery, $precioMin, $precioMax, $marcaFiltro);
-    } else {
-        $stmt->bind_param('sdd', $searchQuery, $precioMin, $precioMax);
-    }
-
+    $stmt->bind_param($bindTypes, ...$bindParams);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    // Mostrar productos si hay resultados
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
+            echo '<a href="buyProduct.php?id_producto=' . htmlspecialchars($row['id_producto']) . '" class="product-link">';
             echo '<div class="product">';
-            echo '<img src="' . $row['imagen'] . '" alt="Imagen de producto">';
-            echo '<p class="product-description">' . $row['descripción'] . '</p>';
-            echo '<p class="product-price">$' . $row['precio'] . '</p>';
+            echo '<img src="' . htmlspecialchars($row['imagen']) . '" alt="Imagen de producto">';
+            echo '<p class="product-name">' . htmlspecialchars($row['nombre']) . '</p>';
+            echo '<p class="product-description">' . htmlspecialchars($row['descripcion']) . '</p>';
+            echo '<p class="product-price">$' . htmlspecialchars($row['precio']) . '</p>';
             echo '</div>';
+            echo '</a>';
         }
     } else {
         echo "<p>No se encontraron productos que coincidan con la búsqueda.</p>";
     }
 
-    // Cerrar la conexion y la consulta
     $stmt->close();
     $conn->close();
 } else {

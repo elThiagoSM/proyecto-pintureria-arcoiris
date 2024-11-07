@@ -36,12 +36,11 @@
         <button type="submit"><i class="fas fa-search"></i></button>
       </form>
 
-
       <div class="action-buttons">
         <?php
-        // Verificar si las cookies de sesion estn configuradas
+        // Verificar si las cookies de sesión están configuradas
         if (isset($_COOKIE['nombre_usuario']) && isset($_COOKIE['correo']) && isset($_COOKIE['clasificacion'])) {
-          // Si las cookies estaj, redirigir al perfil de usuario
+          // Si las cookies están, redirigir al perfil de usuario
           echo '<a href="userProfile.php">
                     <button class="icon-button">
                       <i class="fas fa-user"></i>

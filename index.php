@@ -11,6 +11,7 @@
 
 <body>
   <?php include 'components/header.php'; ?>
+  <?php include './database/database.php'; ?>
 
   <div class="carousel-product-container">
     <section class="carousel">
@@ -36,40 +37,56 @@
     <section class="product-types">
       <div class="product-type-grid">
         <div class="product-type">
-          <img
-            src="https://static.wixstatic.com/media/3f14c4_c83e5adf0f704f7289e3a08baf4301f9~mv2.jpg/v1/fill/w_500,h_500,al_c,q_80,enc_auto/3f14c4_c83e5adf0f704f7289e3a08baf4301f9~mv2.jpg"
-            alt="Pintura" />
-          <p>Pintura</p>
+          <li><a href="productSearched.php?query=<?php echo urlencode($_GET['query'] ?? ''); ?>&funcion_aplicacion=exterior">
+              <img
+                src="https://static.wixstatic.com/media/3f14c4_c83e5adf0f704f7289e3a08baf4301f9~mv2.jpg/v1/fill/w_500,h_500,al_c,q_80,enc_auto/3f14c4_c83e5adf0f704f7289e3a08baf4301f9~mv2.jpg"
+                alt="Pintura" />
+              <p>Exterior</p>
+            </a>
+          </li>
         </div>
         <div class="product-type">
-          <img
-            src="https://static.wixstatic.com/media/3f14c4_c83e5adf0f704f7289e3a08baf4301f9~mv2.jpg/v1/fill/w_500,h_500,al_c,q_80,enc_auto/3f14c4_c83e5adf0f704f7289e3a08baf4301f9~mv2.jpg"
-            alt="Esmalte" />
-          <p>Esmalte</p>
+          <li><a href="productSearched.php?query=<?php echo urlencode($_GET['query'] ?? ''); ?>&funcion_aplicacion=interior"><img
+                src="https://static.wixstatic.com/media/3f14c4_c83e5adf0f704f7289e3a08baf4301f9~mv2.jpg/v1/fill/w_500,h_500,al_c,q_80,enc_auto/3f14c4_c83e5adf0f704f7289e3a08baf4301f9~mv2.jpg"
+                alt="Esmalte" />
+              <p>Interior</p>
+            </a>
+          </li>
         </div>
         <div class="product-type">
-          <img
-            src="https://static.wixstatic.com/media/3f14c4_c83e5adf0f704f7289e3a08baf4301f9~mv2.jpg/v1/fill/w_500,h_500,al_c,q_80,enc_auto/3f14c4_c83e5adf0f704f7289e3a08baf4301f9~mv2.jpg"
-            alt="Barniz" />
-          <p>Barniz</p>
+          <li><a href="productSearched.php?query=<?php echo urlencode($_GET['query'] ?? ''); ?>&funcion_aplicacion=metal">
+              <img
+                src="https://static.wixstatic.com/media/3f14c4_c83e5adf0f704f7289e3a08baf4301f9~mv2.jpg/v1/fill/w_500,h_500,al_c,q_80,enc_auto/3f14c4_c83e5adf0f704f7289e3a08baf4301f9~mv2.jpg"
+                alt="Barniz" />
+              <p>Metal</p>
+            </a>
+          </li>
         </div>
         <div class="product-type">
-          <img
-            src="https://static.wixstatic.com/media/3f14c4_c83e5adf0f704f7289e3a08baf4301f9~mv2.jpg/v1/fill/w_500,h_500,al_c,q_80,enc_auto/3f14c4_c83e5adf0f704f7289e3a08baf4301f9~mv2.jpg"
-            alt="Sellador" />
-          <p>Sellador</p>
+          <li><a href="productSearched.php?query=<?php echo urlencode($_GET['query'] ?? ''); ?>&funcion_aplicacion=madera">
+              <img
+                src="https://static.wixstatic.com/media/3f14c4_c83e5adf0f704f7289e3a08baf4301f9~mv2.jpg/v1/fill/w_500,h_500,al_c,q_80,enc_auto/3f14c4_c83e5adf0f704f7289e3a08baf4301f9~mv2.jpg"
+                alt="Sellador" />
+              <p>Madera</p>
+            </a></li>
         </div>
         <div class="product-type">
-          <img
-            src="https://static.wixstatic.com/media/3f14c4_c83e5adf0f704f7289e3a08baf4301f9~mv2.jpg/v1/fill/w_500,h_500,al_c,q_80,enc_auto/3f14c4_c83e5adf0f704f7289e3a08baf4301f9~mv2.jpg"
-            alt="Impermeabilizante" />
-          <p>Impermeabilizante</p>
+          <li><a href="productSearched.php?query=<?php echo urlencode($_GET['query'] ?? ''); ?>&funcion_aplicacion=sintetica">
+              <img
+                src="https://static.wixstatic.com/media/3f14c4_c83e5adf0f704f7289e3a08baf4301f9~mv2.jpg/v1/fill/w_500,h_500,al_c,q_80,enc_auto/3f14c4_c83e5adf0f704f7289e3a08baf4301f9~mv2.jpg"
+                alt="Impermeabilizante" />
+              <p>Sintética</p>
+            </a>
+          </li>
         </div>
         <div class="product-type">
-          <img
-            src="https://static.wixstatic.com/media/3f14c4_c83e5adf0f704f7289e3a08baf4301f9~mv2.jpg/v1/fill/w_500,h_500,al_c,q_80,enc_auto/3f14c4_c83e5adf0f704f7289e3a08baf4301f9~mv2.jpg"
-            alt="Lacado" />
-          <p>Lacado</p>
+          <li><a href="productSearched.php?query=<?php echo urlencode($_GET['query'] ?? ''); ?>&funcion_aplicacion=membrana">
+              <img
+                src="https://static.wixstatic.com/media/3f14c4_c83e5adf0f704f7289e3a08baf4301f9~mv2.jpg/v1/fill/w_500,h_500,al_c,q_80,enc_auto/3f14c4_c83e5adf0f704f7289e3a08baf4301f9~mv2.jpg"
+                alt="Lacado" />
+              <p>Membrana</p>
+            </a>
+          </li>
         </div>
       </div>
     </section>

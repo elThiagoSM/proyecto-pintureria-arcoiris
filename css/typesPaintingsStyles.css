@@ -57,76 +57,46 @@ h2 {
   object-fit: cover;
 }
 
-.paint-type p {
-  margin: 20px;
-  font-size: 1em;
-  color: #333;
+.product-name {
+  margin: 10px 0;
+  font-size: 1.3rem;
+  color: #000;
 }
 
-
-* {
-  padding: 0;
-  margin: 0;
-}
-
-body {
-  font-family: sans-serif;
-}
-
-.types-paintings {
-  width: 100%;
-  text-align: center;
-  padding: 40px 0;
-  background-color: #f5f5f5;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.types-paintings-container {
-  width: 100%;
-  text-align: center;
-  max-width: 1200px;
-}
-
-h2 {
-  font-size: 2em;
-  margin-bottom: 10px;
-  color: #333;
-}
-
-.subtext {
-  font-size: 1.2em;
-  margin-bottom: 30px;
+.product-description {
+  font-size: 1rem;
+  margin: 10px 0;
   color: #555;
 }
 
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
+.product-price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #000;
 }
 
-.paint-type {
-  background-color: none;
-  border: 1px solid #d8d8d8;
+a {
+  text-decoration: none;
+}
+
+.pagination {
   text-align: center;
-  cursor: pointer;
+  margin: 20px 0;
 }
 
-.paint-type img {
-  width: 100%;
-  height: auto;
-  max-height: 200px;
-  object-fit: cover;
-}
-
-.paint-type p {
-  margin: 20px;
-  font-size: 1em;
+.pagination a {
+  display: inline-block;
+  padding: 8px 16px;
+  margin: 0 5px;
+  text-decoration: none;
   color: #333;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+}
+
+.pagination a:hover {
+  background-color: #ddd;
 }
 
 @media (max-width: 768px) {
@@ -139,28 +109,28 @@ h2 {
   }
 
   .gallery {
-    grid-template-columns: repeat(2, 1fr); 
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .paint-type img {
-    max-height: 150px; 
+    max-height: 150px;
   }
 }
 
 @media (max-width: 480px) {
   h2 {
-    font-size: 1.5em; 
+    font-size: 1.5em;
   }
 
   .subtext {
-    font-size: 1em; 
+    font-size: 1em;
   }
 
   .gallery {
-    grid-template-columns: 1fr; 
+    grid-template-columns: 1fr;
   }
 
   .paint-type p {
-    font-size: 0.9em; 
+    font-size: 0.9em;
   }
 }

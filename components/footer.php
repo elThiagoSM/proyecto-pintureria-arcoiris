@@ -23,36 +23,36 @@
           <div class="social-icons">
             <a href="https://www.facebook.com" target="_blank">
               <i class="fab fa-facebook"></i></a>
-            <a href="https://www.instagram.com" target="_blank"></a>
-            <i class="fab fa-instagram"></i></a>
+            <a href="https://www.instagram.com" target="_blank">
+              <i class="fab fa-instagram"></i></a>
           </div>
         </div>
       </div>
 
       <div class="footer-section branch-and-payment">
-        <div class="footer-branch-payment">
-          <div class="footer-branch">
-            <h4>Sucursal</h4>
-            <p>Salto, Uruguay 2297</p>
-            <p>Lunes a Viernes 8:00 a 18:30 hs</p>
-          </div>
-          <div class="footer-payment">
-            <h4>Medios de Pago</h4>
-          </div>
+        <div class="footer-branch">
+          <h4>Sucursal</h4>
+          <p>Salto, Uruguay 2297</p>
+          <p>Lunes a Viernes 8:00 a 18:30 hs</p>
         </div>
+        <div class="footer-payment">
+          <h4>Medios de Pago</h4>
+        </div>
+      </div>
 
-        <div class="footer-contact-help">
-          <div class="footer-contact">
-            <h4>Contacto</h4>
-            <p>Contacto Atención telefónica: +598 99 123 456</p>
-            <p>Correo electrónico: pintureriaarcoiris@gmail.com</p>
-          </div>
-          <div class="footer-help">
-            <h4>Ayuda</h4>
+      <div class="footer-section footer-contact-help">
+        <div class="footer-contact">
+          <h4>Contacto</h4>
+          <p>Atención telefónica: +598 99 123 456</p>
+          <p>Correo electrónico: pintureriaarcoiris@gmail.com</p>
+        </div>
+        <div class="footer-help">
+          <h4>Ayuda</h4>
+          <ul>
             <li><a href="termsAndConditions.php">Términos y condiciones</a></li>
             <li><a href="frequentlyAskedQuestions.php">Preguntas frecuentes</a></li>
             <li><a href="aboutUs.php">Sobre nosotros</a></li>
-          </div>
+          </ul>
         </div>
       </div>
     </div>
