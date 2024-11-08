@@ -1,11 +1,11 @@
 <?php
-include '../database/database.php';
+include '../database/database.php'; // Conexión a la base de datos
 
 function obtenerUsuarios($clasificacion = null, $busqueda = null, $offset = 0, $limit = 10)
 {
     global $conn;
 
-    $query = "SELECT id_usuario, nombre_usuario, correo, clasificacion, fecha_ingreso, fecha_actualizacion FROM Usuarios";
+    $query = "SELECT id_usuario, nombre_usuario, correo, clasificacion, fecha_ingreso, fecha_actualizacion, foto_perfil FROM Usuarios";
     $params = [];
     $types = "";
 
@@ -107,7 +107,7 @@ $usuarios = obtenerUsuarios($clasificacion, $busqueda, $offset, $limit);
 <!-- Renderizado de usuarios -->
 <?php foreach ($usuarios as $usuario): ?>
     <tr>
-        <td><img src="https://via.placeholder.com/50" alt="Usuario" width="50"></td>
+        <td><img src=<?= htmlspecialchars($usuario['foto_perfil']) ?> alt=<?= htmlspecialchars($usuario['nombre_usuario']) ?> width="50"></td>
         <td><?= htmlspecialchars($usuario['id_usuario']) ?></td>
         <td><?= htmlspecialchars($usuario['nombre_usuario']) ?></td>
         <td><?= htmlspecialchars($usuario['correo']) ?></td>

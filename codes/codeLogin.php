@@ -21,9 +21,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows === 1) {
         $user_data = $result->fetch_assoc();
 
-        // Verificar la contraseña
+        // Verificar la contraseñas
         if (password_verify($contraseña, $user_data['contraseña'])) {
             // Establecer cookies con los datos del usuario
+            setcookie('id_usuario', $user_data['id_usuario'], time() + 3600, "/");
             setcookie('nombre_usuario', $user_data['nombre_usuario'], time() + 3600, "/");
             setcookie('correo', $user_data['correo'], time() + 3600, "/");
             setcookie('clasificacion', $user_data['clasificacion'], time() + 3600, "/");
@@ -31,6 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             setcookie('datos_contacto', $user_data['datos_contacto'], time() + 3600, "/");
             setcookie('fecha_nacimiento', $user_data['fecha_nacimiento'], time() + 3600, "/");
             setcookie('cedula', $user_data['cedula'], time() + 3600, "/");
+            setcookie('foto_perfil', $user_data['foto_perfil'], time() + 3600, "/");
 
             // Redirigir a la pagina de perfil de usuario
             header("Location: ../userProfile.php");

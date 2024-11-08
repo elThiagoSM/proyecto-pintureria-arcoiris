@@ -1,5 +1,5 @@
 <?php
-include '../database/database.php';
+include '../database/database.php'; // Conexión a la base de datos
 
 function obtenerProveedores($busqueda = null, $offset = 0, $limit = 10)
 {

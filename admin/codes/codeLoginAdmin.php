@@ -1,5 +1,5 @@
 <?php
-include '../database/database.php'; // Conexin a la base de datos
+include '../../database/database.php'; // Conexión a la base de datos
 session_start();
 
 // Obtener los datos del formulario
@@ -18,10 +18,13 @@ if ($result->num_rows > 0) {
 
     // Verificar contraseña usando el hash almacenado
     if (password_verify($contraseña, $user['contraseña'])) {
-        // Iniciar sesión y redirigir
+        // Iniciar sesión y guardar datos del usuario
         $_SESSION['id_usuario'] = $user['id_usuario'];
         $_SESSION['nombre_usuario'] = $user['nombre_usuario'];
+        $_SESSION['correo'] = $user['correo'];
         $_SESSION['clasificacion'] = $user['clasificacion'];
+        $_SESSION['fecha_ingreso'] = $user['fecha_ingreso'];
+        $_SESSION['foto_perfil'] = $user['foto_perfil'];
 
         header("Location: ../dashboard.php");
         exit();

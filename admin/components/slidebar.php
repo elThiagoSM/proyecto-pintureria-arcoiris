@@ -10,7 +10,7 @@
 
 <body>
     <div class="sidebar">
-        <h1>LOGO</h1>
+        <h1>PANEL</h1>
         <hr>
         <a href="dashboard.php" class="menu-item"><strong>Panel principal</strong></a>
         <hr>

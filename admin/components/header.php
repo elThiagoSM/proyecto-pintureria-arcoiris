@@ -10,8 +10,11 @@
 
 <body>
     <div class="header">
-        <img src="https://via.placeholder.com/30" alt="Imagen de usuario">
-        <span class="username">Thiago Silveira M.</span>
+
+        <a class="linkeable" href="adminProfile.php">
+            <img src="<?php echo isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'https://via.placeholder.com/30'; ?>" alt="Imagen de usuario">
+            <span class="username"><?php echo isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario'] : 'Usuario Invitado'; ?></span>
+        </a>
     </div>
 </body>
 

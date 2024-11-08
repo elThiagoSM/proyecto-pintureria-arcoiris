@@ -1,5 +1,5 @@
 <?php
-include '../database/database.php';
+include '../database/database.php'; // Conexión a la base de datos
 
 // Obtener ventas en proceso con filtro y paginación
 function obtenerVentasEnProceso($nombre_cliente = null, $offset = 0, $limit = 10)

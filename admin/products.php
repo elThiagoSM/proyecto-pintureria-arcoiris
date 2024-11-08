@@ -1,3 +1,14 @@
+<?php
+session_start();
+
+// Verificar si el usuario ha iniciado sesión y si es un administrador
+if (!isset($_SESSION['id_usuario']) || $_SESSION['clasificacion'] !== 'Administrador') {
+    // Si no es administrador o no está autenticado, redirigir al inicio de sesión
+    header("Location: loginAdmin.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -45,18 +56,12 @@
                     window.location.href = url;
                 }
 
-                // Función para confirmar borrado
-                function confirmarBorrado(idProducto) {
-                    document.getElementById('confirm-delete').style.display = 'block';
-                    document.getElementById('delete-product-id').value = idProducto;
-                }
-
-                function cancelarBorrado() {
-                    document.getElementById('confirm-delete').style.display = 'none';
+                // Nueva función para redirigir a newProduct.php
+                function redirigirANuevoProducto() {
+                    window.location.href = 'newProduct.php';
                 }
             </script>
 
-            <!-- Modal de confirmación de borrado -->
             <div id="confirm-delete" style="display:none; position:fixed; top:10%; left:50%; transform:translateX(-50%); background-color:white; padding:20px; border:1px solid black; z-index:1000;">
                 <p>¿Realmente quieres borrarlo?</p>
                 <form method="POST">
@@ -65,7 +70,6 @@
                     <button type="button" onclick="cancelarBorrado()">Cancelar</button>
                 </form>
             </div>
-
 
             <table class="product-table">
                 <thead>
@@ -84,7 +88,8 @@
             </table>
 
             <div class="footer">
-                <button class="new-product">Nuevo</button>
+                <!-- Cambiar este botón "Nuevo" también para redirigir a newProduct.php -->
+                <button onclick="redirigirANuevoProducto()" class="new-product">Nuevo</button>
 
                 <div class="pagination">
                     <?php if ($page > 1): ?>

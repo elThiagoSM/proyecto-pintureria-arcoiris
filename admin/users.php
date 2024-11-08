@@ -1,3 +1,14 @@
+<?php
+session_start();
+
+// Verificar si el usuario ha iniciado sesión y si es un administrador
+if (!isset($_SESSION['id_usuario']) || $_SESSION['clasificacion'] !== 'Administrador') {
+    // Si no es administrador o no está autenticado, redirigir al inicio de sesión
+    header("Location: loginAdmin.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -53,6 +64,11 @@
                 function cancelarBorrado() {
                     document.getElementById('confirm-delete').style.display = 'none';
                 }
+
+                // Nueva función para redirigir a newAdmin.php
+                function redirigirANuevoAdministrador() {
+                    window.location.href = 'newAdmin.php';
+                }
             </script>
 
             <!-- Modal de confirmación de borrado -->
@@ -84,7 +100,7 @@
             </table>
 
             <div class="footer">
-                <button class="new-user">Nuevo Admin</button>
+                <button onclick="redirigirANuevoAdministrador()" class="new-user">Nuevo Admin</button>
 
                 <div class="pagination">
                     <?php if ($page > 1): ?>

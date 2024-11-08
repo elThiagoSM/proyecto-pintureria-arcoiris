@@ -19,6 +19,10 @@ body {
   border-bottom: 1px solid #ddd;
 }
 
+.header .linkeable {
+  text-decoration: none;
+}
+
 .header img {
   width: 30px;
   height: 30px;

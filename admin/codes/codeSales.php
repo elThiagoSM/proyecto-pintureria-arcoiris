@@ -1,11 +1,12 @@
 <?php
-include '../database/database.php';
+include '../database/database.php'; // Conexión a la base de datos
 
 function obtenerVentas($forma_de_pago = null, $fecha_venta = null, $offset = 0, $limit = 10)
 {
     global $conn;
 
     $query = "SELECT id_venta, forma_de_pago, fecha_de_venta, valor_de_venta, estado, datos_extra_notas, id_usuario, id_producto FROM Ventas";
+
     $params = [];
     $types = "";
 
