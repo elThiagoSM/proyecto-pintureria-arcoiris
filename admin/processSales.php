@@ -3,7 +3,6 @@ session_start();
 
 // Verificar si el usuario ha iniciado sesión y si es un administrador
 if (!isset($_SESSION['id_usuario']) || $_SESSION['clasificacion'] !== 'Administrador') {
-    // Si no es administrador o no está autenticado, redirigir al inicio de sesión
     header("Location: loginAdmin.php");
     exit();
 }
@@ -45,6 +44,18 @@ if (!isset($_SESSION['id_usuario']) || $_SESSION['clasificacion'] !== 'Administr
                     }
                     window.location.href = url;
                 }
+
+                function confirmarVenta(idVenta) {
+                    if (confirm("¿Estás seguro de que deseas completar esta venta?")) {
+                        window.location.href = `./codes/codeProcessSales.php?action=confirm&id_venta=${idVenta}`;
+                    }
+                }
+
+                function cancelarVenta(idVenta) {
+                    if (confirm("¿Estás seguro de que deseas cancelar esta venta?")) {
+                        window.location.href = `./codes/codeProcessSales.php?action=cancel&id_venta=${idVenta}`;
+                    }
+                }
             </script>
 
             <table class="process-sale-table">
@@ -53,6 +64,7 @@ if (!isset($_SESSION['id_usuario']) || $_SESSION['clasificacion'] !== 'Administr
                         <th>ID Venta</th>
                         <th>Cliente</th>
                         <th>Producto</th>
+                        <th>Cantidad</th>
                         <th>Valor de Venta</th>
                         <th>Acciones</th>
                     </tr>

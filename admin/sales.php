@@ -1,9 +1,10 @@
+<!-- Código en sales.php -->
+
 <?php
 session_start();
 
 // Verificar si el usuario ha iniciado sesión y si es un administrador
 if (!isset($_SESSION['id_usuario']) || $_SESSION['clasificacion'] !== 'Administrador') {
-    // Si no es administrador o no está autenticado, redirigir al inicio de sesión
     header("Location: loginAdmin.php");
     exit();
 }
@@ -29,7 +30,12 @@ if (!isset($_SESSION['id_usuario']) || $_SESSION['clasificacion'] !== 'Administr
             <div class="top-bar">
                 <button class="active">Lista de Ventas</button>
                 <div class="search-container">
-                    <input type="date" id="search-date" class="search-bar">
+                    <select id="search-type" onchange="toggleSearchInput()">
+                        <option value="fecha">Buscar por Fecha</option>
+                        <option value="id">Buscar por ID de Venta</option>
+                    </select>
+                    <input type="date" id="search-date" class="search-bar" style="display: inline;">
+                    <input type="number" id="search-id" class="search-bar" style="display: none;" placeholder="ID de Venta">
                     <button onclick="buscarVenta()">Buscar</button>
                 </div>
             </div>
@@ -41,21 +47,39 @@ if (!isset($_SESSION['id_usuario']) || $_SESSION['clasificacion'] !== 'Administr
             </div>
 
             <script>
+                // Alternar el campo de entrada según el tipo de búsqueda seleccionado
+                function toggleSearchInput() {
+                    const searchType = document.getElementById('search-type').value;
+                    document.getElementById('search-date').style.display = searchType === 'fecha' ? 'inline' : 'none';
+                    document.getElementById('search-id').style.display = searchType === 'id' ? 'inline' : 'none';
+                }
+
+                // Función para buscar venta
+                function buscarVenta() {
+                    const searchType = document.getElementById('search-type').value;
+                    const url = new URL(window.location.href);
+
+                    if (searchType === 'fecha') {
+                        const fechaVenta = document.getElementById('search-date').value;
+                        if (fechaVenta) {
+                            url.searchParams.set('fecha_venta', fechaVenta);
+                            url.searchParams.delete('id_venta'); // Eliminar parámetro de id si existe
+                        }
+                    } else if (searchType === 'id') {
+                        const idVenta = document.getElementById('search-id').value;
+                        if (idVenta) {
+                            url.searchParams.set('id_venta', idVenta);
+                            url.searchParams.delete('fecha_venta'); // Eliminar parámetro de fecha si existe
+                        }
+                    }
+                    window.location.href = url;
+                }
+
                 function filtrarFormaPago(formaPago) {
                     const url = new URL(window.location.href);
                     url.searchParams.set('forma_de_pago', formaPago);
                     url.searchParams.delete('fecha_venta');
-                    window.location.href = url;
-                }
-
-                function buscarVenta() {
-                    const fechaVenta = document.getElementById('search-date').value;
-                    const url = new URL(window.location.href);
-                    if (fechaVenta) {
-                        url.searchParams.set('fecha_venta', fechaVenta);
-                    } else {
-                        url.searchParams.delete('fecha_venta');
-                    }
+                    url.searchParams.delete('id_venta');
                     window.location.href = url;
                 }
             </script>
@@ -71,6 +95,7 @@ if (!isset($_SESSION['id_usuario']) || $_SESSION['clasificacion'] !== 'Administr
                         <th>Notas</th>
                         <th>Usuario</th>
                         <th>Producto</th>
+                        <th>Cantidad</th>
                     </tr>
                 </thead>
                 <tbody>

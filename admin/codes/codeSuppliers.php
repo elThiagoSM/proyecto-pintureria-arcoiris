@@ -1,21 +1,51 @@
 <?php
-include '../database/database.php'; // Conexión a la base de datos
+include '../database/database.php';
 
-function obtenerProveedores($busqueda = null, $offset = 0, $limit = 10)
+$limit = 10;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
+$tipo_busqueda = $_GET['tipo_busqueda'] ?? 'nombre';
+$busqueda = $_GET['busqueda'] ?? null;
+
+function obtenerProveedores($tipo_busqueda = 'nombre', $busqueda = null, $offset = 0, $limit = 10)
 {
     global $conn;
 
     $query = "SELECT id_proveedor, nombre, telefono, correo, direccion FROM Proveedores";
     $params = [];
     $types = "";
+    $filters = [];
 
-    // Condición de búsqueda
     if ($busqueda) {
-        $query .= " WHERE nombre LIKE ? OR correo LIKE ?";
-        $busqueda_param = "%" . $busqueda . "%";
-        $params[] = &$busqueda_param;
-        $params[] = &$busqueda_param;
-        $types .= "ss";
+        switch ($tipo_busqueda) {
+            case 'id':
+                $filters[] = "id_proveedor = ?";
+                $params[] = &$busqueda;
+                $types .= "i";
+                break;
+            case 'nombre':
+                $filters[] = "nombre LIKE ?";
+                $busqueda_param = "%" . $busqueda . "%";
+                $params[] = &$busqueda_param;
+                $types .= "s";
+                break;
+            case 'telefono':
+                $filters[] = "telefono LIKE ?";
+                $busqueda_param = "%" . $busqueda . "%";
+                $params[] = &$busqueda_param;
+                $types .= "s";
+                break;
+            case 'correo':
+                $filters[] = "correo LIKE ?";
+                $busqueda_param = "%" . $busqueda . "%";
+                $params[] = &$busqueda_param;
+                $types .= "s";
+                break;
+        }
+    }
+
+    if ($filters) {
+        $query .= " WHERE " . implode(" AND ", $filters);
     }
 
     $query .= " LIMIT ? OFFSET ?";
@@ -23,38 +53,54 @@ function obtenerProveedores($busqueda = null, $offset = 0, $limit = 10)
     $params[] = &$offset;
     $types .= "ii";
 
-    // Preparar y ejecutar la consulta
     $stmt = $conn->prepare($query);
     if ($types) {
         $stmt->bind_param($types, ...$params);
     }
 
     $stmt->execute();
-    $result = $stmt->get_result();
-
-    $proveedores = [];
-    while ($row = $result->fetch_assoc()) {
-        $proveedores[] = $row;
-    }
-    return $proveedores;
+    return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 }
 
-// Obtener el total de proveedores para la paginación
-function contarProveedores($busqueda = null)
+function contarProveedores($tipo_busqueda = 'nombre', $busqueda = null)
 {
     global $conn;
 
     $query = "SELECT COUNT(*) as total FROM Proveedores";
     $params = [];
     $types = "";
+    $filters = [];
 
-    // Condición de búsqueda
     if ($busqueda) {
-        $query .= " WHERE nombre LIKE ? OR correo LIKE ?";
-        $busqueda_param = "%" . $busqueda . "%";
-        $params[] = &$busqueda_param;
-        $params[] = &$busqueda_param;
-        $types .= "ss";
+        switch ($tipo_busqueda) {
+            case 'id':
+                $filters[] = "id_proveedor = ?";
+                $params[] = &$busqueda;
+                $types .= "i";
+                break;
+            case 'nombre':
+                $filters[] = "nombre LIKE ?";
+                $busqueda_param = "%" . $busqueda . "%";
+                $params[] = &$busqueda_param;
+                $types .= "s";
+                break;
+            case 'telefono':
+                $filters[] = "telefono LIKE ?";
+                $busqueda_param = "%" . $busqueda . "%";
+                $params[] = &$busqueda_param;
+                $types .= "s";
+                break;
+            case 'correo':
+                $filters[] = "correo LIKE ?";
+                $busqueda_param = "%" . $busqueda . "%";
+                $params[] = &$busqueda_param;
+                $types .= "s";
+                break;
+        }
+    }
+
+    if ($filters) {
+        $query .= " WHERE " . implode(" AND ", $filters);
     }
 
     $stmt = $conn->prepare($query);
@@ -64,20 +110,12 @@ function contarProveedores($busqueda = null)
 
     $stmt->execute();
     $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
-    return $row['total'];
+    return $result->fetch_assoc()['total'];
 }
 
-// Parámetros de paginación
-$limit = 10;
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$offset = ($page - 1) * $limit;
-
-$busqueda = $_GET['busqueda'] ?? null;
-$totalProveedores = contarProveedores($busqueda);
+$totalProveedores = contarProveedores($tipo_busqueda, $busqueda);
 $totalPaginas = ceil($totalProveedores / $limit);
-
-$proveedores = obtenerProveedores($busqueda, $offset, $limit);
+$proveedores = obtenerProveedores($tipo_busqueda, $busqueda, $offset, $limit);
 ?>
 
 <!-- Renderizado de proveedores -->
@@ -89,7 +127,7 @@ $proveedores = obtenerProveedores($busqueda, $offset, $limit);
         <td><?= htmlspecialchars($proveedor['correo']) ?></td>
         <td><?= htmlspecialchars($proveedor['direccion']) ?></td>
         <td>
-            <button class="edit-btn" data-id="<?= $proveedor['id_proveedor'] ?>">Editar</button>
+            <button class="edit-btn" onclick="window.location.href='editSuppliers.php?id_proveedor=<?= $proveedor['id_proveedor'] ?>'">Editar</button>
             <button class="delete-btn" onclick="confirmarBorrado(<?= $proveedor['id_proveedor'] ?>)">Borrar</button>
         </td>
     </tr>

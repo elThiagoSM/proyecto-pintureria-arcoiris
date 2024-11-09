@@ -6,20 +6,18 @@ function obtenerVentasEnProceso($nombre_cliente = null, $offset = 0, $limit = 10
 {
     global $conn;
     $query = "
-        SELECT Ventas.id_venta, Usuarios.nombre_usuario, Productos.nombre AS nombre_producto, Ventas.valor_de_venta 
+        SELECT Ventas.id_venta, Usuarios.nombre_usuario, Productos.nombre AS nombre_producto, Ventas.valor_de_venta , Ventas.cantidad
         FROM Ventas
         JOIN Usuarios ON Ventas.id_usuario = Usuarios.id_usuario
         JOIN Productos ON Ventas.id_producto = Productos.id_producto
         WHERE Ventas.estado = 'en proceso'
     ";
 
-    // Filtrar por nombre de cliente
     if ($nombre_cliente) {
         $query .= " AND Usuarios.nombre_usuario LIKE ?";
         $nombre_cliente = "%" . $nombre_cliente . "%";
     }
 
-    // Agregar paginación
     $query .= " LIMIT ? OFFSET ?";
     $stmt = $conn->prepare($query);
 
@@ -39,7 +37,6 @@ function obtenerVentasEnProceso($nombre_cliente = null, $offset = 0, $limit = 10
     return $ventas;
 }
 
-// Contar ventas para la paginación
 function contarVentasEnProceso($nombre_cliente = null)
 {
     global $conn;
@@ -66,7 +63,6 @@ function contarVentasEnProceso($nombre_cliente = null)
     return $row['total'];
 }
 
-// Procesar confirmación o cancelación de ventas
 if (isset($_GET['action']) && isset($_GET['id_venta'])) {
     $idVenta = (int)$_GET['id_venta'];
     $action = $_GET['action'];
@@ -76,25 +72,39 @@ if (isset($_GET['action']) && isset($_GET['id_venta'])) {
         $stmt->bind_param("i", $idVenta);
         $stmt->execute();
     } elseif ($action == 'cancel') {
-        $stmt = $conn->prepare("UPDATE Ventas SET estado = 'cancelado' WHERE id_venta = ?");
+        $stmt = $conn->prepare("SELECT id_producto, cantidad FROM Ventas WHERE id_venta = ?");
+        $stmt->bind_param("i", $idVenta);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $venta = $result->fetch_assoc();
+
+        if ($venta) {
+            $idProducto = $venta['id_producto'];
+            $cantidad = $venta['cantidad'];
+
+            $stmtUpdate = $conn->prepare("UPDATE Productos SET stock_cantidad = stock_cantidad + ? WHERE id_producto = ?");
+            $stmtUpdate->bind_param("ii", $cantidad, $idProducto);
+            $stmtUpdate->execute();
+            $stmtUpdate->close();
+        }
+
+        $stmt = $conn->prepare("DELETE FROM Ventas WHERE id_venta = ?");
         $stmt->bind_param("i", $idVenta);
         $stmt->execute();
     }
+
     header("Location: ../processSales.php");
     exit();
 }
 
-// Parámetros de paginación
 $limit = 10;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 $nombre_cliente = $_GET['nombre_cliente'] ?? null;
 
-// Obtener total de páginas
 $totalVentas = contarVentasEnProceso($nombre_cliente);
 $totalPaginas = ceil($totalVentas / $limit);
 
-// Obtener ventas en proceso para la página actual
 $ventasEnProceso = obtenerVentasEnProceso($nombre_cliente, $offset, $limit);
 ?>
 
@@ -104,6 +114,7 @@ $ventasEnProceso = obtenerVentasEnProceso($nombre_cliente, $offset, $limit);
         <td><?= htmlspecialchars($venta['id_venta']) ?></td>
         <td><?= htmlspecialchars($venta['nombre_usuario']) ?></td>
         <td><?= htmlspecialchars($venta['nombre_producto']) ?></td>
+        <td><?= htmlspecialchars($venta['cantidad']) ?></td>
         <td><?= htmlspecialchars($venta['valor_de_venta']) ?></td>
         <td>
             <button class="confirm-btn" onclick="confirmarVenta(<?= $venta['id_venta'] ?>)">Completar</button>

@@ -1,5 +1,5 @@
 <?php
-include './database/database.php';
+include '../database/database.php';
 session_start();
 
 // Verificar si el usuario está logueado
@@ -46,5 +46,5 @@ $params[] = $id_usuario;
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
 
-header("Location: userProfile.php?success=Perfil actualizado exitosamente");
+header("Location: ../userProfile.php?success=Perfil actualizado exitosamente");
 exit();

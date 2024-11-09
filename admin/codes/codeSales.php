@@ -1,34 +1,50 @@
 <?php
-include '../database/database.php'; // Conexión a la base de datos
+include '../database/database.php'; // Conexin a la base de datos
 
-function obtenerVentas($forma_de_pago = null, $fecha_venta = null, $offset = 0, $limit = 10)
+// Parámetros de paginación y filtros
+$limit = 10;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
+$forma_de_pago = $_GET['forma_de_pago'] ?? null;
+$fecha_venta = $_GET['fecha_venta'] ?? null;
+$id_venta = $_GET['id_venta'] ?? null;
+
+// Función para obtener las ventas con filtros y paginación
+function obtenerVentas($forma_de_pago = null, $fecha_venta = null, $id_venta = null, $offset = 0, $limit = 10)
 {
     global $conn;
 
-    $query = "SELECT id_venta, forma_de_pago, fecha_de_venta, valor_de_venta, estado, datos_extra_notas, id_usuario, id_producto FROM Ventas";
-
+    // Crear consulta SQL base
+    $query = "SELECT id_venta, forma_de_pago, fecha_de_venta, valor_de_venta, estado, datos_extra_notas, id_usuario, id_producto, cantidad FROM Ventas";
     $params = [];
     $types = "";
+    $filters = [];
 
-    // Filtro por forma de pago
+    // Aplicar filtros según los parámetros recibidos
     if ($forma_de_pago) {
-        $query .= " WHERE forma_de_pago = ?";
+        $filters[] = "forma_de_pago = ?";
         $params[] = &$forma_de_pago;
         $types .= "s";
     }
 
-    // Condición de búsqueda por fecha de venta
     if ($fecha_venta) {
-        if ($forma_de_pago) {
-            $query .= " AND fecha_de_venta = ?";
-        } else {
-            $query .= " WHERE fecha_de_venta = ?";
-        }
+        $filters[] = "fecha_de_venta = ?";
         $params[] = &$fecha_venta;
         $types .= "s";
     }
 
-    // Paginación
+    if ($id_venta) {
+        $filters[] = "id_venta = ?";
+        $params[] = &$id_venta;
+        $types .= "i";
+    }
+
+    // Si hay filtros, agregarlos a la consulta
+    if ($filters) {
+        $query .= " WHERE " . implode(" AND ", $filters);
+    }
+
+    // Agregar paginación
     $query .= " LIMIT ? OFFSET ?";
     $params[] = &$limit;
     $params[] = &$offset;
@@ -41,17 +57,11 @@ function obtenerVentas($forma_de_pago = null, $fecha_venta = null, $offset = 0, 
     }
 
     $stmt->execute();
-    $result = $stmt->get_result();
-
-    $ventas = [];
-    while ($row = $result->fetch_assoc()) {
-        $ventas[] = $row;
-    }
-    return $ventas;
+    return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 }
 
-// Contar el total de ventas para la paginación
-function contarVentas($forma_de_pago = null, $fecha_venta = null)
+// Función para contar las ventas (para la paginación)
+function contarVentas($forma_de_pago = null, $fecha_venta = null, $id_venta = null)
 {
     global $conn;
 
@@ -59,14 +69,13 @@ function contarVentas($forma_de_pago = null, $fecha_venta = null)
     $params = [];
     $types = "";
 
-    // Filtro por forma de pago
+    // Aplicar filtros para contar
     if ($forma_de_pago) {
         $query .= " WHERE forma_de_pago = ?";
         $params[] = &$forma_de_pago;
         $types .= "s";
     }
 
-    // Condición de búsqueda por fecha de venta
     if ($fecha_venta) {
         if ($forma_de_pago) {
             $query .= " AND fecha_de_venta = ?";
@@ -77,6 +86,17 @@ function contarVentas($forma_de_pago = null, $fecha_venta = null)
         $types .= "s";
     }
 
+    if ($id_venta) {
+        if ($types) {
+            $query .= " AND id_venta = ?";
+        } else {
+            $query .= " WHERE id_venta = ?";
+        }
+        $params[] = &$id_venta;
+        $types .= "i";
+    }
+
+    // Preparar y ejecutar la consulta
     $stmt = $conn->prepare($query);
     if ($types) {
         $stmt->bind_param($types, ...$params);
@@ -88,17 +108,10 @@ function contarVentas($forma_de_pago = null, $fecha_venta = null)
     return $row['total'];
 }
 
-// Parámetros de paginación
-$limit = 10;
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$offset = ($page - 1) * $limit;
-
-$forma_de_pago = $_GET['forma_de_pago'] ?? null;
-$fecha_venta = $_GET['fecha_venta'] ?? null;
-$totalVentas = contarVentas($forma_de_pago, $fecha_venta);
+// Obtener las ventas y el total para la paginación
+$totalVentas = contarVentas($forma_de_pago, $fecha_venta, $id_venta);
 $totalPaginas = ceil($totalVentas / $limit);
-
-$ventas = obtenerVentas($forma_de_pago, $fecha_venta, $offset, $limit);
+$ventas = obtenerVentas($forma_de_pago, $fecha_venta, $id_venta, $offset, $limit);
 ?>
 
 <!-- Renderizado de ventas -->
@@ -112,5 +125,6 @@ $ventas = obtenerVentas($forma_de_pago, $fecha_venta, $offset, $limit);
         <td><?= htmlspecialchars($venta['datos_extra_notas']) ?></td>
         <td><?= htmlspecialchars($venta['id_usuario']) ?></td>
         <td><?= htmlspecialchars($venta['id_producto']) ?></td>
+        <td><?= htmlspecialchars($venta['cantidad']) ?></td>
     </tr>
 <?php endforeach; ?>

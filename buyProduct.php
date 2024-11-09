@@ -52,6 +52,17 @@
                             <p>Marca: <?php echo $producto['marca']; ?></p>
                             <p>Proveedor: <?php echo $producto['proveedor_nombre']; ?></p>
                             <p>Fecha de ingreso: <?php echo $producto['fecha_ingreso']; ?></p>
+
+                            <!-- Menú desplegable para seleccionar cantidad de productos -->
+                            <label for="cantidad">Cantidad a comprar:</label>
+                            <select id="cantidad" name="cantidad">
+                                <?php
+                                for ($i = 1; $i <= $producto['stock_cantidad']; $i++) {
+                                    echo "<option value='$i'>$i</option>";
+                                }
+                                ?>
+                            </select>
+
                             <?php if ($producto['litros'] !== null) { ?>
                                 <h3>Detalles de la Pintura</h3>
                                 <p>Litros: <?php echo $producto['litros']; ?></p>
@@ -62,12 +73,20 @@
                         </div>
 
                         <div class="buttons">
-                            <button class="buy" onclick="window.location.href='checkout.php?id_producto=<?php echo $id_producto; ?>&nombre_producto=<?php echo urlencode($producto['nombre']); ?>&monto_total=<?php echo $producto['precio']; ?>'">COMPRAR AHORA</button>
+                            <button class="buy" onclick="comprarAhora(<?php echo $producto['precio']; ?>)">COMPRAR AHORA</button>
                             <button class="add-to-cart">AGREGAR AL CARRITO</button>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <script>
+                function comprarAhora(precioUnitario) {
+                    const cantidad = document.getElementById('cantidad').value;
+                    const montoTotal = precioUnitario * cantidad;
+                    window.location.href = `checkout.php?id_producto=<?php echo $id_producto; ?>&nombre_producto=<?php echo urlencode($producto['nombre']); ?>&monto_total=${montoTotal}&cantidad=${cantidad}`;
+                }
+            </script>
 
     <?php
         } else {

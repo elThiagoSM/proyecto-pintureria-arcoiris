@@ -1,32 +1,54 @@
 <?php
 include '../database/database.php'; // Conexión a la base de datos
 
-function obtenerUsuarios($clasificacion = null, $busqueda = null, $offset = 0, $limit = 10)
+// Parámetros de paginación y filtros
+$limit = 10;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
+$clasificacion = $_GET['clasificacion'] ?? null;
+$tipo_busqueda = $_GET['tipo_busqueda'] ?? 'nombre';
+$busqueda = $_GET['busqueda'] ?? null;
+
+// Función para obtener los usuarios con filtros y paginación
+function obtenerUsuarios($clasificacion = null, $tipo_busqueda = 'nombre', $busqueda = null, $offset = 0, $limit = 10)
 {
     global $conn;
 
     $query = "SELECT id_usuario, nombre_usuario, correo, clasificacion, fecha_ingreso, fecha_actualizacion, foto_perfil FROM Usuarios";
     $params = [];
     $types = "";
+    $filters = [];
 
-    // Filtro de clasificación
     if ($clasificacion) {
-        $query .= " WHERE clasificacion = ?";
+        $filters[] = "clasificacion = ?";
         $params[] = &$clasificacion;
         $types .= "s";
     }
 
-    // Condición de búsqueda
     if ($busqueda) {
-        if ($clasificacion) {
-            $query .= " AND (nombre_usuario LIKE ? OR correo LIKE ?)";
-        } else {
-            $query .= " WHERE (nombre_usuario LIKE ? OR correo LIKE ?)";
+        switch ($tipo_busqueda) {
+            case 'id':
+                $filters[] = "id_usuario = ?";
+                $params[] = &$busqueda;
+                $types .= "i";
+                break;
+            case 'nombre':
+                $filters[] = "nombre_usuario LIKE ?";
+                $busqueda_param = "%" . $busqueda . "%";
+                $params[] = &$busqueda_param;
+                $types .= "s";
+                break;
+            case 'correo':
+                $filters[] = "correo LIKE ?";
+                $busqueda_param = "%" . $busqueda . "%";
+                $params[] = &$busqueda_param;
+                $types .= "s";
+                break;
         }
-        $busqueda_param = "%" . $busqueda . "%";
-        $params[] = &$busqueda_param;
-        $params[] = &$busqueda_param;
-        $types .= "ss";
+    }
+
+    if ($filters) {
+        $query .= " WHERE " . implode(" AND ", $filters);
     }
 
     $query .= " LIMIT ? OFFSET ?";
@@ -34,52 +56,57 @@ function obtenerUsuarios($clasificacion = null, $busqueda = null, $offset = 0, $
     $params[] = &$offset;
     $types .= "ii";
 
-    // Preparar y ejecutar la consulta
     $stmt = $conn->prepare($query);
     if ($types) {
         $stmt->bind_param($types, ...$params);
     }
 
     $stmt->execute();
-    $result = $stmt->get_result();
-
-    $usuarios = [];
-    while ($row = $result->fetch_assoc()) {
-        $usuarios[] = $row;
-    }
-    return $usuarios;
+    return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 }
 
-// Obtener el total de usuarios para la paginación
-function contarUsuarios($clasificacion = null, $busqueda = null)
+// Función para contar el total de usuarios (para la paginación)
+function contarUsuarios($clasificacion = null, $tipo_busqueda = 'nombre', $busqueda = null)
 {
     global $conn;
 
     $query = "SELECT COUNT(*) as total FROM Usuarios";
     $params = [];
     $types = "";
+    $filters = [];
 
-    // Filtro de clasificación
     if ($clasificacion) {
-        $query .= " WHERE clasificacion = ?";
+        $filters[] = "clasificacion = ?";
         $params[] = &$clasificacion;
         $types .= "s";
     }
 
-    // Condición de búsqueda
     if ($busqueda) {
-        if ($clasificacion) {
-            $query .= " AND (nombre_usuario LIKE ? OR correo LIKE ?)";
-        } else {
-            $query .= " WHERE (nombre_usuario LIKE ? OR correo LIKE ?)";
+        switch ($tipo_busqueda) {
+            case 'id':
+                $filters[] = "id_usuario = ?";
+                $params[] = &$busqueda;
+                $types .= "i";
+                break;
+            case 'nombre':
+                $filters[] = "nombre_usuario LIKE ?";
+                $busqueda_param = "%" . $busqueda . "%";
+                $params[] = &$busqueda_param;
+                $types .= "s";
+                break;
+            case 'correo':
+                $filters[] = "correo LIKE ?";
+                $busqueda_param = "%" . $busqueda . "%";
+                $params[] = &$busqueda_param;
+                $types .= "s";
+                break;
         }
-        $busqueda_param = "%" . $busqueda . "%";
-        $params[] = &$busqueda_param;
-        $params[] = &$busqueda_param;
-        $types .= "ss";
     }
 
-    // Preparar y ejecutar la consulta
+    if ($filters) {
+        $query .= " WHERE " . implode(" AND ", $filters);
+    }
+
     $stmt = $conn->prepare($query);
     if ($types) {
         $stmt->bind_param($types, ...$params);
@@ -87,27 +114,19 @@ function contarUsuarios($clasificacion = null, $busqueda = null)
 
     $stmt->execute();
     $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
-    return $row['total'];
+    return $result->fetch_assoc()['total'];
 }
 
-// Parámetros de paginación
-$limit = 10;
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$offset = ($page - 1) * $limit;
-
-$clasificacion = $_GET['clasificacion'] ?? null;
-$busqueda = $_GET['busqueda'] ?? null;
-$totalUsuarios = contarUsuarios($clasificacion, $busqueda);
+// Obtener los usuarios y el total para la paginación
+$totalUsuarios = contarUsuarios($clasificacion, $tipo_busqueda, $busqueda);
 $totalPaginas = ceil($totalUsuarios / $limit);
-
-$usuarios = obtenerUsuarios($clasificacion, $busqueda, $offset, $limit);
+$usuarios = obtenerUsuarios($clasificacion, $tipo_busqueda, $busqueda, $offset, $limit);
 ?>
 
 <!-- Renderizado de usuarios -->
 <?php foreach ($usuarios as $usuario): ?>
     <tr>
-        <td><img src=<?= htmlspecialchars($usuario['foto_perfil']) ?> alt=<?= htmlspecialchars($usuario['nombre_usuario']) ?> width="50"></td>
+        <td><img src="<?= htmlspecialchars($usuario['foto_perfil']) ?>" alt="<?= htmlspecialchars($usuario['nombre_usuario']) ?>" width="50"></td>
         <td><?= htmlspecialchars($usuario['id_usuario']) ?></td>
         <td><?= htmlspecialchars($usuario['nombre_usuario']) ?></td>
         <td><?= htmlspecialchars($usuario['correo']) ?></td>
@@ -116,7 +135,6 @@ $usuarios = obtenerUsuarios($clasificacion, $busqueda, $offset, $limit);
         <td><?= htmlspecialchars($usuario['fecha_actualizacion']) ?></td>
         <td>
             <button class="edit-btn" data-id="<?= $usuario['id_usuario'] ?>">Editar</button>
-            <button class="delete-btn" onclick="confirmarBorrado(<?= $usuario['id_usuario'] ?>)">Borrar</button>
         </td>
     </tr>
 <?php endforeach; ?>

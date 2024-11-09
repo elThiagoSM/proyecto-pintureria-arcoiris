@@ -109,13 +109,13 @@ $productos = obtenerProductos($categoria, $busqueda, $offset, $limit);
 <!-- Renderizado de productos -->
 <?php foreach ($productos as $producto): ?>
     <tr>
-        <td><img src="<?= $producto['imagen'] ?>" alt="Producto" width="50"></td>
+        <td><img src="<?= $producto['imagen'] ?>" alt="<?= htmlspecialchars($producto['nombre']) ?>" width="50"></td>
         <td><?= htmlspecialchars($producto['nombre']) ?></td>
         <td><?= htmlspecialchars($producto['descripcion']) ?></td>
         <td><?= number_format($producto['precio'], 2) ?></td>
         <td><?= htmlspecialchars($producto['stock_cantidad']) ?></td>
         <td>
-            <button class="edit-btn" data-id="<?= $producto['id_producto'] ?>">Editar</button>
+            <button class="edit-btn" onclick="window.location.href='editProduct.php?id_producto=<?= $producto['id_producto'] ?>'">Editar</button>
             <button class="delete-btn" onclick="confirmarBorrado(<?= $producto['id_producto'] ?>)">Borrar</button>
         </td>
     </tr>

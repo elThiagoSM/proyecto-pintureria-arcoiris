@@ -19,6 +19,7 @@
         <a href="users.php" class="menu-item">Clientes / Usuarios</a>
         <a href="products.php" class="menu-item">Productos</a>
         <a href="suppliers.php" class="menu-item">Proveedores</a>
+        <a href="colorPalette.php" class="menu-item">Paleta de colores</a>
         <a href="sales.php" class="menu-item">Ventas</a>
 
         <div class="section">ESTADÍSTICAS</div>

@@ -69,10 +69,13 @@ if (isset($_COOKIE['id_usuario']) && isset($_COOKIE['nombre_usuario']) && isset(
                 <p>Producto: <?php echo isset($_GET['nombre_producto']) ? htmlspecialchars($_GET['nombre_producto']) : 'N/A'; ?></p>
                 <p>Monto total: $<?php echo isset($_GET['monto_total']) ? htmlspecialchars($_GET['monto_total']) : 'N/A'; ?></p>
                 <p>ID Producto: <?php echo isset($_GET['id_producto']) ? htmlspecialchars($_GET['id_producto']) : 'N/A'; ?></p>
+                <p>Cantidad: <?php echo isset($_GET['cantidad']) ? htmlspecialchars($_GET['cantidad']) : 'N/A'; ?></p> <!-- Mostrar la cantidad -->
 
                 <!-- Campos ocultos para pasar los datos por POST -->
                 <input type="hidden" name="id_producto" value="<?php echo isset($_GET['id_producto']) ? (int)$_GET['id_producto'] : ''; ?>">
                 <input type="hidden" name="monto_total" value="<?php echo isset($_GET['monto_total']) ? (float)$_GET['monto_total'] : ''; ?>">
+                <input type="hidden" name="cantidad" value="<?php echo isset($_GET['cantidad']) ? (int)$_GET['cantidad'] : ''; ?>"> <!-- Nuevo campo para cantidad -->
+
 
                 <button type="submit" class="btn-pago">Procesar Pago</button>
             </form>

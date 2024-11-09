@@ -3,7 +3,6 @@ session_start();
 
 // Verificar si el usuario ha iniciado sesión y si es un administrador
 if (!isset($_SESSION['id_usuario']) || $_SESSION['clasificacion'] !== 'Administrador') {
-    // Si no es administrador o no está autenticado, redirigir al inicio de sesión
     header("Location: loginAdmin.php");
     exit();
 }
@@ -33,7 +32,13 @@ if (!isset($_SESSION['id_usuario']) || $_SESSION['clasificacion'] !== 'Administr
             <div class="top-bar">
                 <button class="active">Lista de Proveedores</button>
                 <div class="search-container">
-                    <input type="text" id="search-input" placeholder="Buscar:" class="search-bar">
+                    <select id="search-type" onchange="toggleSearchInput()">
+                        <option value="id">Buscar por ID</option>
+                        <option value="nombre">Buscar por Nombre</option>
+                        <option value="telefono">Buscar por Teléfono</option>
+                        <option value="correo">Buscar por Correo</option>
+                    </select>
+                    <input type="text" id="search-input" placeholder="Buscar..." class="search-bar">
                     <button onclick="buscarProveedor()">Buscar</button>
                 </div>
             </div>
@@ -43,14 +48,21 @@ if (!isset($_SESSION['id_usuario']) || $_SESSION['clasificacion'] !== 'Administr
             </div>
 
             <script>
+                function toggleSearchInput() {
+                    const searchType = document.getElementById('search-type').value;
+                    document.getElementById('search-input').placeholder = `Buscar por ${searchType.charAt(0).toUpperCase() + searchType.slice(1)}`;
+                }
+
                 function buscarProveedor() {
-                    const busqueda = document.getElementById('search-input').value;
+                    const searchType = document.getElementById('search-type').value;
+                    const searchValue = document.getElementById('search-input').value;
                     const url = new URL(window.location.href);
-                    url.searchParams.set('busqueda', busqueda);
+
+                    url.searchParams.set('tipo_busqueda', searchType);
+                    url.searchParams.set('busqueda', searchValue);
                     window.location.href = url;
                 }
 
-                // Función para confirmar borrado
                 function confirmarBorrado(idProveedor) {
                     document.getElementById('confirm-delete').style.display = 'block';
                     document.getElementById('delete-supplier-id').value = idProveedor;
@@ -60,7 +72,6 @@ if (!isset($_SESSION['id_usuario']) || $_SESSION['clasificacion'] !== 'Administr
                     document.getElementById('confirm-delete').style.display = 'none';
                 }
 
-                // Nueva función para redirigir a newSuppliers.php
                 function redirigirANuevoProveedor() {
                     window.location.href = 'newSuppliers.php';
                 }
@@ -97,13 +108,13 @@ if (!isset($_SESSION['id_usuario']) || $_SESSION['clasificacion'] !== 'Administr
 
                 <div class="pagination">
                     <?php if ($page > 1): ?>
-                        <a href="?page=<?= $page - 1 ?>&busqueda=<?= $busqueda ?>">Anterior</a>
+                        <a href="?page=<?= $page - 1 ?>&tipo_busqueda=<?= $tipo_busqueda ?>&busqueda=<?= $busqueda ?>">Anterior</a>
                     <?php endif; ?>
 
                     <span>Página <?= $page ?> de <?= $totalPaginas ?></span>
 
                     <?php if ($page < $totalPaginas): ?>
-                        <a href="?page=<?= $page + 1 ?>&busqueda=<?= $busqueda ?>">Siguiente</a>
+                        <a href="?page=<?= $page + 1 ?>&tipo_busqueda=<?= $tipo_busqueda ?>&busqueda=<?= $busqueda ?>">Siguiente</a>
                     <?php endif; ?>
                 </div>
             </div>
