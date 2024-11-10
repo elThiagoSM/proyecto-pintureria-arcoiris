@@ -2,15 +2,16 @@
 include '../database/database.php';
 session_start();
 
-// Verificar si el usuario está logueado
-if (!isset($_COOKIE['id_usuario'])) {
-    header("Location: login.php");
+// Verificar si el usuario está logueado usando la sesión
+if (!isset($_SESSION['id_usuario'])) {
+    header("Location: ../login.php");
     exit();
 }
 
-$id_usuario = $_COOKIE['id_usuario'];
+// Obtener el ID del usuario desde la sesión
+$id_usuario = $_SESSION['id_usuario'];
 
-// Sanitizar y validar los datos recibidos
+// Sanitizar y validar los datos recibidos del formulario
 $nombre_usuario = isset($_POST['nombre_usuario']) ? htmlspecialchars($_POST['nombre_usuario']) : null;
 $direccion = isset($_POST['direccion']) ? htmlspecialchars($_POST['direccion']) : null;
 $datos_contacto = isset($_POST['datos_contacto']) ? htmlspecialchars($_POST['datos_contacto']) : null;
@@ -18,7 +19,7 @@ $fecha_nacimiento = isset($_POST['fecha_nacimiento']) ? htmlspecialchars($_POST[
 $foto_perfil = $_FILES['foto_perfil'];
 
 // Procesar la subida de la foto de perfil si hay un archivo seleccionado
-$target_dir = "uploads/profile_pictures/";
+$target_dir = "../uploads/profile_pictures/"; // Asegúrate de que esta carpeta exista y tenga permisos de escritura
 $profile_picture_path = '';
 
 if ($foto_perfil && $foto_perfil['error'] === UPLOAD_ERR_OK) {
@@ -46,5 +47,6 @@ $params[] = $id_usuario;
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
 
+// Redirigir con un mensaje de éxito
 header("Location: ../userProfile.php?success=Perfil actualizado exitosamente");
 exit();

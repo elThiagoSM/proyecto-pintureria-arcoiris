@@ -1,7 +1,7 @@
 <?php
-session_start();
-
-if (!isset($_SESSION['id_usuario']) || $_SESSION['clasificacion'] !== 'Administrador') {
+// Verificar si las cookies están configuradas y si el usuario es un administrador
+if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrador') {
+    // Si no es administrador o no está autenticado, redirigir al inicio de sesión
     header("Location: loginAdmin.php");
     exit();
 }

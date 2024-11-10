@@ -17,7 +17,7 @@
       <div class="logo">
         <a href="index.php">
           <img
-            src="https://images.vexels.com/media/users/3/142789/isolated/preview/2bfb04ad814c4995f0c537c68db5cd0b-logotipo-de-c-rculo-de-remolinos-multicolor.png"
+            src="./assets/imgs/logo-pintureria-arcoiris/logo-pintureria-arcoiris.png"
             alt="Logo Pinturería Arcoiris" />
         </a>
       </div>
@@ -38,16 +38,16 @@
 
       <div class="action-buttons">
         <?php
-        // Verificar si las cookies de sesión están configuradas
-        if (isset($_COOKIE['nombre_usuario']) && isset($_COOKIE['correo']) && isset($_COOKIE['clasificacion'])) {
-          // Si las cookies están, redirigir al perfil de usuario
+        // Verificar si el usuario ha iniciado sesión usando variables de sesión
+        if (isset($_SESSION['nombre_usuario'])) {
+          // Si la sesión está activa, mostrar el perfil de usuario
           echo '<a href="userProfile.php">
                     <button class="icon-button">
                       <i class="fas fa-user"></i>
                     </button>
                   </a>';
         } else {
-          // Si no hay cookies redirigir al login
+          // Si no hay sesión activa, mostrar el botón de login
           echo '<a href="login.php">
                     <button class="icon-button">
                       <i class="fas fa-user"></i>

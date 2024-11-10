@@ -1,6 +1,5 @@
 <?php
 include '../../database/database.php'; // Conexión a la base de datos
-session_start();
 
 // Obtener los datos del formulario
 $nombre_usuario = $_POST['nombre_usuario'];
@@ -18,13 +17,13 @@ if ($result->num_rows > 0) {
 
     // Verificar contraseña usando el hash almacenado
     if (password_verify($contraseña, $user['contraseña'])) {
-        // Iniciar sesión y guardar datos del usuario
-        $_SESSION['id_usuario'] = $user['id_usuario'];
-        $_SESSION['nombre_usuario'] = $user['nombre_usuario'];
-        $_SESSION['correo'] = $user['correo'];
-        $_SESSION['clasificacion'] = $user['clasificacion'];
-        $_SESSION['fecha_ingreso'] = $user['fecha_ingreso'];
-        $_SESSION['foto_perfil'] = $user['foto_perfil'];
+        // Configurar cookies que solo existen mientras la pestaña esté abierta
+        setcookie("id_usuario", $user['id_usuario'], 0, "/");
+        setcookie("nombre_usuario", $user['nombre_usuario'], 0, "/");
+        setcookie("correo", $user['correo'], 0, "/");
+        setcookie("clasificacion", $user['clasificacion'], 0, "/");
+        setcookie("fecha_ingreso", $user['fecha_ingreso'], 0, "/");
+        setcookie("foto_perfil", $user['foto_perfil'], 0, "/");
 
         header("Location: ../dashboard.php");
         exit();

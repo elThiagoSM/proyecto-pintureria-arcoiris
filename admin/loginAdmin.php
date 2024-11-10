@@ -4,23 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entrar al panel de admin</title>
+    <title>Panel de Administración - Inicio de Sesión</title>
     <link rel="stylesheet" href="./styles/loginAdminStyles.css">
 </head>
 
 <body>
     <div class="login-container">
-        <h2>Inicio de sesión - Administrador</h2>
+        <h1>Panel de Administración</h1>
         <form action="./codes/codeLoginAdmin.php" method="POST">
-            <label for="nombre_usuario">Nombre de usuario:</label>
-            <input type="text" id="nombre_usuario" name="nombre_usuario" required>
-            <br><br>
+            <div class="form-group">
+                <input placeholder="Nombre de usuario" type="text" id="nombre_usuario" name="nombre_usuario" required>
+            </div>
 
-            <label for="contraseña">Contraseña:</label>
-            <input type="password" id="contraseña" name="contraseña" required>
-            <br><br>
+            <div class="form-group">
+                <input placeholder="Contraseña" type="password" id="contraseña" name="contraseña" required>
+            </div>
 
-            <input type="submit" value="Iniciar Sesión">
+            <button type="submit">Iniciar Sesión</button>
         </form>
     </div>
 </body>

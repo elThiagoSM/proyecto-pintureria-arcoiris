@@ -1,17 +1,20 @@
 <?php
-// Verificar si las cookies están configuradas
-if (isset($_COOKIE['id_usuario']) && isset($_COOKIE['nombre_usuario']) && isset($_COOKIE['correo']) && isset($_COOKIE['clasificacion'])) {
-  // Obtener los valores desde las cookies
-  $id_usuario = $_COOKIE['id_usuario'];
-  $nombre_usuario = $_COOKIE['nombre_usuario'];
-  $correo = $_COOKIE['correo'];
-  $clasificacion = $_COOKIE['clasificacion'];
-  $direccion = isset($_COOKIE['direccion']) ? $_COOKIE['direccion'] : '';
-  $datos_contacto = isset($_COOKIE['datos_contacto']) ? $_COOKIE['datos_contacto'] : '';
-  $fecha_nacimiento = isset($_COOKIE['fecha_nacimiento']) ? $_COOKIE['fecha_nacimiento'] : '';
-  $cedula = isset($_COOKIE['cedula']) ? $_COOKIE['cedula'] : '';
-  $foto_perfil = isset($_COOKIE['foto_perfil']) ? $_COOKIE['foto_perfil'] : '';
+session_start();
+
+// Verificar si la sesión del usuario está configurada
+if (isset($_SESSION['id_usuario']) && isset($_SESSION['nombre_usuario']) && isset($_SESSION['correo']) && isset($_SESSION['clasificacion'])) {
+  // Obtener los valores desde la sesión
+  $id_usuario = $_SESSION['id_usuario'];
+  $nombre_usuario = $_SESSION['nombre_usuario'];
+  $correo = $_SESSION['correo'];
+  $clasificacion = $_SESSION['clasificacion'];
+  $direccion = isset($_SESSION['direccion']) ? $_SESSION['direccion'] : '';
+  $datos_contacto = isset($_SESSION['datos_contacto']) ? $_SESSION['datos_contacto'] : '';
+  $fecha_nacimiento = isset($_SESSION['fecha_nacimiento']) ? $_SESSION['fecha_nacimiento'] : '';
+  $cedula = isset($_SESSION['cedula']) ? $_SESSION['cedula'] : '';
+  $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : '';
 } else {
+  // Si no hay sesión activa, redirigir al usuario a la página de inicio de sesión
   header("Location: login.php");
   exit();
 }
@@ -70,7 +73,7 @@ if (isset($_COOKIE['id_usuario']) && isset($_COOKIE['nombre_usuario']) && isset(
         <div class="action-buttons">
           <button class="btn" type="submit">Guardar</button>
           <button class="btn">Cambiar contraseña</button>
-          <form action="./codes/codeLogout.php" method="post">
+          <form action="codes/codeLogout.php" method="post">
             <button class="btn" type="submit">Salir</button>
           </form>
         </div>

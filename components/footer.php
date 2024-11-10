@@ -16,14 +16,17 @@
     <div class="footer-container">
       <div class="footer-section logo-and-social">
         <div class="footer-logo">
-          <p>LOGO</p>
+          <img
+            src="./assets/imgs/logo-pintureria-arcoiris/logo-pintureria-arcoiris.png"
+            alt="Logo Pinturería Arcoiris" />
+          </a>
         </div>
         <div class="footer-social">
           <h4>Síguenos</h4>
           <div class="social-icons">
-            <a href="https://www.facebook.com" target="_blank">
+            <a href="https://www.facebook.com/pintureria-arcoiris" target="_blank">
               <i class="fab fa-facebook"></i></a>
-            <a href="https://www.instagram.com" target="_blank">
+            <a href="https://www.instagram.com/pintureria-arcoiris" target="_blank">
               <i class="fab fa-instagram"></i></a>
           </div>
         </div>
@@ -37,14 +40,16 @@
         </div>
         <div class="footer-payment">
           <h4>Medios de Pago</h4>
+          <p>Transferencia</p>
+          <p>Efectivo</p>
         </div>
       </div>
 
       <div class="footer-section footer-contact-help">
         <div class="footer-contact">
           <h4>Contacto</h4>
-          <p>Atención telefónica: +598 99 123 456</p>
-          <p>Correo electrónico: pintureriaarcoiris@gmail.com</p>
+          <a href="tel:+598 99 123 456">+598 99 123 456</a>
+          <a href="mailto:pintureriaarcoiris@gmail.com">pintureriaarcoiris@gmail.com</a>
         </div>
         <div class="footer-help">
           <h4>Ayuda</h4>

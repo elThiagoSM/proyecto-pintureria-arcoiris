@@ -9,47 +9,73 @@
 </head>
 
 <body>
-  <?php include 'components/header.php'; ?>
+  <?php
+  session_start();
 
-  <div class="register">
-    <div class="register-container">
+  // Mostrar mensaje de error o éxito si existe
+  if (isset($_SESSION['error'])) {
+    echo "<script>alert('" . $_SESSION['error'] . "');</script>";
+    unset($_SESSION['error']); // Eliminar mensaje después de mostrarlo
+  }
+  if (isset($_SESSION['success'])) {
+    echo "<script>alert('" . $_SESSION['success'] . "');</script>";
+    unset($_SESSION['success']); // Eliminar mensaje después de mostrarlo
+  }
+  ?>
+
+  <div class="login">
+    <div class="login-container">
+
       <h2>Registrarse</h2>
-      <form action="./codes/codeRegistro.php" method="POST">
+      <form action="./codes/codeRegister.php" method="POST" onsubmit="return validarContraseñas();">
         <div class="form-group">
-          <label for="login_username">Usuario</label>
-          <input type="text" id="login_username" name="nombre_usuario" required>
+          <input placeholder="Nombre Completo" type="text" id="nombre_cliente" name="nombre_cliente" required>
         </div>
         <div class="form-group">
-          <label for="registra_correo">Correo electrónico</label>
-          <input type="email" id="correo" name="correo" required>
+          <input placeholder="Usuario" type="text" id="login_username" name="nombre_usuario" required>
         </div>
         <div class="form-group">
-          <label for="cedula">Cédula</label>
-          <input type="text" id="cedula" name="cedula" required>
+          <input placeholder="Correo electrónico" type="email" id="correo" name="correo" required>
+        </div>
+        <div class="form-group">
+          <input placeholder="Cédula" type="text" id="cedula" name="cedula" required>
         </div>
         <div class="form-group">
           <label for="fecha_nacimiento">Fecha de Nacimiento</label>
-          <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
+          <input placeholder="Fecha de Nacimiento" type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
         </div>
         <div class="form-group">
-          <label for="direccion">Dirección</label>
-          <input type="text" id="direccion" name="direccion">
+          <input placeholder="Dirección" type="text" id="direccion" name="direccion">
         </div>
         <div class="form-group">
-          <label for="datos_contacto">Datos de Contacto</label>
-          <input type="text" id="datos_contacto" name="datos_contacto">
+          <input placeholder="Datos de Contacto" type="text" id="datos_contacto" name="datos_contacto">
         </div>
         <div class="form-group">
-          <label for="login_password">Contraseña</label>
-          <input type="password" id="login_password" name="contraseña" required>
+          <input placeholder="Contraseña" type="password" id="login_password" name="contraseña" required>
+        </div>
+        <div class="form-group">
+          <input placeholder="Confirmar Contraseña" type="password" id="confirm_password" name="confirmar_contraseña" required>
         </div>
         <button type="submit" class="btn">Registrarse</button>
       </form>
       <p>¿Ya tienes una cuenta? <a href="login.php">Inicia sesión aquí</a></p>
+      <a href="index.php">Volver a la pagina principal</a>
+
     </div>
   </div>
 
-  <?php include 'components/footer.php'; ?>
+  <script>
+    function validarContraseñas() {
+      const password = document.getElementById("login_password").value;
+      const confirmPassword = document.getElementById("confirm_password").value;
+
+      if (password !== confirmPassword) {
+        alert("Las contraseñas no coinciden. Por favor, inténtalo de nuevo.");
+        return false;
+      }
+      return true;
+    }
+  </script>
 </body>
 
 </html>

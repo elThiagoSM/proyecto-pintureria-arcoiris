@@ -22,46 +22,46 @@ body {
   padding: 20px;
 }
 
-h1 {
+.checkout-container h1 {
   font-size: 1.5em;
   color: #68092b;
 }
 
-form {
+.checkout-container form {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-fieldset {
+.checkout-container fieldset {
   border: none;
   margin: 0;
   padding: 0;
 }
 
-legend {
+.checkout-container legend {
   font-weight: bold;
   color: #68092b;
   margin-bottom: 5px;
 }
 
-label,
-input,
-button {
+.checkout-container label,
+.checkout-container input,
+.checkout-container button {
   font-size: 1em;
   margin: 5px 0;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="tel"] {
+.checkout-container input[type="text"],
+.checkout-container input[type="email"],
+.checkout-container input[type="tel"] {
   width: 100%;
   padding: 8px;
   border: 1px solid #68092b;
   border-radius: 4px;
 }
 
-button {
+.checkout-container button {
   background-color: #68092b;
   color: white;
   padding: 10px;
@@ -71,6 +71,6 @@ button {
   text-align: center;
 }
 
-button:hover {
+.checkout-container button:hover {
   background-color: #1b4e87;
 }

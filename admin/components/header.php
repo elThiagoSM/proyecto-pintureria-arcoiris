@@ -10,10 +10,9 @@
 
 <body>
     <div class="header">
-
         <a class="linkeable" href="adminProfile.php">
-            <img src="<?php echo isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'https://via.placeholder.com/30'; ?>" alt="Imagen de usuario">
-            <span class="username"><?php echo isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario'] : 'Usuario Invitado'; ?></span>
+            <img src="<?php echo isset($_COOKIE['foto_perfil']) ? $_COOKIE['foto_perfil'] : 'https://via.placeholder.com/30'; ?>" alt="Imagen de usuario">
+            <span class="username"><?php echo isset($_COOKIE['nombre_usuario']) ? $_COOKIE['nombre_usuario'] : 'Usuario Invitado'; ?></span>
         </a>
     </div>
 </body>

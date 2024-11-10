@@ -15,6 +15,10 @@ body {
   padding: 20px 10px;
 }
 
+.footer-logo img {
+  height: 50px;
+}
+
 .footer-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -44,6 +48,10 @@ body {
   margin-top: 10px;
 }
 
+.footer-social h4 {
+  margin-bottom: 10px;
+}
+
 .social-icons a {
   font-size: 24px;
   color: #fff;
@@ -55,7 +63,14 @@ body {
 .footer-payment,
 .footer-contact,
 .footer-help {
+  display: flex;
+  flex-direction: column;
   margin: 10px 0;
+}
+
+.footer-contact a {
+  text-decoration: none;
+  color: #fff;
 }
 
 .footer-help ul {
