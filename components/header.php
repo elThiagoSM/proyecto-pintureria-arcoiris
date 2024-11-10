@@ -6,9 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Header</title>
   <link rel="stylesheet" href="css/header.css" />
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </head>
 
 <body>
@@ -16,9 +14,7 @@
     <div class="header-container">
       <div class="logo">
         <a href="index.php">
-          <img
-            src="./assets/imgs/logo-pintureria-arcoiris/logo-pintureria-arcoiris.png"
-            alt="Logo Pinturería Arcoiris" />
+          <img src="./assets/imgs/logo-pintureria-arcoiris/logo-pintureria-arcoiris.png" alt="Logo Pinturería Arcoiris" />
         </a>
       </div>
 
@@ -37,27 +33,22 @@
       </form>
 
       <div class="action-buttons">
-        <?php
-        // Verificar si el usuario ha iniciado sesión usando variables de sesión
-        if (isset($_SESSION['nombre_usuario'])) {
-          // Si la sesión está activa, mostrar el perfil de usuario
-          echo '<a href="userProfile.php">
-                    <button class="icon-button">
-                      <i class="fas fa-user"></i>
-                    </button>
-                  </a>';
-        } else {
-          // Si no hay sesión activa, mostrar el botón de login
-          echo '<a href="login.php">
-                    <button class="icon-button">
-                      <i class="fas fa-user"></i>
-                    </button>
-                  </a>';
-        }
-        ?>
-        <button class="icon-button">
-          <i class="fas fa-shopping-cart"></i>
-        </button>
+        <?php if (isset($_SESSION['nombre_usuario'])): ?>
+          <a href="userProfile.php">
+            <button class="icon-button"><i class="fas fa-user"></i></button>
+          </a>
+        <?php else: ?>
+          <a href="login.php">
+            <button class="icon-button"><i class="fas fa-user"></i></button>
+          </a>
+        <?php endif; ?>
+
+        <!-- Botón del carrito, que ahora lleva a cart.php -->
+        <a href="cart.php">
+          <button class="icon-button">
+            <i class="fas fa-shopping-cart"></i>
+          </button>
+        </a>
       </div>
     </div>
   </header>

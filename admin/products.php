@@ -24,6 +24,10 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
         <?php include './components/header.php'; ?>
 
         <div class="products-content">
+            <div class="products-header">
+                <h1>Administrador de Productos</h1>
+            </div>
+
             <div class="top-bar">
                 <button class="<?= !isset($_GET['categoria']) ? 'active' : '' ?>" onclick="filtrarCategoria('')">Catálogo de productos</button>
                 <div class="search-container">

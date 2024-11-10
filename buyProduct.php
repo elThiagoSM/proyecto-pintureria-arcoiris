@@ -11,13 +11,10 @@
 <body>
     <?php
     include 'components/header.php';
-    include './database/database.php'; // Conexion a la base de datos
+    include './database/database.php';
 
-    // Verifica si se ha recibido un id_producto
     if (isset($_GET['id_producto'])) {
         $id_producto = $_GET['id_producto'];
-
-        // Consulta para obtener detalles del producto y sus relaciones
         $query = "SELECT p.imagen, p.nombre, p.descripcion, p.precio, p.stock_cantidad, p.marca, p.fecha_ingreso, 
                          pr.nombre AS proveedor_nombre,
                          pt.litros, pt.funcion_aplicacion, pt.terminacion, pc.nombre_color
@@ -32,7 +29,6 @@
         $stmt->execute();
         $result = $stmt->get_result();
 
-        // Verifica si se encontró el producto
         if ($result->num_rows > 0) {
             $producto = $result->fetch_assoc();
     ?>
@@ -42,7 +38,6 @@
                     <div class="image-container">
                         <img src="<?php echo $producto['imagen']; ?>" alt="<?php echo $producto['descripcion']; ?>">
                     </div>
-
                     <div class="details">
                         <div class="details-text">
                             <h2><?php echo $producto['nombre']; ?></h2>
@@ -53,14 +48,11 @@
                             <p>Proveedor: <?php echo $producto['proveedor_nombre']; ?></p>
                             <p>Fecha de ingreso: <?php echo $producto['fecha_ingreso']; ?></p>
 
-                            <!-- Menú desplegable para seleccionar cantidad de productos -->
                             <label for="cantidad">Cantidad a comprar:</label>
                             <select id="cantidad" name="cantidad">
-                                <?php
-                                for ($i = 1; $i <= $producto['stock_cantidad']; $i++) {
-                                    echo "<option value='$i'>$i</option>";
-                                }
-                                ?>
+                                <?php for ($i = 1; $i <= $producto['stock_cantidad']; $i++) { ?>
+                                    <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                <?php } ?>
                             </select>
 
                             <?php if ($producto['litros'] !== null) { ?>
@@ -71,10 +63,9 @@
                                 <p>Color: <?php echo $producto['nombre_color']; ?></p>
                             <?php } ?>
                         </div>
-
                         <div class="buttons">
                             <button class="buy" onclick="comprarAhora(<?php echo $producto['precio']; ?>)">COMPRAR AHORA</button>
-                            <button class="add-to-cart">AGREGAR AL CARRITO</button>
+                            <button class="add-to-cart" onclick="agregarAlCarrito()">AGREGAR AL CARRITO</button>
                         </div>
                     </div>
                 </div>
@@ -86,14 +77,38 @@
                     const montoTotal = precioUnitario * cantidad;
                     window.location.href = `checkout.php?id_producto=<?php echo $id_producto; ?>&nombre_producto=<?php echo urlencode($producto['nombre']); ?>&monto_total=${montoTotal}&cantidad=${cantidad}`;
                 }
+
+                function agregarAlCarrito() {
+                    const id_producto = <?php echo json_encode($id_producto); ?>;
+                    const nombre = <?php echo json_encode($producto['nombre']); ?>;
+                    const precio = <?php echo json_encode($producto['precio']); ?>;
+                    const cantidad = document.getElementById('cantidad').value;
+
+                    const producto = {
+                        id: id_producto,
+                        nombre: nombre,
+                        precio: precio,
+                        cantidad: parseInt(cantidad)
+                    };
+
+                    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+                    const index = carrito.findIndex(item => item.id === producto.id);
+
+                    if (index > -1) {
+                        carrito[index].cantidad += producto.cantidad;
+                    } else {
+                        carrito.push(producto);
+                    }
+
+                    localStorage.setItem('carrito', JSON.stringify(carrito));
+                    alert('Producto agregado al carrito');
+                }
             </script>
 
     <?php
         } else {
             echo "<p>Producto no encontrado.</p>";
         }
-
-        // Cierra la sentencia y la conexion
         $stmt->close();
     } else {
         echo "<p>ID de producto no especificado.</p>";

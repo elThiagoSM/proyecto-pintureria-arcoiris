@@ -5,6 +5,9 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
     header("Location: loginAdmin.php");
     exit();
 }
+
+// Inicializar la variable $clasificacion
+$clasificacion = $_GET['clasificacion'] ?? 'Cliente';
 ?>
 
 <!DOCTYPE html>
@@ -24,6 +27,10 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
         <?php include './components/header.php'; ?>
 
         <div class="users-content">
+            <div class="users-header">
+                <h1>Administrador de Usuarios</h1>
+            </div>
+
             <div class="top-bar">
                 <button class="active">Lista de Usuarios</button>
                 <div class="search-container">
@@ -38,7 +45,6 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
             </div>
 
             <div class="categories">
-                <button class="<?= (!isset($_GET['clasificacion']) || $_GET['clasificacion'] == '') ? 'active' : '' ?>" onclick="filtrarClasificacion('')">Todos</button>
                 <button class="<?= (isset($_GET['clasificacion']) && $_GET['clasificacion'] == 'Cliente') ? 'active' : '' ?>" onclick="filtrarClasificacion('Cliente')">Clientes</button>
                 <button class="<?= (isset($_GET['clasificacion']) && $_GET['clasificacion'] == 'Administrador') ? 'active' : '' ?>" onclick="filtrarClasificacion('Administrador')">Administradores</button>
             </div>
@@ -81,16 +87,25 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
                         <th>ID</th>
                         <th>Nombre</th>
                         <th>Correo</th>
+                        <th>Correo Verificado</th>
                         <th>Clasificación</th>
                         <th>Fecha de Ingreso</th>
                         <th>Última Actualización</th>
-                        <th>Acciones</th>
+                        <?php if ($clasificacion == 'Cliente'): ?>
+                            <th>Nombre del Cliente</th>
+                            <th>Dirección</th>
+                            <th>Datos de Contacto</th>
+                            <th>Fecha de Nacimiento</th>
+                            <th>Cédula</th>
+                        <?php endif; ?>
                     </tr>
                 </thead>
+
                 <tbody>
                     <?php include './codes/codeUsers.php'; ?>
                 </tbody>
             </table>
+
 
             <div class="footer">
                 <button onclick="redirigirANuevoAdministrador()" class="new-user">Nuevo Admin</button>

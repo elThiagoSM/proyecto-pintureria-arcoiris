@@ -49,7 +49,7 @@
         <div class="footer-contact">
           <h4>Contacto</h4>
           <a href="tel:+598 99 123 456">+598 99 123 456</a>
-          <a href="mailto:pintureriaarcoiris@gmail.com">pintureriaarcoiris@gmail.com</a>
+          <a href="pintureriaacoiris@gmail.com">pintureriaacoiris@gmail.com</a>
         </div>
         <div class="footer-help">
           <h4>Ayuda</h4>

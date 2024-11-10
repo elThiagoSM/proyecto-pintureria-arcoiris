@@ -61,6 +61,7 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
                 <thead>
                     <tr>
                         <th>ID Venta</th>
+                        <th>ID Cliente</th>
                         <th>Cliente</th>
                         <th>Producto</th>
                         <th>Cantidad</th>

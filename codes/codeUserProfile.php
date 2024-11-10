@@ -27,11 +27,13 @@ if ($foto_perfil && $foto_perfil['error'] === UPLOAD_ERR_OK) {
     $target_file = $target_dir . $file_name;
     if (move_uploaded_file($foto_perfil['tmp_name'], $target_file)) {
         $profile_picture_path = $target_file;
+        $_SESSION['foto_perfil'] = $profile_picture_path; // Actualizar en la sesión
     }
 }
 
-// Preparar la actualización en la base de datos
-$sql = "UPDATE Usuarios u JOIN Clientes c ON u.id_usuario = c.id_usuario
+// Preparar la consulta para actualizar datos
+$sql = "UPDATE usuarios u 
+        JOIN clientes c ON u.id_usuario = c.id_usuario
         SET u.nombre_usuario = ?, c.direccion = ?, c.datos_contacto = ?, c.fecha_nacimiento = ?";
 $params = [$nombre_usuario, $direccion, $datos_contacto, $fecha_nacimiento];
 
@@ -43,9 +45,23 @@ if ($profile_picture_path) {
 $sql .= " WHERE u.id_usuario = ?";
 $params[] = $id_usuario;
 
-// Ejecutar la consulta preparada
-$stmt = $pdo->prepare($sql);
-$stmt->execute($params);
+// Preparar y ejecutar la consulta con `mysqli`
+$stmt = $conn->prepare($sql);
+
+// Verificar si la consulta se preparó correctamente
+if ($stmt === false) {
+    die("Error en la preparación de la consulta: " . $conn->error);
+}
+
+// Crear los tipos para `bind_param` (todos son strings, excepto `fecha_nacimiento`)
+$types = str_repeat("s", count($params)); // Generar un string de 's' del mismo tamaño que los parámetros
+
+// Asociar los parámetros y ejecutar
+$stmt->bind_param($types, ...$params);
+$stmt->execute();
+
+// Cerrar la declaración
+$stmt->close();
 
 // Redirigir con un mensaje de éxito
 header("Location: ../userProfile.php?success=Perfil actualizado exitosamente");

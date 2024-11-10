@@ -33,9 +33,10 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
                 fetch('codes/codeUserRegistration.php')
                     .then(response => response.json())
                     .then(data => {
-                        // Extraer fechas y contar usuarios por fecha
+                        // Extraer fechas y conteos de usuarios por clasificación
                         const fechas = data.map(usuario => usuario.fecha);
-                        const conteo = data.map(usuario => usuario.conteo);
+                        const conteoClientes = data.map(usuario => usuario.cliente);
+                        const conteoAdministradores = data.map(usuario => usuario.administrador);
 
                         // Configuración del gráfico
                         const ctx = document.getElementById('usuariosChart').getContext('2d');
@@ -44,13 +45,22 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
                             data: {
                                 labels: fechas,
                                 datasets: [{
-                                    label: 'Usuarios Registrados',
-                                    data: conteo,
-                                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                                    borderColor: 'rgba(54, 162, 235, 1)',
-                                    borderWidth: 1,
-                                    fill: true
-                                }]
+                                        label: 'Clientes Registrados',
+                                        data: conteoClientes,
+                                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                        borderColor: 'rgba(75, 192, 192, 1)',
+                                        borderWidth: 1,
+                                        fill: true
+                                    },
+                                    {
+                                        label: 'Administradores Registrados',
+                                        data: conteoAdministradores,
+                                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                        borderColor: 'rgba(255, 99, 132, 1)',
+                                        borderWidth: 1,
+                                        fill: true
+                                    }
+                                ]
                             },
                             options: {
                                 scales: {
@@ -75,7 +85,7 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
                                     },
                                     title: {
                                         display: true,
-                                        text: 'Registro de Usuarios'
+                                        text: 'Registro de Usuarios por Clasificación'
                                     }
                                 }
                             }
@@ -83,6 +93,7 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
                     })
                     .catch(error => console.error('Error al cargar los datos:', error));
             </script>
+
         </div>
     </div>
 

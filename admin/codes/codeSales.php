@@ -1,5 +1,5 @@
 <?php
-include '../database/database.php'; // Conexin a la base de datos
+include '../database/database.php'; // Conexión a la base de datos
 
 // Parámetros de paginación y filtros
 $limit = 10;
@@ -15,7 +15,7 @@ function obtenerVentas($forma_de_pago = null, $fecha_venta = null, $id_venta = n
     global $conn;
 
     // Crear consulta SQL base
-    $query = "SELECT id_venta, forma_de_pago, fecha_de_venta, valor_de_venta, estado, datos_extra_notas, id_usuario, id_producto, cantidad FROM Ventas";
+    $query = "SELECT id_venta, forma_de_pago, fecha_de_venta, valor_de_venta, estado, datos_extra_notas, id_cliente, id_producto, cantidad FROM ventas";
     $params = [];
     $types = "";
     $filters = [];
@@ -65,7 +65,7 @@ function contarVentas($forma_de_pago = null, $fecha_venta = null, $id_venta = nu
 {
     global $conn;
 
-    $query = "SELECT COUNT(*) as total FROM Ventas";
+    $query = "SELECT COUNT(*) as total FROM ventas";
     $params = [];
     $types = "";
 
@@ -123,7 +123,7 @@ $ventas = obtenerVentas($forma_de_pago, $fecha_venta, $id_venta, $offset, $limit
         <td><?= htmlspecialchars($venta['valor_de_venta']) ?></td>
         <td><?= htmlspecialchars($venta['estado']) ?></td>
         <td><?= htmlspecialchars($venta['datos_extra_notas']) ?></td>
-        <td><?= htmlspecialchars($venta['id_usuario']) ?></td>
+        <td><?= htmlspecialchars($venta['id_cliente']) ?></td>
         <td><?= htmlspecialchars($venta['id_producto']) ?></td>
         <td><?= htmlspecialchars($venta['cantidad']) ?></td>
     </tr>

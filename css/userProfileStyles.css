@@ -5,7 +5,7 @@
 }
 
 body {
-  font-family: sans-serif;
+  font-family: Arial, sans-serif;
   background-color: #f4f4f9;
   color: #333;
 }
@@ -13,139 +13,123 @@ body {
 .profile {
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin: 40px 0;
-  font-size: 18px;
-  min-height: 80vh;
+  align-items: flex-start;
+  padding: 50px 0;
 }
 
 .profile-container {
-  display: flex;
-  justify-content: space-between;
-  background-color: #fff;
-  padding: 40px;
-  border: 1px solid #d8d8d8;
+  max-width: 600px;
   width: 100%;
-  max-width: 800px;
+  padding: 25px;
+  background-color: #ffffff;
   border-radius: 10px;
-  gap: 30px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.profile-picture-section {
+.profile-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profile-header h1 {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+}
+
+.user-details,
+.client-details {
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.user-details p,
+.client-details p {
+  font-size: 16px;
+  margin: 8px 0;
+  color: #555;
+}
+
+.profile-pic-wrapper {
   display: flex;
   flex-direction: column;
+  text-align: center;
   align-items: center;
-  flex: 1;
 }
 
-.user-profile-picture {
+.profile-pic {
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
-  width: 180px;
-  height: 180px;
   object-fit: cover;
-  margin-bottom: 15px;
-  border: 2px solid #d8d8d8;
+  margin-top: 15px;
+  border: 2px solid #e0e0e0;
 }
 
-.action-buttons {
+.client-details h2 {
+  font-size: 22px;
+  margin-bottom: 15px;
+  color: #333;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 5px;
+}
+
+.no-client-data {
+  text-align: center;
+  font-style: italic;
+  color: #555;
+}
+
+.btn-change-photo,
+.btn-logout,
+.btn-edit {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-decoration: none;
+  text-align: center;
+}
+
+.btn-change-photo {
+  margin-top: 10px;
+  background-color: #0a6847;
+}
+
+.btn-change-photo:hover {
+  background-color: #095b3e;
+}
+
+.btn-logout {
+  background-color: #68092b;
+}
+
+.btn-logout:hover {
+  background-color: #5d0926;
+}
+
+.btn-edit {
+  background-color: #2a69ac;
+  margin-left: 10px;
+}
+
+.btn-edit:hover {
+  background-color: #265c97;
+}
+
+/* Alinear botones al final de la sección */
+.profile-container .action-buttons {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
   gap: 10px;
-}
-
-.btn {
-  background-color: #68092b;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  font-size: 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.profile-container .btn:hover {
-  background-color: #540823;
-}
-
-.profile-details-section {
-  flex: 2;
-}
-
-.profile-details-section h2 {
-  font-size: 24px;
-  margin-bottom: 15px;
-}
-
-.user-role {
-  font-size: 0.9em;
-  color: #777;
-}
-
-.profile-details-section label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
-  font-size: 16px;
-}
-
-.profile-details-section input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #d8d8d8;
-  border-radius: 5px;
-  font-size: 16px;
-  color: #333;
-  background-color: #f9f9f9;
-}
-
-.registration-info {
-  text-align: center;
-  margin-top: 25px;
-  font-size: 16px;
-  color: #777;
-}
-
-/* Responsividad */
-@media (max-width: 768px) {
-  .profile-container {
-    flex-direction: column;
-    padding: 30px;
-  }
-
-  .user-profile-picture {
-    width: 140px;
-    height: 140px;
-  }
-
-  .profile-container .btn {
-    padding: 10px 18px;
-    font-size: 15px;
-  }
-
-  .profile-details-section h2 {
-    font-size: 22px;
-  }
-}
-
-@media (max-width: 480px) {
-  .profile-container {
-    padding: 20px;
-  }
-
-  .profile-container .btn {
-    padding: 8px 15px;
-    font-size: 14px;
-  }
-
-  .profile-details-section h2 {
-    font-size: 20px;
-  }
-
-  .registration-info {
-    font-size: 14px;
-  }
+  margin-top: 20px;
 }

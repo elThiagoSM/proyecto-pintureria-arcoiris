@@ -24,6 +24,10 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
         <?php include './components/header.php'; ?>
 
         <div class="sales-content">
+            <div class="sales-header">
+                <h1>Administrador de Ventas</h1>
+            </div>
+
             <div class="top-bar">
                 <button class="active">Lista de Ventas</button>
                 <div class="search-container">
@@ -90,7 +94,7 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
                         <th>Valor de Venta</th>
                         <th>Estado</th>
                         <th>Notas</th>
-                        <th>Usuario</th>
+                        <th>Cliente</th>
                         <th>Producto</th>
                         <th>Cantidad</th>
                     </tr>

@@ -16,6 +16,12 @@ body {
   flex-direction: column;
 }
 
+.sales-header h1 {
+  color: #444;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
 .sales-content {
   flex: 1;
   background-color: #f0f0f0;

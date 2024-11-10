@@ -6,15 +6,15 @@ function obtenerVentasEnProceso($nombre_cliente = null, $offset = 0, $limit = 10
 {
     global $conn;
     $query = "
-        SELECT Ventas.id_venta, Usuarios.nombre_usuario, Productos.nombre AS nombre_producto, Ventas.valor_de_venta , Ventas.cantidad
+        SELECT Ventas.id_venta, Clientes.id_cliente, Clientes.nombre_cliente, Productos.nombre AS nombre_producto, Ventas.valor_de_venta, Ventas.cantidad
         FROM Ventas
-        JOIN Usuarios ON Ventas.id_usuario = Usuarios.id_usuario
+        JOIN Clientes ON Ventas.id_cliente = Clientes.id_cliente
         JOIN Productos ON Ventas.id_producto = Productos.id_producto
         WHERE Ventas.estado = 'en proceso'
     ";
 
     if ($nombre_cliente) {
-        $query .= " AND Usuarios.nombre_usuario LIKE ?";
+        $query .= " AND Clientes.nombre_cliente LIKE ?";
         $nombre_cliente = "%" . $nombre_cliente . "%";
     }
 
@@ -37,17 +37,18 @@ function obtenerVentasEnProceso($nombre_cliente = null, $offset = 0, $limit = 10
     return $ventas;
 }
 
+// Contar ventas en proceso
 function contarVentasEnProceso($nombre_cliente = null)
 {
     global $conn;
     $query = "
         SELECT COUNT(*) as total FROM Ventas
-        JOIN Usuarios ON Ventas.id_usuario = Usuarios.id_usuario
+        JOIN Clientes ON Ventas.id_cliente = Clientes.id_cliente
         WHERE Ventas.estado = 'en proceso'
     ";
 
     if ($nombre_cliente) {
-        $query .= " AND Usuarios.nombre_usuario LIKE ?";
+        $query .= " AND Clientes.nombre_cliente LIKE ?";
     }
 
     $stmt = $conn->prepare($query);
@@ -63,6 +64,7 @@ function contarVentasEnProceso($nombre_cliente = null)
     return $row['total'];
 }
 
+// Confirmar o cancelar venta
 if (isset($_GET['action']) && isset($_GET['id_venta'])) {
     $idVenta = (int)$_GET['id_venta'];
     $action = $_GET['action'];
@@ -97,6 +99,7 @@ if (isset($_GET['action']) && isset($_GET['id_venta'])) {
     exit();
 }
 
+// Paginación y filtros
 $limit = 10;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
@@ -112,7 +115,8 @@ $ventasEnProceso = obtenerVentasEnProceso($nombre_cliente, $offset, $limit);
 <?php foreach ($ventasEnProceso as $venta): ?>
     <tr>
         <td><?= htmlspecialchars($venta['id_venta']) ?></td>
-        <td><?= htmlspecialchars($venta['nombre_usuario']) ?></td>
+        <td><?= htmlspecialchars($venta['id_cliente']) ?></td>
+        <td><?= htmlspecialchars($venta['nombre_cliente']) ?></td>
         <td><?= htmlspecialchars($venta['nombre_producto']) ?></td>
         <td><?= htmlspecialchars($venta['cantidad']) ?></td>
         <td><?= htmlspecialchars($venta['valor_de_venta']) ?></td>
