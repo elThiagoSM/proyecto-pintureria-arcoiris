@@ -1,16 +1,18 @@
 <?php
+// auth.php
 session_start();
 
 // Verificar si el usuario ha iniciado sesión
 if (!isset($_SESSION['id_usuario'])) {
-    // Si no ha iniciado sesión, redirigir al login
-    header("Location: login.php");
+    // Redirigir a la página de inicio de sesión si no ha iniciado sesión
+    header("Location: ../login.php?error=acceso_restringido");
     exit();
 }
 
-// Verificar si el usuario tiene el rol de cliente
-if ($_SESSION['clasificacion'] !== 'Cliente') {
-    // Si el usuario no es un cliente, redirigir a una página de error o al inicio
-    header("Location: error_no_autorizado.php");
-    exit();
-}
+// Opcional: Verificación adicional para usuarios con ciertos roles
+// Puedes agregar una verificación de rol si necesitas bloquear a algunos usuarios
+// por clasificación o tipo de usuario
+// if ($_SESSION['clasificacion'] !== 'admin') {
+//     header("Location: ../login.php?error=acceso_restringido");
+//     exit();
+// }

@@ -40,7 +40,7 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
                     </tr>
                 </thead>
                 <tbody>
-                    <?php include './codes/codeColorPalette.php'; ?>
+                    <?php include './codes/loadColorPalette.php'; ?>
                 </tbody>
             </table>
         </div>

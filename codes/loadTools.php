@@ -1,16 +1,16 @@
 <?php
 include './database/database.php';
-session_start();
 
 // Configuración de paginación
 $toolsPerPage = 10;  // Número de herramientas por página
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;  // Página actual, por defecto es 1
 $offset = ($page - 1) * $toolsPerPage;  // Calcular el desplazamiento
 
-// Consulta con LIMIT y OFFSET para la paginación
+// Consulta con LIMIT y OFFSET para la paginación, y filtrado por `mostrar = 1`
 $query = "SELECT p.id_producto, p.imagen, p.nombre, p.descripcion, p.precio 
           FROM Productos p
           INNER JOIN MiniFerreteria mf ON p.id_producto = mf.id_producto
+          WHERE p.mostrar = 1
           LIMIT ? OFFSET ?";
 
 // Prepara la consulta
@@ -36,8 +36,10 @@ if ($result->num_rows > 0) {
 
     echo '</div>';
 
-    // Consulta para contar el número total de herramientas
-    $countQuery = "SELECT COUNT(*) AS total FROM Productos p INNER JOIN MiniFerreteria mf ON p.id_producto = mf.id_producto";
+    // Consulta para contar el número total de herramientas con `mostrar = 1`
+    $countQuery = "SELECT COUNT(*) AS total FROM Productos p 
+                   INNER JOIN MiniFerreteria mf ON p.id_producto = mf.id_producto 
+                   WHERE p.mostrar = 1";
     $countResult = $conn->query($countQuery);
     $totalRows = $countResult->fetch_assoc()['total'];
     $totalPages = ceil($totalRows / $toolsPerPage);  // Calcular el número total de páginas

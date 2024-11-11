@@ -1,5 +1,4 @@
 <?php
-session_start();
 include '../database/database.php';
 
 // Recoge datos del formulario

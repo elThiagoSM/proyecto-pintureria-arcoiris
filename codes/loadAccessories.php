@@ -1,16 +1,16 @@
 <?php
 include './database/database.php';
-session_start();
 
 // Configuración de paginación
 $accessoriesPerPage = 10;  // Número de accesorios por página
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;  // Página actual, por defecto es 1
 $offset = ($page - 1) * $accessoriesPerPage;  // Calcular el desplazamiento
 
-// Consulta con LIMIT y OFFSET para la paginación
+// Consulta con LIMIT y OFFSET para la paginación, y filtrado por `mostrar = 1`
 $query = "SELECT p.id_producto, p.imagen, p.nombre, p.descripcion, p.precio 
           FROM Productos p
           INNER JOIN Accesorios a ON p.id_producto = a.id_producto
+          WHERE p.mostrar = 1
           LIMIT ? OFFSET ?";
 
 // Prepara la consulta
@@ -36,8 +36,10 @@ if ($result->num_rows > 0) {
 
     echo '</div>';
 
-    // Consulta para contar el número total de accesorios
-    $countQuery = "SELECT COUNT(*) AS total FROM Productos p INNER JOIN Accesorios a ON p.id_producto = a.id_producto";
+    // Consulta para contar el número total de accesorios con `mostrar = 1`
+    $countQuery = "SELECT COUNT(*) AS total FROM Productos p 
+                   INNER JOIN Accesorios a ON p.id_producto = a.id_producto 
+                   WHERE p.mostrar = 1";
     $countResult = $conn->query($countQuery);
     $totalRows = $countResult->fetch_assoc()['total'];
     $totalPages = ceil($totalRows / $accessoriesPerPage);  // Calcular el número total de páginas

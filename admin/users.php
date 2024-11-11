@@ -102,7 +102,7 @@ $clasificacion = $_GET['clasificacion'] ?? 'Cliente';
                 </thead>
 
                 <tbody>
-                    <?php include './codes/codeUsers.php'; ?>
+                    <?php include './codes/loadUsers.php'; ?>
                 </tbody>
             </table>
 

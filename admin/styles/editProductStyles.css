@@ -1,32 +1,70 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
+* {
   margin: 0;
-  padding: 20px;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  background-color: white;
+body {
+  height: 100%;
+  font-family: Arial, sans-serif;
+}
+
+.edit-product {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f4f4f9;
+  margin: 0;
+}
+
+.edit-product-container {
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  width: 90%;
 }
 
 h1 {
   text-align: center;
   color: #333;
+  margin-bottom: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.image-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.product-image {
+  width: 300px;
+  height: auto;
+  margin-bottom: 10px;
+  border-radius: 5px;
 }
 
 .form-group {
-  margin-bottom: 15px;
+  flex: 1;
+  min-width: 200px;
 }
 
 label {
-  display: block;
   font-weight: bold;
-  margin-bottom: 5px;
+  color: #555;
 }
 
 input[type="text"],
@@ -35,31 +73,48 @@ textarea,
 select {
   width: 100%;
   padding: 8px;
-  box-sizing: border-box;
-  border: 1px solid #ddd;
+  margin-top: 5px;
+  border: 1px solid #ccc;
   border-radius: 4px;
 }
 
 textarea {
-  resize: vertical;
+  height: 110px;
 }
 
-button {
-  width: 100%;
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cancel-button,
+.save-button {
+  padding: 10px 20px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
 }
 
-button:hover {
-  background-color: #0056b3;
+.cancel-button {
+  background-color: #ff4d4d;
+  color: white;
+  text-decoration: none;
+  transition: background-color 0.3s;
 }
 
-.opciones-especificas {
-  display: none;
-  margin-top: 20px;
+.cancel-button:hover {
+  background-color: #dc4242;
+}
+
+.save-button {
+  background-color: #4e7aff;
+  color: white;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.save-button:hover {
+  background-color: #4368d7;
 }

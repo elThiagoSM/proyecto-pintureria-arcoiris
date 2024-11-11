@@ -12,12 +12,14 @@ if (isset($_GET['query'])) {
     $terminacionFiltro = $_GET['terminacion'] ?? '';
     $funcionAplicacionFiltro = $_GET['funcion_aplicacion'] ?? '';
 
+    // Agregamos la condición `p.mostrar = 1` en la consulta principal
     $query = "SELECT p.id_producto, p.imagen, p.nombre, p.descripcion, p.precio 
               FROM Productos p
               LEFT JOIN Pinturas pt ON p.id_producto = pt.id_producto
               LEFT JOIN Accesorios a ON p.id_producto = a.id_producto
               LEFT JOIN MiniFerreteria mf ON p.id_producto = mf.id_producto
-              WHERE p.nombre LIKE ? 
+              WHERE p.mostrar = 1 
+              AND p.nombre LIKE ? 
               AND p.precio BETWEEN ? AND ?";
     $bindTypes = 'sdd';
     $bindParams = [$searchQuery, $precioMin, $precioMax];

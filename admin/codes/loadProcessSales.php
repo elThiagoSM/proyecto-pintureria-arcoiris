@@ -1,8 +1,7 @@
 <?php
-include '../database/database.php'; // Conexión a la base de datos
+include '../database/database.php';
 
-// Obtener ventas en proceso con filtro y paginación
-function obtenerVentasEnProceso($nombre_cliente = null, $offset = 0, $limit = 10)
+function obtenerVentasEnProceso($nombre_cliente = null, $id_venta = null, $offset = 0, $limit = 10)
 {
     global $conn;
     $query = "
@@ -13,20 +12,29 @@ function obtenerVentasEnProceso($nombre_cliente = null, $offset = 0, $limit = 10
         WHERE Ventas.estado = 'en proceso'
     ";
 
+    $params = [];
+    $types = "";
+
     if ($nombre_cliente) {
         $query .= " AND Clientes.nombre_cliente LIKE ?";
         $nombre_cliente = "%" . $nombre_cliente . "%";
+        $params[] = &$nombre_cliente;
+        $types .= "s";
+    } elseif ($id_venta) {
+        $query .= " AND Ventas.id_venta = ?";
+        $params[] = &$id_venta;
+        $types .= "i";
     }
 
     $query .= " LIMIT ? OFFSET ?";
+    $params[] = &$limit;
+    $params[] = &$offset;
+    $types .= "ii";
+
     $stmt = $conn->prepare($query);
-
-    if ($nombre_cliente) {
-        $stmt->bind_param("sii", $nombre_cliente, $limit, $offset);
-    } else {
-        $stmt->bind_param("ii", $limit, $offset);
+    if ($types) {
+        $stmt->bind_param($types, ...$params);
     }
-
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -37,8 +45,7 @@ function obtenerVentasEnProceso($nombre_cliente = null, $offset = 0, $limit = 10
     return $ventas;
 }
 
-// Contar ventas en proceso
-function contarVentasEnProceso($nombre_cliente = null)
+function contarVentasEnProceso($nombre_cliente = null, $id_venta = null)
 {
     global $conn;
     $query = "
@@ -49,13 +56,15 @@ function contarVentasEnProceso($nombre_cliente = null)
 
     if ($nombre_cliente) {
         $query .= " AND Clientes.nombre_cliente LIKE ?";
-    }
-
-    $stmt = $conn->prepare($query);
-
-    if ($nombre_cliente) {
+        $stmt = $conn->prepare($query);
         $nombre_cliente = "%" . $nombre_cliente . "%";
         $stmt->bind_param("s", $nombre_cliente);
+    } elseif ($id_venta) {
+        $query .= " AND Ventas.id_venta = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $id_venta);
+    } else {
+        $stmt = $conn->prepare($query);
     }
 
     $stmt->execute();
@@ -64,51 +73,17 @@ function contarVentasEnProceso($nombre_cliente = null)
     return $row['total'];
 }
 
-// Confirmar o cancelar venta
-if (isset($_GET['action']) && isset($_GET['id_venta'])) {
-    $idVenta = (int)$_GET['id_venta'];
-    $action = $_GET['action'];
-
-    if ($action == 'confirm') {
-        $stmt = $conn->prepare("UPDATE Ventas SET estado = 'completado' WHERE id_venta = ?");
-        $stmt->bind_param("i", $idVenta);
-        $stmt->execute();
-    } elseif ($action == 'cancel') {
-        $stmt = $conn->prepare("SELECT id_producto, cantidad FROM Ventas WHERE id_venta = ?");
-        $stmt->bind_param("i", $idVenta);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $venta = $result->fetch_assoc();
-
-        if ($venta) {
-            $idProducto = $venta['id_producto'];
-            $cantidad = $venta['cantidad'];
-
-            $stmtUpdate = $conn->prepare("UPDATE Productos SET stock_cantidad = stock_cantidad + ? WHERE id_producto = ?");
-            $stmtUpdate->bind_param("ii", $cantidad, $idProducto);
-            $stmtUpdate->execute();
-            $stmtUpdate->close();
-        }
-
-        $stmt = $conn->prepare("DELETE FROM Ventas WHERE id_venta = ?");
-        $stmt->bind_param("i", $idVenta);
-        $stmt->execute();
-    }
-
-    header("Location: ../processSales.php");
-    exit();
-}
-
-// Paginación y filtros
 $limit = 10;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
-$nombre_cliente = $_GET['nombre_cliente'] ?? null;
 
-$totalVentas = contarVentasEnProceso($nombre_cliente);
+$nombre_cliente = $_GET['nombre_cliente'] ?? null;
+$id_venta = $_GET['id_venta'] ?? null;
+
+$totalVentas = contarVentasEnProceso($nombre_cliente, $id_venta);
 $totalPaginas = ceil($totalVentas / $limit);
 
-$ventasEnProceso = obtenerVentasEnProceso($nombre_cliente, $offset, $limit);
+$ventasEnProceso = obtenerVentasEnProceso($nombre_cliente, $id_venta, $offset, $limit);
 ?>
 
 <!-- Renderizado de ventas en proceso -->

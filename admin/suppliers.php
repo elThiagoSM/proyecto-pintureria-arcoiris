@@ -72,7 +72,7 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
                 }
 
                 function redirigirANuevoProveedor() {
-                    window.location.href = 'newSuppliers.php';
+                    window.location.href = 'newSupplier.php';
                 }
             </script>
 
@@ -98,7 +98,7 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
                     </tr>
                 </thead>
                 <tbody>
-                    <?php include './codes/codeSuppliers.php'; ?>
+                    <?php include './codes/loadSuppliers.php'; ?>
                 </tbody>
             </table>
 

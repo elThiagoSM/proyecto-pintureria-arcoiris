@@ -1,12 +1,3 @@
-<?php
-// Verificar si las cookies están configuradas y si el usuario es un administrador
-if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrador') {
-    // Si no es administrador o no está autenticado, redirigir al inicio de sesión
-    header("Location: loginAdmin.php");
-    exit();
-}
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -27,20 +18,37 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
             <div class="top-bar">
                 <button class="active">Ventas en Proceso</button>
                 <div class="search-container">
-                    <input type="text" id="search-client" placeholder="Buscar por Cliente" class="search-bar">
-                    <button onclick="buscarCliente()">Buscar</button>
+                    <select id="search-type" onchange="toggleSearchInput()">
+                        <option value="id_venta">Buscar por ID Venta</option>
+                        <option value="nombre_cliente">Buscar por Cliente</option>
+                    </select>
+                    <input type="text" id="search-input" placeholder="Buscar por ID Venta" class="search-bar">
+                    <button onclick="buscarVenta()">Buscar</button>
                 </div>
             </div>
 
             <script>
-                function buscarCliente() {
-                    const nombreCliente = document.getElementById('search-client').value;
+                function toggleSearchInput() {
+                    const searchType = document.getElementById('search-type').value;
+                    document.getElementById('search-input').placeholder = `Buscar por ${searchType === 'id_venta' ? 'ID Venta' : 'Cliente'}`;
+                }
+
+                function buscarVenta() {
+                    const searchType = document.getElementById('search-type').value;
+                    const searchValue = document.getElementById('search-input').value;
                     const url = new URL(window.location.href);
-                    if (nombreCliente) {
-                        url.searchParams.set('nombre_cliente', nombreCliente);
+
+                    if (searchType === 'id_venta' && searchValue) {
+                        url.searchParams.set('id_venta', searchValue);
+                        url.searchParams.delete('nombre_cliente');
+                    } else if (searchType === 'nombre_cliente' && searchValue) {
+                        url.searchParams.set('nombre_cliente', searchValue);
+                        url.searchParams.delete('id_venta');
                     } else {
+                        url.searchParams.delete('id_venta');
                         url.searchParams.delete('nombre_cliente');
                     }
+
                     window.location.href = url;
                 }
 
@@ -70,20 +78,20 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
                     </tr>
                 </thead>
                 <tbody>
-                    <?php include './codes/codeProcessSales.php'; ?>
+                    <?php include './codes/loadProcessSales.php'; ?>
                 </tbody>
             </table>
 
             <div class="footer">
                 <div class="pagination">
                     <?php if ($page > 1): ?>
-                        <a href="?page=<?= $page - 1 ?>&nombre_cliente=<?= $nombre_cliente ?>">Anterior</a>
+                        <a href="?page=<?= $page - 1 ?>&nombre_cliente=<?= $nombre_cliente ?>&id_venta=<?= $id_venta ?>">Anterior</a>
                     <?php endif; ?>
 
                     <span>Página <?= $page ?> de <?= $totalPaginas ?></span>
 
                     <?php if ($page < $totalPaginas): ?>
-                        <a href="?page=<?= $page + 1 ?>&nombre_cliente=<?= $nombre_cliente ?>">Siguiente</a>
+                        <a href="?page=<?= $page + 1 ?>&nombre_cliente=<?= $nombre_cliente ?>&id_venta=<?= $id_venta ?>">Siguiente</a>
                     <?php endif; ?>
                 </div>
             </div>

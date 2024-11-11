@@ -33,7 +33,7 @@
       </form>
 
       <div class="action-buttons">
-        <?php if (isset($_SESSION['nombre_usuario'])): ?>
+        <?php if (isset($_SESSION['id_usuario'])): ?>
           <a href="userProfile.php">
             <button class="icon-button"><i class="fas fa-user"></i></button>
           </a>
@@ -43,7 +43,6 @@
           </a>
         <?php endif; ?>
 
-        <!-- Botón del carrito, que ahora lleva a cart.php -->
         <a href="cart.php">
           <button class="icon-button">
             <i class="fas fa-shopping-cart"></i>

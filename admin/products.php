@@ -1,7 +1,6 @@
 <?php
 // Verificar si las cookies están configuradas y si el usuario es un administrador
 if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrador') {
-    // Si no es administrador o no está autenticado, redirigir al inicio de sesión
     header("Location: loginAdmin.php");
     exit();
 }
@@ -31,52 +30,56 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
             <div class="top-bar">
                 <button class="<?= !isset($_GET['categoria']) ? 'active' : '' ?>" onclick="filtrarCategoria('')">Catálogo de productos</button>
                 <div class="search-container">
+                    <select id="search-type" onchange="toggleSearchInput()">
+                        <option value="id">Buscar por ID</option>
+                        <option value="nombre">Buscar por Nombre</option>
+                    </select>
                     <input type="text" id="search-input" placeholder="Buscar:" class="search-bar">
                     <button onclick="buscarProducto()">Buscar</button>
                 </div>
             </div>
 
             <div class="categories">
+                <button class="<?= (!isset($_GET['categoria']) || $_GET['categoria'] == '') ? 'active' : '' ?>" onclick="filtrarCategoria('')">Todos</button>
                 <button class="<?= (isset($_GET['categoria']) && $_GET['categoria'] == 'Pinturas') ? 'active' : '' ?>" onclick="filtrarCategoria('Pinturas')">Pinturas</button>
                 <button class="<?= (isset($_GET['categoria']) && $_GET['categoria'] == 'Accesorios') ? 'active' : '' ?>" onclick="filtrarCategoria('Accesorios')">Accesorios</button>
                 <button class="<?= (isset($_GET['categoria']) && $_GET['categoria'] == 'Mini Ferretería') ? 'active' : '' ?>" onclick="filtrarCategoria('Mini Ferretería')">Mini Ferretería</button>
-                <button class="<?= (!isset($_GET['categoria']) || $_GET['categoria'] == '') ? 'active' : '' ?>" onclick="filtrarCategoria('')">Todos</button>
             </div>
 
             <script>
+                function toggleSearchInput() {
+                    const searchType = document.getElementById('search-type').value;
+                    document.getElementById('search-input').placeholder = `Buscar por ${searchType.charAt(0).toUpperCase() + searchType.slice(1)}`;
+                }
+
+                function buscarProducto() {
+                    const searchType = document.getElementById('search-type').value;
+                    const searchValue = document.getElementById('search-input').value;
+                    const url = new URL(window.location.href);
+                    url.searchParams.set('tipo_busqueda', searchType);
+                    url.searchParams.set('busqueda', searchValue);
+                    window.location.href = url;
+                }
+
                 function filtrarCategoria(categoria) {
                     const url = new URL(window.location.href);
                     url.searchParams.set('categoria', categoria);
                     url.searchParams.delete('busqueda');
+                    url.searchParams.delete('tipo_busqueda');
                     window.location.href = url;
                 }
 
-                function buscarProducto() {
-                    const busqueda = document.getElementById('search-input').value;
-                    const url = new URL(window.location.href);
-                    url.searchParams.set('busqueda', busqueda);
-                    window.location.href = url;
-                }
-
-                // Nueva función para redirigir a newProduct.php
+                // Redirige a la página de nuevo producto
                 function redirigirANuevoProducto() {
-                    window.location.href = 'newProduct.php';
+                    window.location.href = "newProduct.php";
                 }
             </script>
-
-            <div id="confirm-delete" style="display:none; position:fixed; top:10%; left:50%; transform:translateX(-50%); background-color:white; padding:20px; border:1px solid black; z-index:1000;">
-                <p>¿Realmente quieres borrarlo?</p>
-                <form method="POST">
-                    <input type="hidden" id="delete-product-id" name="delete_id">
-                    <button type="submit">Confirmar</button>
-                    <button type="button" onclick="cancelarBorrado()">Cancelar</button>
-                </form>
-            </div>
 
             <table class="product-table">
                 <thead>
                     <tr>
                         <th>Imagen</th>
+                        <th>ID</th>
                         <th>Nombre</th>
                         <th>Descripción</th>
                         <th>Precio</th>
@@ -85,23 +88,22 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
                     </tr>
                 </thead>
                 <tbody>
-                    <?php include './codes/codeProducts.php'; ?>
+                    <?php include './codes/loadProducts.php'; ?>
                 </tbody>
             </table>
 
             <div class="footer">
-                <!-- Cambiar este botón "Nuevo" también para redirigir a newProduct.php -->
                 <button onclick="redirigirANuevoProducto()" class="new-product">Nuevo</button>
 
                 <div class="pagination">
                     <?php if ($page > 1): ?>
-                        <a href="?page=<?= $page - 1 ?>&categoria=<?= $categoria ?>&busqueda=<?= $busqueda ?>">Anterior</a>
+                        <a href="?page=<?= $page - 1 ?>&categoria=<?= $categoria ?>&tipo_busqueda=<?= $tipo_busqueda ?>&busqueda=<?= $busqueda ?>">Anterior</a>
                     <?php endif; ?>
 
                     <span>Página <?= $page ?> de <?= $totalPaginas ?></span>
 
                     <?php if ($page < $totalPaginas): ?>
-                        <a href="?page=<?= $page + 1 ?>&categoria=<?= $categoria ?>&busqueda=<?= $busqueda ?>">Siguiente</a>
+                        <a href="?page=<?= $page + 1 ?>&categoria=<?= $categoria ?>&tipo_busqueda=<?= $tipo_busqueda ?>&busqueda=<?= $busqueda ?>">Siguiente</a>
                     <?php endif; ?>
                 </div>
             </div>

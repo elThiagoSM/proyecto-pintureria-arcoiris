@@ -1,13 +1,12 @@
 <?php
-include '../database/database.php'; // Conexión a la base de datos
+include '../database/database.php';
 
-function obtenerProductos($categoria = null, $busqueda = null, $offset = 0, $limit = 10)
+function obtenerProductos($categoria = null, $busqueda = null, $tipo_busqueda = 'nombre', $offset = 0, $limit = 10)
 {
     global $conn;
 
     $query = "SELECT Productos.id_producto, Productos.imagen, Productos.nombre, Productos.descripcion, Productos.precio, Productos.stock_cantidad FROM Productos";
 
-    // Filtro de categoría
     if ($categoria) {
         switch ($categoria) {
             case 'Pinturas':
@@ -22,16 +21,21 @@ function obtenerProductos($categoria = null, $busqueda = null, $offset = 0, $lim
         }
     }
 
-    // Condiciones adicionales
     $query .= " WHERE 1=1";
     $params = [];
     $types = "";
 
     if ($busqueda) {
-        $query .= " AND Productos.nombre LIKE ?";
-        $busqueda_param = "%" . $busqueda . "%";
-        $params[] = &$busqueda_param;
-        $types .= "s";
+        if ($tipo_busqueda === 'id') {
+            $query .= " AND Productos.id_producto = ?";
+            $params[] = &$busqueda;
+            $types .= "i";
+        } else {
+            $query .= " AND Productos.nombre LIKE ?";
+            $busqueda_param = "%" . $busqueda . "%";
+            $params[] = &$busqueda_param;
+            $types .= "s";
+        }
     }
 
     $query .= " LIMIT ? OFFSET ?";
@@ -39,7 +43,6 @@ function obtenerProductos($categoria = null, $busqueda = null, $offset = 0, $lim
     $params[] = &$offset;
     $types .= "ii";
 
-    // Preparar y ejecutar consulta
     $stmt = $conn->prepare($query);
     if ($types) {
         $stmt->bind_param($types, ...$params);
@@ -55,14 +58,12 @@ function obtenerProductos($categoria = null, $busqueda = null, $offset = 0, $lim
     return $productos;
 }
 
-// Obtener número total de productos para paginación
-function contarProductos($categoria = null, $busqueda = null)
+function contarProductos($categoria = null, $busqueda = null, $tipo_busqueda = 'nombre')
 {
     global $conn;
 
     $query = "SELECT COUNT(*) as total FROM Productos";
 
-    // Filtro de categoría
     if ($categoria) {
         switch ($categoria) {
             case 'Pinturas':
@@ -79,10 +80,16 @@ function contarProductos($categoria = null, $busqueda = null)
 
     $query .= " WHERE 1=1";
     if ($busqueda) {
-        $query .= " AND Productos.nombre LIKE ?";
-        $stmt = $conn->prepare($query);
-        $busqueda_param = "%" . $busqueda . "%";
-        $stmt->bind_param("s", $busqueda_param);
+        if ($tipo_busqueda === 'id') {
+            $query .= " AND Productos.id_producto = ?";
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param("i", $busqueda);
+        } else {
+            $query .= " AND Productos.nombre LIKE ?";
+            $stmt = $conn->prepare($query);
+            $busqueda_param = "%" . $busqueda . "%";
+            $stmt->bind_param("s", $busqueda_param);
+        }
     } else {
         $stmt = $conn->prepare($query);
     }
@@ -93,30 +100,30 @@ function contarProductos($categoria = null, $busqueda = null)
     return $row['total'];
 }
 
-// Parámetros de paginación
-$limit = 10;  // productos por página
+$limit = 10;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
 $categoria = $_GET['categoria'] ?? null;
+$tipo_busqueda = $_GET['tipo_busqueda'] ?? 'nombre';
 $busqueda = $_GET['busqueda'] ?? null;
-$totalProductos = contarProductos($categoria, $busqueda);
+$totalProductos = contarProductos($categoria, $busqueda, $tipo_busqueda);
 $totalPaginas = ceil($totalProductos / $limit);
 
-$productos = obtenerProductos($categoria, $busqueda, $offset, $limit);
+$productos = obtenerProductos($categoria, $busqueda, $tipo_busqueda, $offset, $limit);
 ?>
 
 <!-- Renderizado de productos -->
 <?php foreach ($productos as $producto): ?>
     <tr>
         <td><img src="<?= $producto['imagen'] ?>" alt="<?= htmlspecialchars($producto['nombre']) ?>" width="50"></td>
+        <td><?= htmlspecialchars($producto['id_producto']) ?></td>
         <td><?= htmlspecialchars($producto['nombre']) ?></td>
         <td><?= htmlspecialchars($producto['descripcion']) ?></td>
         <td><?= number_format($producto['precio'], 2) ?></td>
         <td><?= htmlspecialchars($producto['stock_cantidad']) ?></td>
         <td>
             <button class="edit-btn" onclick="window.location.href='editProduct.php?id_producto=<?= $producto['id_producto'] ?>'">Editar</button>
-            <button class="delete-btn" onclick="confirmarBorrado(<?= $producto['id_producto'] ?>)">Borrar</button>
         </td>
     </tr>
 <?php endforeach; ?>
