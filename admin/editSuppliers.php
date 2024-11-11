@@ -1,12 +1,11 @@
 <?php
-// Verificar si las cookies están configuradas y si el usuario es un administrador
+// Redirige a la página de inicio de sesión si no hay cookies de sesión activas
 if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrador') {
-    // Si no es administrador o no está autenticado, redirigir al inicio de sesión
     header("Location: loginAdmin.php");
     exit();
 }
 
-include '../database/database.php';
+include './database/database.php';
 
 $id_proveedor = $_GET['id_proveedor'] ?? null;
 if (!$id_proveedor) {

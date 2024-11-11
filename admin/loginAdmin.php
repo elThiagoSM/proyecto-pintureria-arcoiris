@@ -23,6 +23,24 @@
             <button type="submit">Iniciar Sesión</button>
         </form>
     </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        if (params.has('error')) {
+            let message = '';
+            switch (params.get('error')) {
+                case 'contraseña_incorrecta':
+                    message = 'Contraseña incorrecta.';
+                    break;
+                case 'sin_permiso':
+                    message = 'No tienes permisos de administrador o el usuario no existe.';
+                    break;
+                default:
+                    message = 'Error desconocido.';
+            }
+            alert(message);
+        }
+    </script>
 </body>
 
 </html>

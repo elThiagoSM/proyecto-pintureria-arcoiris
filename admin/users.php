@@ -1,13 +1,16 @@
 <?php
-// Verificar si las cookies están configuradas y si el usuario es un administrador
+// Redirige a la página de inicio de sesión si no hay cookies de sesión activas
 if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrador') {
-    // Si no es administrador o no está autenticado, redirigir al inicio de sesión
     header("Location: loginAdmin.php");
     exit();
 }
 
-// Inicializar la variable $clasificacion
+// Inicializa la variable $clasificacion con un valor por defecto si no se pasa por la URL
 $clasificacion = $_GET['clasificacion'] ?? 'Cliente';
+$tipo_busqueda = $_GET['tipo_busqueda'] ?? 'nombre';
+$busqueda = $_GET['busqueda'] ?? null;
+$page = $_GET['page'] ?? 1;
+$totalPaginas = isset($totalPaginas) ? $totalPaginas : 1;
 ?>
 
 <!DOCTYPE html>

@@ -17,7 +17,7 @@ if ($result->num_rows > 0) {
 
     // Verificar contraseña usando el hash almacenado
     if (password_verify($contraseña, $user['contraseña'])) {
-        // Configurar cookies que solo existen mientras la pestaña esté abierta
+        // Configurar cookies de sesión
         setcookie("id_usuario", $user['id_usuario'], 0, "/");
         setcookie("nombre_usuario", $user['nombre_usuario'], 0, "/");
         setcookie("correo", $user['correo'], 0, "/");
@@ -28,10 +28,14 @@ if ($result->num_rows > 0) {
         header("Location: ../dashboard.php");
         exit();
     } else {
-        echo "Contraseña incorrecta.";
+        // Redirigir con mensaje de error en caso de contraseña incorrecta
+        header("Location: ../loginAdmin.php?error=contraseña_incorrecta");
+        exit();
     }
 } else {
-    echo "No tienes permisos de administrador o el usuario no existe.";
+    // Redirigir con mensaje de error si no es administrador o no existe
+    header("Location: ../loginAdmin.php?error=sin_permiso");
+    exit();
 }
 
 // Cerrar conexión

@@ -1,3 +1,11 @@
+<?php
+// Redirige a la página de inicio de sesión si no hay cookies de sesión activas
+if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrador') {
+    header("Location: loginAdmin.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
