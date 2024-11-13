@@ -13,6 +13,20 @@
 <body>
     <?php include 'components/header.php'; ?>
 
+    <?php if (isset($_SESSION['error'])): ?>
+        <script>
+            alert('<?php echo $_SESSION['error']; ?>');
+        </script>
+        <?php unset($_SESSION['error']); ?>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['success'])): ?>
+        <script>
+            alert('<?php echo $_SESSION['success']; ?>');
+        </script>
+        <?php unset($_SESSION['success']); ?>
+    <?php endif; ?>
+
     <div class="checkout">
         <div class="checkout-container">
             <h1>CONFIRMAR DATOS COMPRA</h1>

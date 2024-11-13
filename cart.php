@@ -25,7 +25,7 @@ session_start();
                 <h3>Total: $<span id="cart-total">0</span></h3>
             </div>
 
-            <button onclick="procederCompra()" class="checkout-button">Proceder a la Compra</button>
+            <button class="checkout-button">Proceder a la Compra</button>
         </div>
     </div>
 
@@ -56,6 +56,7 @@ session_start();
                         <div class="cart-item-subtotal">
                             <p>Subtotal: $${subtotal}</p>
                             <button onclick="eliminarProducto(${index})" class="remove-button">Eliminar</button>
+                            <button onclick="comprarProducto(${producto.id})" class="buy-button">Comprar</button>
                         </div>
                     </div>
                 `;
@@ -67,9 +68,7 @@ session_start();
         function eliminarProducto(index) {
             const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
-            // Confirmación antes de eliminar el producto
             const confirmar = confirm('¿Estás seguro de que deseas eliminar este producto del carrito?');
-
             if (confirmar) {
                 carrito.splice(index, 1); // Eliminar el producto del carrito
                 localStorage.setItem('carrito', JSON.stringify(carrito)); // Guardar de nuevo en el localStorage
@@ -77,23 +76,15 @@ session_start();
             }
         }
 
-
-        function procederCompra() {
-            const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-            if (carrito.length === 0) {
-                alert('El carrito está vacío');
-                return;
-            }
-
-            const carritoData = encodeURIComponent(JSON.stringify(carrito));
-            window.location.href = `checkout.php?carrito=${carritoData}`;
+        function comprarProducto(idProducto) {
+            // Redirigir a buyProduct.php con el id del producto
+            window.location.href = `buyProduct.php?id_producto=${idProducto}`;
         }
 
         window.onload = cargarCarrito;
     </script>
 
     <?php include 'components/featuredProducts.php'; ?>
-
     <?php include 'components/footer.php'; ?>
 </body>
 

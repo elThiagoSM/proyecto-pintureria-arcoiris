@@ -41,6 +41,18 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
                     <?php include './codes/loadColorPalette.php'; ?>
                 </tbody>
             </table>
+
+            <div class="pagination">
+                <?php if ($page > 1): ?>
+                    <a href="?page=<?= $page - 1 ?>">Anterior</a>
+                <?php endif; ?>
+
+                <span>Página <?= $page ?> de <?= $totalPaginas ?></span>
+
+                <?php if ($page < $totalPaginas): ?>
+                    <a href="?page=<?= $page + 1 ?>">Siguiente</a>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 

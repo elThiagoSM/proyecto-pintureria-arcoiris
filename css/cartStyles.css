@@ -90,7 +90,7 @@ body {
 }
 
 .remove-button {
-  background-color: #e74c3c;
+  background-color: #68092b;
   color: white;
   padding: 6px 12px;
   border: none;
@@ -102,5 +102,21 @@ body {
 }
 
 .remove-button:hover {
-  background-color: #c0392b;
+  background-color: #5d0926;
+}
+
+.buy-button {
+  background-color: #2a69ac;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9em;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.buy-button:hover {
+  background-color: #1b4e87;
 }

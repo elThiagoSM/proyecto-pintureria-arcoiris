@@ -1,4 +1,5 @@
 <?php
+session_start();
 include '../database/database.php';
 
 // Recoge datos del formulario
@@ -6,12 +7,12 @@ $forma_pago = isset($_POST['payment']) ? $_POST['payment'] : null;
 $fecha_venta = date("Y-m-d");
 $mensaje = isset($_POST['mensaje']) ? $_POST['mensaje'] : "";
 
-// Datos pasados en la URL
+// Datos pasados en el formulario
 $id_producto = isset($_POST['id_producto']) ? (int)$_POST['id_producto'] : null;
 $valor_venta = isset($_POST['monto_total']) ? (float)$_POST['monto_total'] : null;
 $cantidad = isset($_POST['cantidad']) ? (int)$_POST['cantidad'] : 1;
 
-// Obtener el id_cliente y nombre_cliente de la sesión en lugar de las cookies
+// Datos del cliente en sesión
 $id_cliente = isset($_SESSION['id_cliente']) ? (int)$_SESSION['id_cliente'] : null;
 $nombre_cliente = isset($_SESSION['nombre_cliente']) ? $_SESSION['nombre_cliente'] : "Cliente";
 $correo_cliente = isset($_SESSION['correo']) ? $_SESSION['correo'] : null;
@@ -82,25 +83,26 @@ if ($forma_pago && $id_producto && $valor_venta && $id_cliente && $cantidad) {
             $cabeceras .= "MIME-Version: 1.0\r\n";
             $cabeceras .= "Content-Type: text/html; charset=UTF-8\r\n";
 
-            // Enviar el correo
-            if (mail($correo_cliente, $asunto, $mensaje_html, $cabeceras)) {
-                $_SESSION['success'] = "Compra realizada con éxito. Revisa tu correo para ver los detalles de la compra.";
-            } else {
+            if (!mail($correo_cliente, $asunto, $mensaje_html, $cabeceras)) {
                 $_SESSION['error'] = "La compra fue exitosa, pero no se pudo enviar el correo de confirmación.";
             }
         }
 
-        // Redirigir a thanks.php con datos necesarios
+        // Redirigir a thanks.php con mensaje de éxito
+        $_SESSION['success'] = "Compra realizada con éxito. Gracias por tu compra.";
         header("Location: ../thanks.php?nombre_cliente=" . urlencode($nombre_cliente) . "&id_venta=" . $id_venta . "&total=" . $valor_venta);
         exit();
     } catch (Exception $e) {
         $conn->rollback();
-        echo $e->getMessage();
+        $_SESSION['error'] = $e->getMessage();
+        header("Location: ../checkout.php");
+        exit();
     }
 
     $stmt->close();
 } else {
-    echo "Faltan datos necesarios para realizar la venta.";
+    $_SESSION['error'] = "Faltan datos necesarios para realizar la venta.";
+    header("Location: ../checkout.php");
 }
 
 $conn->close();

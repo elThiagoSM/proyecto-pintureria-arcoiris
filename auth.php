@@ -9,9 +9,8 @@ if (!isset($_SESSION['id_usuario'])) {
     exit();
 }
 
-// Opcional: Verificación adicional para usuarios con ciertos roles
-// Puedes agregar una verificación de rol si necesitas bloquear a algunos usuarios
-// por clasificación o tipo de usuario
+// Verificacin adicional para usuarios administrador
+// por clasificacion o tipo de usuario
 // if ($_SESSION['clasificacion'] !== 'admin') {
 //     header("Location: ../login.php?error=acceso_restringido");
 //     exit();

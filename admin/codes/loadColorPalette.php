@@ -47,7 +47,7 @@ $paletas = obtenerPaletas($offset, $limit);
         <td><?= htmlspecialchars($paleta['tintes_utilizados']) ?></td>
         <td>
             <button class="edit-btn" onclick="window.location.href='editColorPalette.php?id_paleta=<?= $paleta['id_paleta'] ?>'">Editar</button>
-            <button class="delete-btn" onclick="confirmarBorrado(<?= $paleta['id_paleta'] ?>)">Borrar</button>
+            <!-- <button class="delete-btn" onclick="confirmarBorrado(<?= $paleta['id_paleta'] ?>)">Borrar</button> -->
         </td>
     </tr>
 <?php endforeach; ?>
