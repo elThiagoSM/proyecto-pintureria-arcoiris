@@ -18,7 +18,7 @@ if ($result->num_rows > 0) {
     }
 }
 
-// Cerrar la conexión
+// Cerrar la conexion
 $conn->close();
 
 // Enviar datos en formato JSON
