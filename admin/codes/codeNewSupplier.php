@@ -12,15 +12,15 @@ $sql_proveedor = "INSERT INTO Proveedores (nombre, telefono, correo, direccion)
                   VALUES ('$nombre', '$telefono', '$correo', '$direccion')";
 
 if ($conn->query($sql_proveedor) === TRUE) {
-    // Mostrar mensaje de éxito en un alert y redirigir
-    echo "<script>
+  // Mostrar mensaje de éxito en un alert y redirigir
+  echo "<script>
             alert('Proveedor agregado exitosamente.');
             window.location.href = '../suppliers.php';
           </script>";
 } else {
-    // Mostrar mensaje de error en un alert y redirigir
-    $error = $conn->error;
-    echo "<script>
+  // Mostrar mensaje de error en un alert y redirigir
+  $error = $conn->error;
+  echo "<script>
             alert('Error al insertar proveedor: $error');
             window.location.href = '../suppliers.php';
           </script>";

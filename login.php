@@ -2,6 +2,15 @@
 if (isset($_GET['error']) && $_GET['error'] === 'correo_no_verificado') {
     echo "<script>alert('Tu correo no está verificado. Por favor, revisa tu correo para confirmarlo.');</script>";
 }
+
+if (isset($_SESSION['error'])) {
+    echo "<script>alert('" . $_SESSION['error'] . "');</script>";
+    unset($_SESSION['error']);
+}
+if (isset($_SESSION['success'])) {
+    echo "<script>alert('" . $_SESSION['success'] . "');</script>";
+    unset($_SESSION['success']);
+}
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +50,8 @@ if (isset($_GET['error']) && $_GET['error'] === 'correo_no_verificado') {
                 </div>
                 <button type="submit" class="btn">Iniciar Sesión</button>
             </form>
-            <p>¿No tienes una cuenta? <a href="register.php">Regístrate aquí</a></p>
+            <p style="margin-bottom: 5px;">¿No tienes una cuenta? <a href="register.php">Regístrate aquí</a></p>
+            <p style="margin-bottom: 5px;">¿Te olvidaste tu contraseña? <a href="resetRequest.php">Presiona aquí</a></p>
             <a href="index.php">Volver a la pagina principal</a>
         </div>
     </div>

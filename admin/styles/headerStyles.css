@@ -6,20 +6,27 @@
 
 body {
   font-family: Arial, sans-serif;
-  display: flex;
   height: 100vh;
+  display: flex;
 }
 
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   padding: 10px 20px;
   background-color: #ffffff;
   border-bottom: 1px solid #ddd;
+  z-index: 1000;
 }
 
 .header .linkeable {
+  display: flex;
+  align-items: center;
   text-decoration: none;
 }
 

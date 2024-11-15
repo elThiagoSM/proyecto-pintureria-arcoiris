@@ -1,68 +1,110 @@
 <?php
-include '../database/database.php';
 session_start();
+include '../database/database.php';
 
-// Verificar si el usuario está logueado usando la sesión
-if (!isset($_SESSION['id_usuario'])) {
-    header("Location: ../login.php");
-    exit();
-}
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] === UPLOAD_ERR_OK) {
+        $maxDim = 512;
 
-// Obtener el ID del usuario desde la sesión
-$id_usuario = $_SESSION['id_usuario'];
+        // Define directamente las rutas de carga y acceso web
+        $projectPath = '/proyecto-pintureria-arcoiris';
+        $uploadsDir = $_SERVER['DOCUMENT_ROOT'] . $projectPath . '/uploads/profile_pictures/' . $_SESSION['nombre_usuario'] . '/';
+        $webPath = 'http://localhost' . $projectPath . '/uploads/profile_pictures/' . $_SESSION['nombre_usuario'] . '/';
 
-// Sanitizar y validar los datos recibidos del formulario
-$nombre_usuario = isset($_POST['nombre_usuario']) ? htmlspecialchars($_POST['nombre_usuario']) : null;
-$direccion = isset($_POST['direccion']) ? htmlspecialchars($_POST['direccion']) : null;
-$datos_contacto = isset($_POST['datos_contacto']) ? htmlspecialchars($_POST['datos_contacto']) : null;
-$fecha_nacimiento = isset($_POST['fecha_nacimiento']) ? htmlspecialchars($_POST['fecha_nacimiento']) : null;
-$foto_perfil = $_FILES['foto_perfil'];
+        if (!is_dir($uploadsDir)) {
+            mkdir($uploadsDir, 0755, true);
+        }
 
-// Procesar la subida de la foto de perfil si hay un archivo seleccionado
-$target_dir = "../uploads/profile_pictures/"; // Asegúrate de que esta carpeta exista y tenga permisos de escritura
-$profile_picture_path = '';
+        // Obtener el formato de la imagen
+        $fileTmpPath = $_FILES['profile_image']['tmp_name'];
+        list($width, $height, $imageType) = getimagesize($fileTmpPath);
 
-if ($foto_perfil && $foto_perfil['error'] === UPLOAD_ERR_OK) {
-    $file_name = basename($foto_perfil['name']);
-    $target_file = $target_dir . $file_name;
-    if (move_uploaded_file($foto_perfil['tmp_name'], $target_file)) {
-        $profile_picture_path = $target_file;
-        $_SESSION['foto_perfil'] = $profile_picture_path; // Actualizar en la sesión
+        // Determinar extensión en función del tipo de imagen
+        switch ($imageType) {
+            case IMAGETYPE_JPEG:
+                $srcImage = imagecreatefromjpeg($fileTmpPath);
+                $fileExtension = '.jpg';
+                break;
+            case IMAGETYPE_PNG:
+                $srcImage = imagecreatefrompng($fileTmpPath);
+                $fileExtension = '.png';
+                break;
+            case IMAGETYPE_GIF:
+                $srcImage = imagecreatefromgif($fileTmpPath);
+                $fileExtension = '.gif';
+                break;
+            default:
+                header("Location: ../userProfile.php?upload=error_type");
+                exit();
+        }
+
+        // Asignar nombre incremental para evitar sobrescritura
+        $baseFileName = $_SESSION['nombre_usuario'];
+        $fileName = $baseFileName . $fileExtension;
+        $destPath = $uploadsDir . $fileName;
+        $counter = 1;
+        while (file_exists($destPath)) {
+            $fileName = $baseFileName . '_' . $counter . $fileExtension;
+            $destPath = $uploadsDir . $fileName;
+            $counter++;
+        }
+
+        // Redimensionar la imagen
+        $srcAspect = $width / $height;
+        $newWidth = $maxDim;
+        $newHeight = $maxDim;
+        if ($srcAspect > 1) {
+            $tempHeight = $maxDim / $srcAspect;
+            $tempWidth = $maxDim;
+            $srcX = 0;
+            $srcY = ($height - $width) / 2;
+        } else {
+            $tempWidth = $maxDim * $srcAspect;
+            $tempHeight = $maxDim;
+            $srcY = 0;
+            $srcX = ($width - $height) / 2;
+        }
+
+        $dstImage = imagecreatetruecolor($maxDim, $maxDim);
+        if ($imageType == IMAGETYPE_PNG || $imageType == IMAGETYPE_GIF) {
+            imagecolortransparent($dstImage, imagecolorallocatealpha($dstImage, 0, 0, 0, 127));
+            imagealphablending($dstImage, false);
+            imagesavealpha($dstImage, true);
+        }
+
+        imagecopyresampled($dstImage, $srcImage, 0, 0, $srcX, $srcY, $maxDim, $maxDim, $width, $height);
+
+        switch ($imageType) {
+            case IMAGETYPE_JPEG:
+                imagejpeg($dstImage, $destPath, 90);
+                break;
+            case IMAGETYPE_PNG:
+                imagepng($dstImage, $destPath);
+                break;
+            case IMAGETYPE_GIF:
+                imagegif($dstImage, $destPath);
+                break;
+        }
+
+        imagedestroy($srcImage);
+        imagedestroy($dstImage);
+
+        $_SESSION['foto_perfil'] = $webPath . $fileName;
+        $id_usuario = $_SESSION['id_usuario'];
+        $stmt = $conn->prepare("UPDATE usuarios SET foto_perfil = ? WHERE id_usuario = ?");
+        $stmt->bind_param("si", $_SESSION['foto_perfil'], $id_usuario);
+
+        if ($stmt->execute()) {
+            header("Location: ../userProfile.php?upload=success");
+        } else {
+            header("Location: ../userProfile.php?upload=db_error");
+        }
+
+        $stmt->close();
+        $conn->close();
+        exit();
+    } else {
+        header("Location: ../userProfile.php?upload=error");
+        exit();
     }
 }
-
-// Preparar la consulta para actualizar datos
-$sql = "UPDATE usuarios u 
-        JOIN clientes c ON u.id_usuario = c.id_usuario
-        SET u.nombre_usuario = ?, c.direccion = ?, c.datos_contacto = ?, c.fecha_nacimiento = ?";
-$params = [$nombre_usuario, $direccion, $datos_contacto, $fecha_nacimiento];
-
-if ($profile_picture_path) {
-    $sql .= ", u.foto_perfil = ?";
-    $params[] = $profile_picture_path;
-}
-
-$sql .= " WHERE u.id_usuario = ?";
-$params[] = $id_usuario;
-
-// Preparar y ejecutar la consulta con `mysqli`
-$stmt = $conn->prepare($sql);
-
-// Verificar si la consulta se preparó correctamente
-if ($stmt === false) {
-    die("Error en la preparación de la consulta: " . $conn->error);
-}
-
-// Crear los tipos para `bind_param` (todos son strings, excepto `fecha_nacimiento`)
-$types = str_repeat("s", count($params)); // Generar un string de 's' del mismo tamaño que los parámetros
-
-// Asociar los parámetros y ejecutar
-$stmt->bind_param($types, ...$params);
-$stmt->execute();
-
-// Cerrar la declaración
-$stmt->close();
-
-// Redirigir con un mensaje de éxito
-header("Location: ../userProfile.php?success=Perfil actualizado exitosamente");
-exit();

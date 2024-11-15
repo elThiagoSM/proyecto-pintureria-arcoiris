@@ -185,7 +185,7 @@ $resultadoPaletas = $conn->query($sqlPaletas);
 
                 <!-- Botones de Acción -->
                 <div class="action-buttons">
-                    <a href="products.php" class="cancel-button">Cancelar</a>
+                    <a href="./products.php" class="cancel-button">Cancelar</a>
                     <button type="submit" class="save-button">Guardar Cambios</button>
                 </div>
             </form>

@@ -21,9 +21,22 @@ if ($forma_pago && $id_producto && $valor_venta && $id_cliente && $cantidad) {
     $conn->begin_transaction();
 
     try {
+        // Obtener el id_usuario asociado al id_cliente
+        $stmt = $conn->prepare("SELECT id_usuario FROM clientes WHERE id_cliente = ?");
+        $stmt->bind_param("i", $id_cliente);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows === 0) {
+            throw new Exception("El cliente no tiene un usuario asociado.");
+        }
+
+        $row = $result->fetch_assoc();
+        $id_usuario = $row['id_usuario'];
+
         // Insertar la venta en la tabla Ventas
-        $stmt = $conn->prepare("INSERT INTO ventas (forma_de_pago, fecha_de_venta, valor_de_venta, estado, datos_extra_notas, id_cliente, id_producto, cantidad) VALUES (?, ?, ?, 'en proceso', ?, ?, ?, ?)");
-        $stmt->bind_param("ssdssii", $forma_pago, $fecha_venta, $valor_venta, $mensaje, $id_cliente, $id_producto, $cantidad);
+        $stmt = $conn->prepare("INSERT INTO ventas (forma_de_pago, fecha_de_venta, valor_de_venta, estado, datos_extra_notas, id_usuario, id_producto, cantidad) VALUES (?, ?, ?, 'en proceso', ?, ?, ?, ?)");
+        $stmt->bind_param("ssdssii", $forma_pago, $fecha_venta, $valor_venta, $mensaje, $id_usuario, $id_producto, $cantidad);
 
         if (!$stmt->execute()) {
             throw new Exception("Error al registrar la venta: " . $stmt->error);

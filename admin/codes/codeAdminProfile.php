@@ -1,45 +1,70 @@
 <?php
-include '../../database/database.php'; // Conexión a la base de datos
+include '../database/database.php';
 
-// Verificar que las cookies están configuradas y el usuario es administrador
-if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrador') {
-    header("Location: ../loginAdmin.php");
-    exit();
-}
 
-// Cargar información del administrador desde la base de datos
 $id_usuario = $_COOKIE['id_usuario'];
-$sql = "SELECT nombre_usuario, correo, foto_perfil, clasificacion, fecha_ingreso FROM Usuarios WHERE id_usuario = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $id_usuario);
-$stmt->execute();
-$result = $stmt->get_result();
 
-if ($result->num_rows > 0) {
-    $user = $result->fetch_assoc();
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] === UPLOAD_ERR_OK) {
+        $uploadsDir = $_SERVER['DOCUMENT_ROOT'] . '/uploads/admin_profile_pictures/';
+        $webPath = 'http://localhost/uploads/admin_profile_pictures/';
 
-    // Almacenar la información en cookies
-    setcookie("correo", $user['correo'], 0, "/");
-    setcookie("foto_perfil", $user['foto_perfil'], 0, "/");
-    setcookie("fecha_ingreso", $user['fecha_ingreso'], 0, "/");
-} else {
-    echo "No se encontró la información del usuario.";
+        if (!is_dir($uploadsDir)) {
+            mkdir($uploadsDir, 0755, true);
+        }
+
+        $fileTmpPath = $_FILES['profile_image']['tmp_name'];
+        list($width, $height, $imageType) = getimagesize($fileTmpPath);
+
+        switch ($imageType) {
+            case IMAGETYPE_JPEG:
+                $srcImage = imagecreatefromjpeg($fileTmpPath);
+                $fileExtension = '.jpg';
+                break;
+            case IMAGETYPE_PNG:
+                $srcImage = imagecreatefrompng($fileTmpPath);
+                $fileExtension = '.png';
+                break;
+            case IMAGETYPE_GIF:
+                $srcImage = imagecreatefromgif($fileTmpPath);
+                $fileExtension = '.gif';
+                break;
+            default:
+                header("Location: ../adminProfile.php?upload=error_type");
+                exit();
+        }
+
+        $fileName = 'admin_' . $id_usuario . $fileExtension;
+        $destPath = $uploadsDir . $fileName;
+
+        imagejpeg($srcImage, $destPath, 90);
+        imagedestroy($srcImage);
+
+        $photoPath = $webPath . $fileName;
+        $stmt = $conn->prepare("UPDATE Usuarios SET foto_perfil = ? WHERE id_usuario = ?");
+        $stmt->bind_param("si", $photoPath, $id_usuario);
+
+        if ($stmt->execute()) {
+            setcookie("foto_perfil", $photoPath, 0, "/");
+            header("Location: ../adminProfile.php?upload=success");
+        } else {
+            header("Location: ../adminProfile.php?upload=db_error");
+        }
+
+        $stmt->close();
+        $conn->close();
+        exit();
+    }
+
+    if (isset($_POST['logout'])) {
+        setcookie("id_usuario", "", time() - 3600, "/");
+        setcookie("nombre_usuario", "", time() - 3600, "/");
+        setcookie("correo", "", time() - 3600, "/");
+        setcookie("clasificacion", "", time() - 3600, "/");
+        setcookie("fecha_ingreso", "", time() - 3600, "/");
+        setcookie("foto_perfil", "", time() - 3600, "/");
+
+        header("Location: ../loginAdmin.php");
+        exit();
+    }
 }
-
-// Manejo de cierre de sesión
-if (isset($_POST['logout'])) {
-    // Eliminar cookies establecidas
-    setcookie("id_usuario", "", time() - 3600, "/");
-    setcookie("nombre_usuario", "", time() - 3600, "/");
-    setcookie("correo", "", time() - 3600, "/");
-    setcookie("clasificacion", "", time() - 3600, "/");
-    setcookie("fecha_ingreso", "", time() - 3600, "/");
-    setcookie("foto_perfil", "", time() - 3600, "/");
-
-    header("Location: ../loginAdmin.php");
-    exit();
-}
-
-// Cerrar conexión
-$stmt->close();
-$conn->close();

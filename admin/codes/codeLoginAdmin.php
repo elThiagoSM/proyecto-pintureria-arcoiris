@@ -1,5 +1,5 @@
 <?php
-include '../../database/database.php'; // Conexión a la base de datos
+include '../database/database.php'; // Conexión a la base de datos
 
 // Obtener los datos del formulario
 $nombre_usuario = $_POST['nombre_usuario'];

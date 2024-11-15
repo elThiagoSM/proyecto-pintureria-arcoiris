@@ -29,7 +29,7 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
 
             <script>
                 // Obtener los datos de ventas desde el archivo PHP
-                fetch('./codes/loadSaleRegistration.php')
+                fetch('./codes/loads/loadSaleRegistration.php')
                     .then(response => response.json())
                     .then(data => {
                         // Extraer fechas y valores de venta

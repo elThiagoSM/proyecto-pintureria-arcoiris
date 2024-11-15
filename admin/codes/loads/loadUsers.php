@@ -1,5 +1,5 @@
 <?php
-include '../database/database.php'; // Conexión a la base de datos
+include './database/database.php'; // Conexión a la base de datos
 
 // Parámetros de paginación y filtros
 $limit = 10;

@@ -99,7 +99,7 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
                     </tr>
                 </thead>
                 <tbody>
-                    <?php include './codes/loadSales.php'; ?>
+                    <?php include './codes/loads/loadSales.php'; ?>
                 </tbody>
             </table>
 

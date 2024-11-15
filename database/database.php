@@ -1,8 +1,7 @@
 <?php
-// Configuración de la base de datos
 $servername = "localhost";
-$username = "cliente_us";
-$password = "contraseña_segura";
+$username = "root";
+$password = "";
 $dbname = "bd_pinturaria_arcoiris";
 
 // Conexion

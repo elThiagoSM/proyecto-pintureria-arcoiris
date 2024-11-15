@@ -14,7 +14,8 @@
             <h1>Agregar Nueva Paleta de Colores</h1>
             <form action="./codes/codeNewColorPalette.php" method="POST" class="new-palette-form">
                 <div class="form-group">
-                    <input placeholder="Código de Color" type="text" id="codigo_color" name="codigo_color" required>
+                    <input type="color" id="codigo_color" name="codigo_color" required>
+                    <label for="codigo_color">Código de Color</label>
                 </div>
 
                 <div class="form-group">
@@ -28,10 +29,6 @@
                 <div class="form-group">
                     <button type="submit" class="submit-btn">Guardar Paleta</button>
                 </div>
-
-                <?php if (isset($_GET['error'])): ?>
-                    <p class="error"><?= htmlspecialchars($_GET['error']) ?></p>
-                <?php endif; ?>
             </form>
         </div>
     </div>

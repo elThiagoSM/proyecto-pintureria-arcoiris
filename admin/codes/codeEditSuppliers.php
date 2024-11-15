@@ -1,11 +1,4 @@
 <?php
-session_start();
-
-if (!isset($_SESSION['id_usuario']) || $_SESSION['clasificacion'] !== 'Administrador') {
-    header("Location: loginAdmin.php");
-    exit();
-}
-
 include '../database/database.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

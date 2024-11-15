@@ -69,7 +69,34 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
                     window.location.href = url;
                 }
 
-                // Redirige a la página de nuevo producto
+                function confirmarBorradoProducto(idProducto) {
+                    const confirmDelete = confirm('¿Estás seguro de que deseas eliminar este producto?');
+                    if (confirmDelete) {
+                        fetch('./codes/deletes/deleteProduct.php', {
+                                method: 'DELETE',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    id_producto: idProducto,
+                                }),
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    alert('Producto eliminado exitosamente.');
+                                    window.location.reload();
+                                } else {
+                                    alert(data.message || 'No se pudo eliminar el producto.');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error al eliminar el producto:', error);
+                                alert('Ocurrió un error al eliminar el producto.');
+                            });
+                    }
+                }
+
                 function redirigirANuevoProducto() {
                     window.location.href = "newProduct.php";
                 }
@@ -88,7 +115,7 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
                     </tr>
                 </thead>
                 <tbody>
-                    <?php include './codes/loadProducts.php'; ?>
+                    <?php include './codes/loads/loadProducts.php'; ?>
                 </tbody>
             </table>
 

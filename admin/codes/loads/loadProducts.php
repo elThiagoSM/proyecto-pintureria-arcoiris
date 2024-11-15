@@ -1,5 +1,5 @@
 <?php
-include '../database/database.php';
+include './database/database.php';
 
 function obtenerProductos($categoria = null, $busqueda = null, $tipo_busqueda = 'nombre', $offset = 0, $limit = 10)
 {
@@ -115,6 +115,15 @@ $productos = obtenerProductos($categoria, $busqueda, $tipo_busqueda, $offset, $l
 
 <!-- Renderizado de productos -->
 <?php foreach ($productos as $producto): ?>
+    <?php
+    // Verificar si el producto está relacionado con ventas
+    $queryVentas = "SELECT COUNT(*) AS total FROM ventas WHERE id_producto = ?";
+    $stmtVentas = $conn->prepare($queryVentas);
+    $stmtVentas->bind_param('i', $producto['id_producto']);
+    $stmtVentas->execute();
+    $resultVentas = $stmtVentas->get_result();
+    $totalVentas = $resultVentas->fetch_assoc()['total'];
+    ?>
     <tr>
         <td><img src="<?= $producto['imagen'] ?>" alt="<?= htmlspecialchars($producto['nombre']) ?>" width="50"></td>
         <td><?= htmlspecialchars($producto['id_producto']) ?></td>
@@ -123,7 +132,12 @@ $productos = obtenerProductos($categoria, $busqueda, $tipo_busqueda, $offset, $l
         <td><?= number_format($producto['precio'], 2) ?></td>
         <td><?= htmlspecialchars($producto['stock_cantidad']) ?></td>
         <td>
-            <button class="edit-btn" onclick="window.location.href='editProduct.php?id_producto=<?= $producto['id_producto'] ?>'">Editar</button>
+            <button class="edit-btn" onclick="window.location.href='../../editProduct.php?id_producto=<?= $producto['id_producto'] ?>'">Editar</button>
+            <?php if ($totalVentas === 0): ?>
+                <button class="delete-btn" onclick="confirmarBorradoProducto(<?= $producto['id_producto'] ?>)">Borrar</button>
+            <?php else: ?>
+                <button class="delete-btn" disabled>No eliminable</button>
+            <?php endif; ?>
         </td>
     </tr>
 <?php endforeach; ?>

@@ -86,3 +86,7 @@ body {
   background-color: #540823;
   color: #fff;
 }
+
+.out-of-stock {
+  color: red;
+}

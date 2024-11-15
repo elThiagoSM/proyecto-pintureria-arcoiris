@@ -1,5 +1,5 @@
 <?php
-include '../database/database.php';
+include './database/database.php';
 
 $limit = 10;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
@@ -120,6 +120,15 @@ $proveedores = obtenerProveedores($tipo_busqueda, $busqueda, $offset, $limit);
 
 <!-- Renderizado de proveedores -->
 <?php foreach ($proveedores as $proveedor): ?>
+    <?php
+    // Verificar si el proveedor tiene productos relacionados
+    $queryProductos = "SELECT COUNT(*) AS total FROM productos WHERE id_proveedor = ?";
+    $stmtProductos = $conn->prepare($queryProductos);
+    $stmtProductos->bind_param('i', $proveedor['id_proveedor']);
+    $stmtProductos->execute();
+    $resultProductos = $stmtProductos->get_result();
+    $totalProductos = $resultProductos->fetch_assoc()['total'];
+    ?>
     <tr>
         <td><?= htmlspecialchars($proveedor['id_proveedor']) ?></td>
         <td><?= htmlspecialchars($proveedor['nombre']) ?></td>
@@ -127,8 +136,12 @@ $proveedores = obtenerProveedores($tipo_busqueda, $busqueda, $offset, $limit);
         <td><?= htmlspecialchars($proveedor['correo']) ?></td>
         <td><?= htmlspecialchars($proveedor['direccion']) ?></td>
         <td>
-            <button class="edit-btn" onclick="window.location.href='editSuppliers.php?id_proveedor=<?= $proveedor['id_proveedor'] ?>'">Editar</button>
-            <button class="delete-btn" onclick="confirmarBorrado(<?= $proveedor['id_proveedor'] ?>)">Borrar</button>
+            <button class="edit-btn" onclick="window.location.href='../../editSuppliers.php?id_proveedor=<?= $proveedor['id_proveedor'] ?>'">Editar</button>
+            <?php if ($totalProductos === 0): ?>
+                <button class="delete-btn" onclick="confirmarBorrado(<?= $proveedor['id_proveedor'] ?>)">Borrar</button>
+            <?php else: ?>
+                <button class="delete-btn" disabled>No eliminable</button>
+            <?php endif; ?>
         </td>
     </tr>
 <?php endforeach; ?>

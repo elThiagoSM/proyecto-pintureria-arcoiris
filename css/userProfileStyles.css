@@ -126,7 +126,6 @@ body {
   background-color: #265c97;
 }
 
-/* Alinear botones al final de la sección */
 .profile-container .action-buttons {
   display: flex;
   justify-content: center;

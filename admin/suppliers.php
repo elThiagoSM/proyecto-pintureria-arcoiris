@@ -62,9 +62,33 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
                 }
 
                 function confirmarBorrado(idProveedor) {
-                    document.getElementById('confirm-delete').style.display = 'block';
-                    document.getElementById('delete-supplier-id').value = idProveedor;
+                    const confirmDelete = confirm('¿Estás seguro de que deseas eliminar este proveedor? Solo puedes eliminar proveedores que no hayan suministrado productos.');
+                    if (confirmDelete) {
+                        fetch(`./codes/deletes/deleteSupplier.php`, {
+                                method: 'DELETE',
+                                headers: {
+                                    'Content-Type': 'application/json', // Define el tipo de contenido
+                                },
+                                body: JSON.stringify({
+                                    id_proveedor: idProveedor
+                                }), // Envía los datos como JSON
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    alert('Proveedor eliminado exitosamente.');
+                                    window.location.reload();
+                                } else {
+                                    alert(data.message || 'No se pudo eliminar el proveedor.');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error al eliminar el proveedor:', error);
+                                alert('Ocurrió un error al eliminar el proveedor.');
+                            });
+                    }
                 }
+
 
                 function cancelarBorrado() {
                     document.getElementById('confirm-delete').style.display = 'none';
@@ -74,16 +98,6 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
                     window.location.href = 'newSupplier.php';
                 }
             </script>
-
-            <!-- Modal de confirmación de borrado -->
-            <div id="confirm-delete" style="display:none; position:fixed; top:10%; left:50%; transform:translateX(-50%); background-color:white; padding:20px; border:1px solid black; z-index:1000;">
-                <p>¿Realmente quieres borrarlo?</p>
-                <form method="POST">
-                    <input type="hidden" id="delete-supplier-id" name="delete_id">
-                    <button type="submit">Confirmar</button>
-                    <button type="button" onclick="cancelarBorrado()">Cancelar</button>
-                </form>
-            </div>
 
             <table class="supplier-table">
                 <thead>
@@ -97,7 +111,7 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
                     </tr>
                 </thead>
                 <tbody>
-                    <?php include './codes/loadSuppliers.php'; ?>
+                    <?php include './codes/loads/loadSuppliers.php'; ?>
                 </tbody>
             </table>
 

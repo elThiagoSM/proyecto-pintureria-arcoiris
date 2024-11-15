@@ -12,22 +12,20 @@
   <?php
   session_start();
 
-  // Mostrar mensaje de error o éxito si existe
   if (isset($_SESSION['error'])) {
     echo "<script>alert('" . $_SESSION['error'] . "');</script>";
-    unset($_SESSION['error']); // Eliminar mensaje después de mostrarlo
+    unset($_SESSION['error']);
   }
   if (isset($_SESSION['success'])) {
     echo "<script>alert('" . $_SESSION['success'] . "');</script>";
-    unset($_SESSION['success']); // Eliminar mensaje después de mostrarlo
+    unset($_SESSION['success']);
   }
   ?>
 
   <div class="login">
     <div class="login-container">
-
       <h2>Registrarse</h2>
-      <form action="./codes/codeRegister.php" method="POST" onsubmit="return validarContraseñas();">
+      <form action="./codes/codeRegister.php" method="POST" onsubmit="return validarFormulario();">
         <div class="form-group">
           <input placeholder="Nombre Completo" type="text" id="nombre_cliente" name="nombre_cliente" required>
         </div>
@@ -58,22 +56,32 @@
         </div>
         <button type="submit" class="btn">Registrarse</button>
       </form>
-      <p>¿Ya tienes una cuenta? <a href="login.php">Inicia sesión aquí</a></p>
-      <a href="index.php">Volver a la pagina principal</a>
-
+      <p style="margin-bottom: 5px;">¿Ya tienes una cuenta? <a href="login.php">Inicia sesión aquí</a></p>
+      <a href="index.php">Volver a la página principal</a>
     </div>
   </div>
 
+  <!-- Incluye la librería ci_js -->
+  <script src="js/ci_js-gh-pages/ci.js"></script>
+
   <script>
-    function validarContraseñas() {
+    function validarFormulario() {
+      // Validación de contraseñas
       const password = document.getElementById("login_password").value;
       const confirmPassword = document.getElementById("confirm_password").value;
-
       if (password !== confirmPassword) {
         alert("Las contraseñas no coinciden. Por favor, inténtalo de nuevo.");
         return false;
       }
-      return true;
+
+      // Validación de cédula
+      const cedula = document.getElementById("cedula").value;
+      if (!CI.validar(cedula)) {
+        alert("La cédula ingresada no es válida para Uruguay.");
+        return false;
+      }
+
+      return true; // Si todas las validaciones pasan, el formulario se envía
     }
   </script>
 </body>

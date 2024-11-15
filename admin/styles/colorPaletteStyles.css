@@ -14,12 +14,20 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
+  margin-left: 250px;
+  margin-top: 30px;
 }
 
 .color-palette-content {
   flex: 1;
   background-color: #f0f0f0;
-  padding: 20px;
+  padding: 30px;
+}
+
+.color-palette-header h1 {
+  color: #444;
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
 .top-bar {
@@ -29,13 +37,8 @@ body {
   margin-bottom: 20px;
 }
 
-.top-bar h1 {
-  color: #444;
-  font-size: 24px;
-}
-
-.new-palette {
-  background-color: #28a745;
+.top-bar button {
+  background-color: #4e7aff;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -43,26 +46,63 @@ body {
   cursor: pointer;
 }
 
-.palette-table {
+.top-bar button.active {
+  background-color: #4e7aff;
+}
+
+.search-bar {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 200px;
+}
+
+.categories {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.categories button {
+  background-color: #e0e0e0;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #666;
+}
+
+.categories button.active {
+  background-color: #4e7aff;
+  color: #fff;
+}
+
+.color-palette-table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
 }
 
-.palette-table th,
-.palette-table td {
+.color-palette-table th,
+.color-palette-table td {
   padding: 12px;
   text-align: left;
 }
 
-.palette-table th {
+.color-palette-table th {
   background-color: #f8f8f8;
   color: #333;
   font-weight: bold;
 }
 
-.palette-table td {
+.color-palette-table td {
   background-color: #f5f5f5;
+}
+
+.color-palette-table img {
+  width: 50px;
+  height: auto;
+  border-radius: 4px;
 }
 
 .edit-btn {
@@ -84,13 +124,28 @@ body {
   cursor: pointer;
 }
 
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.new-color-palette {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
 .pagination {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.pagination a {
+.pagination button {
   background-color: #f0f0f0;
   color: #333;
   border: none;

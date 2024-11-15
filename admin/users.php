@@ -105,7 +105,7 @@ $totalPaginas = isset($totalPaginas) ? $totalPaginas : 1;
                 </thead>
 
                 <tbody>
-                    <?php include './codes/loadUsers.php'; ?>
+                    <?php include './codes/loads/loadUsers.php'; ?>
                 </tbody>
             </table>
 

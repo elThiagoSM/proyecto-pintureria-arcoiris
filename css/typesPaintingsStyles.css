@@ -43,23 +43,29 @@ h2 {
   margin: 0 auto;
 }
 
+.paint-type-link {
+  background-color: #fff;
+  border: 1px solid #d8d8d8;
+  padding: 20px;
+  cursor: pointer;
+}
+
 .paint-type {
   background-color: none;
-  border: 1px solid #d8d8d8;
-  text-align: center;
-  cursor: pointer;
+  text-align: left;
 }
 
 .paint-type img {
   width: 100%;
   height: auto;
-  max-height: 200px;
+  max-height: 600px;
   object-fit: cover;
+  background-color: #fff;
 }
 
 .product-name {
   margin: 10px 0;
-  font-size: 1.3rem;
+  font-size: 1rem;
   color: #000;
 }
 

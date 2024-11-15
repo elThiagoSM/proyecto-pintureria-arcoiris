@@ -10,6 +10,7 @@ include 'auth.php';
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel de Usuario</title>
   <link rel="stylesheet" href="css/userProfileStyles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
 </head>
 
 <body>
@@ -17,26 +18,31 @@ include 'auth.php';
 
   <div class="profile">
     <div class="profile-container">
-      <!-- Nombre y clasificación del usuario -->
       <header class="profile-header">
         <h1><?php echo $_SESSION['nombre_usuario'] . ' (' . $_SESSION['clasificacion'] . ')'; ?></h1>
       </header>
 
-      <!-- Detalles del usuario -->
       <section class="user-details">
         <div class="profile-pic-wrapper">
           <?php if (!empty($_SESSION['foto_perfil'])): ?>
-            <img src="<?php echo $_SESSION['foto_perfil']; ?>" alt="Foto de perfil" class="profile-pic">
+            <img src="<?php echo $_SESSION['foto_perfil']; ?>" alt="Foto de perfil" class="profile-pic" id="profile-pic-preview">
           <?php else: ?>
             <p>No disponible</p>
           <?php endif; ?>
 
-          <!-- Botón para cambiar la foto -->
-          <button class="btn-change-photo">Cambiar Foto</button>
+          <input type="file" id="profile-image-input" name="profile_image" accept="image/*">
+
+          <div id="cropModal" style="display:none;">
+            <img id="image" style="max-width:100%;" alt="Imagen a recortar">
+            <button id="cropButton">Recortar y Guardar</button>
+          </div>
         </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+        <script src="js/editProfilePicture.js"> </script>
+
       </section>
 
-      <!-- Detalles del cliente si existen -->
       <?php if (isset($_SESSION['id_cliente'])): ?>
         <section class="client-details">
           <h2>Datos del Usuario</h2>
@@ -52,10 +58,9 @@ include 'auth.php';
         <p class="no-client-data">No hay datos de cliente asociados a este usuario.</p>
       <?php endif; ?>
 
-      <!-- Botones de Cerrar Sesión y Editar -->
       <div class="action-buttons">
         <a href="codes/codeLogout.php" class="btn-logout">Cerrar Sesión</a>
-        <button class="btn-edit">Editar Datos</button>
+        <a href="resetRequest.php" class="btn-edit">Cambiar contraseña</a>
       </div>
     </div>
   </div>

@@ -27,10 +27,8 @@ session_start();
             <div class="bank-details">
                 <p>
                     <strong>Cuenta Corriente en pesos N°:</strong> 0783229537<br>
-                    <strong>Banco:</strong> HSBC sucursal San Isidro<br>
-                    <strong>CBU:</strong> 15000329-00007832295378<br>
-                    <strong>Titular:</strong> Anyway Network S.R.L.<br>
-                    <strong>CUIT:</strong> 30-70953195-2
+                    <strong>Banco:</strong> BROU<br>
+                    <strong>Titular:</strong> Pinturería Arcoiris SRL<br>
                 </p>
             </div>
 

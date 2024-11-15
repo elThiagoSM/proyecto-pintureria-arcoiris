@@ -5,7 +5,7 @@ session_start();
 // Verificar si el usuario ha iniciado sesión
 if (!isset($_SESSION['id_usuario'])) {
     // Redirigir a la página de inicio de sesión si no ha iniciado sesión
-    header("Location: ../login.php?error=acceso_restringido");
+    header("Location: http://localhost/proyecto-pintureria-arcoiris/login.php?error=acceso_restringido");
     exit();
 }
 

@@ -6,17 +6,23 @@
 
 body {
   font-family: Arial, sans-serif;
-  display: flex;
   height: 100vh;
+  display: flex;
 }
 
 .sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 250px;
+  height: 100vh;
   background-color: #536dfe;
   color: white;
   display: flex;
   flex-direction: column;
   padding: 20px;
+  overflow-y: auto;
+  z-index: 1001;
 }
 
 .sidebar h1 {

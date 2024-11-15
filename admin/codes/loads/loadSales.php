@@ -1,5 +1,5 @@
 <?php
-include '../database/database.php'; // Conexión a la base de datos
+include './database/database.php'; // Conexión a la base de datos
 
 // Parámetros de paginación y filtros
 $limit = 10;
@@ -15,26 +15,33 @@ function obtenerVentas($forma_de_pago = null, $fecha_venta = null, $id_venta = n
     global $conn;
 
     // Crear consulta SQL base
-    $query = "SELECT id_venta, forma_de_pago, fecha_de_venta, valor_de_venta, estado, datos_extra_notas, id_cliente, id_producto, cantidad FROM ventas";
+    $query = "
+        SELECT v.id_venta, v.forma_de_pago, v.fecha_de_venta, v.valor_de_venta, v.estado, v.datos_extra_notas,
+               v.id_producto, v.cantidad, 
+               c.id_cliente, u.id_usuario, c.nombre_cliente
+        FROM ventas v
+        LEFT JOIN usuarios u ON v.id_usuario = u.id_usuario
+        LEFT JOIN clientes c ON u.id_usuario = c.id_usuario
+    ";
     $params = [];
     $types = "";
     $filters = [];
 
     // Aplicar filtros según los parámetros recibidos
     if ($forma_de_pago) {
-        $filters[] = "forma_de_pago = ?";
+        $filters[] = "v.forma_de_pago = ?";
         $params[] = &$forma_de_pago;
         $types .= "s";
     }
 
     if ($fecha_venta) {
-        $filters[] = "fecha_de_venta = ?";
+        $filters[] = "v.fecha_de_venta = ?";
         $params[] = &$fecha_venta;
         $types .= "s";
     }
 
     if ($id_venta) {
-        $filters[] = "id_venta = ?";
+        $filters[] = "v.id_venta = ?";
         $params[] = &$id_venta;
         $types .= "i";
     }
@@ -65,35 +72,38 @@ function contarVentas($forma_de_pago = null, $fecha_venta = null, $id_venta = nu
 {
     global $conn;
 
-    $query = "SELECT COUNT(*) as total FROM ventas";
+    $query = "
+        SELECT COUNT(*) as total
+        FROM ventas v
+        LEFT JOIN usuarios u ON v.id_usuario = u.id_usuario
+        LEFT JOIN clientes c ON u.id_usuario = c.id_usuario
+    ";
     $params = [];
     $types = "";
+    $filters = [];
 
     // Aplicar filtros para contar
     if ($forma_de_pago) {
-        $query .= " WHERE forma_de_pago = ?";
+        $filters[] = "v.forma_de_pago = ?";
         $params[] = &$forma_de_pago;
         $types .= "s";
     }
 
     if ($fecha_venta) {
-        if ($forma_de_pago) {
-            $query .= " AND fecha_de_venta = ?";
-        } else {
-            $query .= " WHERE fecha_de_venta = ?";
-        }
+        $filters[] = "v.fecha_de_venta = ?";
         $params[] = &$fecha_venta;
         $types .= "s";
     }
 
     if ($id_venta) {
-        if ($types) {
-            $query .= " AND id_venta = ?";
-        } else {
-            $query .= " WHERE id_venta = ?";
-        }
+        $filters[] = "v.id_venta = ?";
         $params[] = &$id_venta;
         $types .= "i";
+    }
+
+    // Si hay filtros, agregarlos a la consulta
+    if ($filters) {
+        $query .= " WHERE " . implode(" AND ", $filters);
     }
 
     // Preparar y ejecutar la consulta

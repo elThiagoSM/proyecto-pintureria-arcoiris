@@ -16,10 +16,10 @@ $sql_usuario = "INSERT INTO Usuarios (nombre_usuario, correo, contraseña, clasi
                 VALUES ('$nombre_usuario', '$correo', '$contraseña', '$clasificacion', NOW(), 0, '$token_verificacion')";
 
 if ($conn->query($sql_usuario) === TRUE) {
-    // Si la inserción es exitosa, enviar un correo de verificación
-    $asunto = "Verificación de Correo - Administrador de Pinturería Arcoiris";
-    $verificacion_url = "http://localhost/proyecto-pintureria-arcoiris/verifyEmail.php?token=" . $token_verificacion . "&correo=" . urlencode($correo);
-    $mensaje = "
+  // Si la inserción es exitosa, enviar un correo de verificación
+  $asunto = "Verificación de Correo - Administrador de Pinturería Arcoiris";
+  $verificacion_url = "http://localhost/proyecto-pintureria-arcoiris/verifyEmail.php?token=" . $token_verificacion . "&correo=" . urlencode($correo);
+  $mensaje = "
 <html>
 <head>
   <title>Verificación de Correo</title>
@@ -38,20 +38,20 @@ if ($conn->query($sql_usuario) === TRUE) {
 </body>
 </html>";
 
-    // Encabezados del correo
-    $cabeceras = "From: no-reply@tu_sitio.com\r\n";
-    $cabeceras .= "Reply-To: no-reply@tu_sitio.com\r\n";
-    $cabeceras .= "MIME-Version: 1.0\r\n";
-    $cabeceras .= "Content-Type: text/html; charset=UTF-8\r\n";
+  // Encabezados del correo
+  $cabeceras = "From: no-reply@tu_sitio.com\r\n";
+  $cabeceras .= "Reply-To: no-reply@tu_sitio.com\r\n";
+  $cabeceras .= "MIME-Version: 1.0\r\n";
+  $cabeceras .= "Content-Type: text/html; charset=UTF-8\r\n";
 
-    // Preparar mensaje para el alert y redirección
-    if (mail($correo, $asunto, $mensaje, $cabeceras)) {
-        $alert_message = "Administrador agregado exitosamente. Se ha enviado un correo de verificación.";
-    } else {
-        $alert_message = "Administrador agregado, pero no se pudo enviar el correo de verificación.";
-    }
+  // Preparar mensaje para el alert y redirección
+  if (mail($correo, $asunto, $mensaje, $cabeceras)) {
+    $alert_message = "Administrador agregado exitosamente. Se ha enviado un correo de verificación.";
+  } else {
+    $alert_message = "Administrador agregado, pero no se pudo enviar el correo de verificación.";
+  }
 } else {
-    $alert_message = "Error al insertar administrador: " . $conn->error;
+  $alert_message = "Error al insertar administrador: " . $conn->error;
 }
 
 // Cerrar la conexión

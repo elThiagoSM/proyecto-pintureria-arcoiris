@@ -86,7 +86,7 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
                     </tr>
                 </thead>
                 <tbody>
-                    <?php include './codes/loadProcessSales.php'; ?>
+                    <?php include './codes/loads/loadProcessSales.php'; ?>
                 </tbody>
             </table>
 

@@ -41,9 +41,14 @@ $resultado_paletas = $conn->query($sql_paletas);
                         <textarea id="descripcion" name="descripcion"></textarea>
                     </div>
 
-                    <div class="form-group image-group">
+                    <div class="form-group">
                         <label for="imagen">Imagen del Producto:</label>
-                        <input type="file" id="imagen" name="imagen" accept="image/*">
+                        <img src="" alt="Imagen actual" class="product-image">
+                        <input type="file" id="imagen" name="imagen" accept="image/*" onchange="previewImage(event)">
+                    </div>
+
+                    <div class="form-group">
+                        <img id="imagePreview" class="image-preview" style="display: none;" alt="Previsualización">
                     </div>
                 </div>
 
