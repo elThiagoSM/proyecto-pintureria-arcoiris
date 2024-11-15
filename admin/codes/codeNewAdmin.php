@@ -12,7 +12,7 @@ $clasificacion = $conn->real_escape_string($_POST['clasificacion']);
 $token_verificacion = bin2hex(random_bytes(3)); // Generar un token de verificación
 
 // Insertar datos en la tabla Usuarios
-$sql_usuario = "INSERT INTO Usuarios (nombre_usuario, correo, contraseña, clasificacion, fecha_ingreso, correo_verificado, token_verificacion)
+$sql_usuario = "INSERT INTO usuarios (nombre_usuario, correo, contraseña, clasificacion, fecha_ingreso, correo_verificado, token_verificacion)
                 VALUES ('$nombre_usuario', '$correo', '$contraseña', '$clasificacion', NOW(), 0, '$token_verificacion')";
 
 if ($conn->query($sql_usuario) === TRUE) {

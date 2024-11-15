@@ -58,11 +58,11 @@ if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] == UPLOAD_ERR_OK) {
 // Actualizar los datos generales del producto
 // Solo actualizar la imagen si se subió una nueva
 if ($imagen) {
-    $query = "UPDATE Productos SET nombre = ?, descripcion = ?, precio = ?, stock_cantidad = ?, marca = ?, unidad = ?, id_proveedor = ?, imagen = ?, mostrar = ? WHERE id_producto = ?";
+    $query = "UPDATE productos SET nombre = ?, descripcion = ?, precio = ?, stock_cantidad = ?, marca = ?, unidad = ?, id_proveedor = ?, imagen = ?, mostrar = ? WHERE id_producto = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("ssdisissii", $nombre, $descripcion, $precio, $stock_cantidad, $marca, $unidad, $id_proveedor, $imagen, $mostrar, $id_producto);
 } else {
-    $query = "UPDATE Productos SET nombre = ?, descripcion = ?, precio = ?, stock_cantidad = ?, marca = ?, unidad = ?, id_proveedor = ?, mostrar = ? WHERE id_producto = ?";
+    $query = "UPDATE productos SET nombre = ?, descripcion = ?, precio = ?, stock_cantidad = ?, marca = ?, unidad = ?, id_proveedor = ?, mostrar = ? WHERE id_producto = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("ssdisisii", $nombre, $descripcion, $precio, $stock_cantidad, $marca, $unidad, $id_proveedor, $mostrar, $id_producto);
 }

@@ -39,7 +39,7 @@ session_start();
                         <ul>
                             <?php
                             include './database/database.php';
-                            $marcasQuery = "SELECT DISTINCT marca FROM Productos WHERE marca IS NOT NULL";
+                            $marcasQuery = "SELECT DISTINCT marca FROM productos WHERE marca IS NOT NULL";
                             $marcasResult = $conn->query($marcasQuery);
 
                             if ($marcasResult->num_rows > 0) {

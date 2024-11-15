@@ -1,6 +1,4 @@
 <?php
-// codeProcessSales.php
-
 include '../database/database.php';
 
 // Verificar que el usuario tiene permisos de administrador
@@ -20,7 +18,7 @@ if (!$action || !$id_venta) {
 
 if ($action === 'confirm') {
     // Lógica para completar la venta
-    $stmt = $conn->prepare("UPDATE Ventas SET estado = 'completado' WHERE id_venta = ?");
+    $stmt = $conn->prepare("UPDATE ventas SET estado = 'completado' WHERE id_venta = ?");
     $stmt->bind_param("i", $id_venta);
     if ($stmt->execute()) {
         echo "Venta completada con éxito.";
@@ -30,7 +28,7 @@ if ($action === 'confirm') {
     $stmt->close();
 } elseif ($action === 'cancel') {
     // Obtener la cantidad de productos y el ID del producto para actualizar el stock
-    $stmt = $conn->prepare("SELECT id_producto, cantidad FROM Ventas WHERE id_venta = ?");
+    $stmt = $conn->prepare("SELECT id_producto, cantidad FROM ventas WHERE id_venta = ?");
     $stmt->bind_param("i", $id_venta);
     $stmt->execute();
     $stmt->bind_result($id_producto, $cantidad);
@@ -39,11 +37,11 @@ if ($action === 'confirm') {
 
     if ($id_producto && $cantidad) {
         // Actualizar el stock del producto
-        $stmt = $conn->prepare("UPDATE Productos SET stock_cantidad = stock_cantidad + ? WHERE id_producto = ?");
+        $stmt = $conn->prepare("UPDATE productos SET stock_cantidad = stock_cantidad + ? WHERE id_producto = ?");
         $stmt->bind_param("ii", $cantidad, $id_producto);
         if ($stmt->execute()) {
             // Eliminar la venta después de actualizar el stock
-            $stmt = $conn->prepare("DELETE FROM Ventas WHERE id_venta = ?");
+            $stmt = $conn->prepare("DELETE FROM ventas WHERE id_venta = ?");
             $stmt->bind_param("i", $id_venta);
             if ($stmt->execute()) {
                 echo "Venta cancelada y eliminada con éxito. Stock actualizado.";

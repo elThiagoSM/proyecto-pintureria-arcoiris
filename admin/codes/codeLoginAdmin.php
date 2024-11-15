@@ -6,7 +6,7 @@ $nombre_usuario = $_POST['nombre_usuario'];
 $contraseña = $_POST['contraseña'];
 
 // Consulta para verificar usuario
-$sql = "SELECT * FROM Usuarios WHERE nombre_usuario = ? AND clasificacion = 'Administrador'";
+$sql = "SELECT * FROM usuarios WHERE nombre_usuario = ? AND clasificacion = 'Administrador'";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $nombre_usuario);
 $stmt->execute();

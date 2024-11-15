@@ -4,7 +4,7 @@ include '../../database/database.php'; // Conexión a la base de datos
 header('Content-Type: application/json');
 
 // Query para obtener datos de ventas (fecha y valor de venta)
-$sql = "SELECT fecha_de_venta, valor_de_venta FROM Ventas WHERE estado = 'completado' ORDER BY fecha_de_venta";
+$sql = "SELECT fecha_de_venta, valor_de_venta FROM ventas WHERE estado = 'completado' ORDER BY fecha_de_venta";
 $result = $conn->query($sql);
 
 $ventas = [];

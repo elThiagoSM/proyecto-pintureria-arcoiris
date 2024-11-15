@@ -13,7 +13,7 @@ if (!$id_proveedor) {
     exit();
 }
 
-$query = "SELECT nombre, telefono, correo, direccion FROM Proveedores WHERE id_proveedor = ?";
+$query = "SELECT nombre, telefono, correo, direccion FROM proveedores WHERE id_proveedor = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $id_proveedor);
 $stmt->execute();

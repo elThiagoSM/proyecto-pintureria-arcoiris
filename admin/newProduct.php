@@ -8,11 +8,11 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
 include './database/database.php';
 
 // Consultar proveedores
-$sql_proveedores = "SELECT id_proveedor, nombre FROM Proveedores";
+$sql_proveedores = "SELECT id_proveedor, nombre FROM proveedores";
 $resultado_proveedores = $conn->query($sql_proveedores);
 
 // Consultar paletas de color
-$sql_paletas = "SELECT id_paleta, nombre_color FROM PaletaColor";
+$sql_paletas = "SELECT id_paleta, nombre_color FROM paletacolor";
 $resultado_paletas = $conn->query($sql_paletas);
 ?>
 

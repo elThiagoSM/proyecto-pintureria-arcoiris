@@ -8,8 +8,8 @@ $offset = ($page - 1) * $paintingsPerPage;  // Calcular el desplazamiento
 
 // Consulta con LIMIT y OFFSET para la paginación, y filtrado por `mostrar = 1`
 $query = "SELECT p.id_producto, p.imagen, p.nombre, p.descripcion, p.precio 
-          FROM Productos p
-          INNER JOIN Pinturas pt ON p.id_producto = pt.id_producto
+          FROM productos p
+          INNER JOIN pinturas pt ON p.id_producto = pt.id_producto
           WHERE p.mostrar = 1
           LIMIT ? OFFSET ?";
 

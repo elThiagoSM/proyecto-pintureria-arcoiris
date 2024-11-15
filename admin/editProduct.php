@@ -15,7 +15,7 @@ if (!$id_producto) {
 }
 
 // Consultar los datos básicos del producto
-$queryProducto = "SELECT * FROM Productos WHERE id_producto = ?";
+$queryProducto = "SELECT * FROM productos WHERE id_producto = ?";
 $stmtProducto = $conn->prepare($queryProducto);
 $stmtProducto->bind_param("i", $id_producto);
 $stmtProducto->execute();
@@ -27,9 +27,9 @@ $tipoProducto = null;
 $atributosEspecificos = [];
 
 $queryTipo = [
-    "Accesorio" => "SELECT * FROM Accesorios WHERE id_producto = ?",
-    "MiniFerreteria" => "SELECT * FROM MiniFerreteria WHERE id_producto = ?",
-    "Pintura" => "SELECT * FROM Pinturas WHERE id_producto = ?"
+    "Accesorio" => "SELECT * FROM accesorios WHERE id_producto = ?",
+    "MiniFerreteria" => "SELECT * FROM miniFerreteria WHERE id_producto = ?",
+    "Pintura" => "SELECT * FROM pinturas WHERE id_producto = ?"
 ];
 
 foreach ($queryTipo as $tipo => $sql) {
@@ -46,10 +46,10 @@ foreach ($queryTipo as $tipo => $sql) {
 }
 
 // Consultar proveedores y paletas de color
-$sqlProveedores = "SELECT id_proveedor, nombre FROM Proveedores";
+$sqlProveedores = "SELECT id_proveedor, nombre FROM proveedores";
 $resultadoProveedores = $conn->query($sqlProveedores);
 
-$sqlPaletas = "SELECT id_paleta, nombre_color FROM PaletaColor";
+$sqlPaletas = "SELECT id_paleta, nombre_color FROM paletacolor";
 $resultadoPaletas = $conn->query($sqlPaletas);
 ?>
 

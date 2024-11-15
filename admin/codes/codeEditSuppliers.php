@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $correo = $_POST['correo'];
     $direccion = $_POST['direccion'];
 
-    $query = "UPDATE Proveedores SET nombre = ?, telefono = ?, correo = ?, direccion = ? WHERE id_proveedor = ?";
+    $query = "UPDATE proveedores SET nombre = ?, telefono = ?, correo = ?, direccion = ? WHERE id_proveedor = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("ssssi", $nombre, $telefono, $correo, $direccion, $id_proveedor);
 

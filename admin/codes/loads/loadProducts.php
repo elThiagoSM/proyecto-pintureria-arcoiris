@@ -5,18 +5,18 @@ function obtenerProductos($categoria = null, $busqueda = null, $tipo_busqueda = 
 {
     global $conn;
 
-    $query = "SELECT Productos.id_producto, Productos.imagen, Productos.nombre, Productos.descripcion, Productos.precio, Productos.stock_cantidad FROM Productos";
+    $query = "SELECT productos.id_producto, productos.imagen, productos.nombre, productos.descripcion, productos.precio, productos.stock_cantidad FROM productos";
 
     if ($categoria) {
         switch ($categoria) {
             case 'Pinturas':
-                $query .= " INNER JOIN Pinturas ON Productos.id_producto = Pinturas.id_producto";
+                $query .= " INNER JOIN pinturas ON productos.id_producto = pinturas.id_producto";
                 break;
             case 'Accesorios':
-                $query .= " INNER JOIN Accesorios ON Productos.id_producto = Accesorios.id_producto";
+                $query .= " INNER JOIN accesorios ON productos.id_producto = accesorios.id_producto";
                 break;
             case 'Mini Ferretería':
-                $query .= " INNER JOIN MiniFerreteria ON Productos.id_producto = MiniFerreteria.id_producto";
+                $query .= " INNER JOIN miniferreteria ON productos.id_producto = miniferreteria.id_producto";
                 break;
         }
     }

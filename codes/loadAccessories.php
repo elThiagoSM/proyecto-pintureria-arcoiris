@@ -8,7 +8,7 @@ $offset = ($page - 1) * $accessoriesPerPage;  // Calcular el desplazamiento
 
 // Consulta con LIMIT y OFFSET para la paginación, y filtrado por `mostrar = 1`
 $query = "SELECT p.id_producto, p.imagen, p.nombre, p.descripcion, p.precio 
-          FROM Productos p
+          FROM productos p
           INNER JOIN Accesorios a ON p.id_producto = a.id_producto
           WHERE p.mostrar = 1
           LIMIT ? OFFSET ?";
@@ -37,8 +37,8 @@ if ($result->num_rows > 0) {
     echo '</div>';
 
     // Consulta para contar el número total de accesorios con `mostrar = 1`
-    $countQuery = "SELECT COUNT(*) AS total FROM Productos p 
-                   INNER JOIN Accesorios a ON p.id_producto = a.id_producto 
+    $countQuery = "SELECT COUNT(*) AS total FROM productos p 
+                   INNER JOIN accesorios a ON p.id_producto = a.id_producto 
                    WHERE p.mostrar = 1";
     $countResult = $conn->query($countQuery);
     $totalRows = $countResult->fetch_assoc()['total'];

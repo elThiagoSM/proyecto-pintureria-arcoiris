@@ -56,7 +56,7 @@ if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] == UPLOAD_ERR_OK) {
 }
 
 // Inserción en la tabla Productos
-$sql_producto = "INSERT INTO Productos (imagen, nombre, descripcion, precio, stock_cantidad, marca, unidad, fecha_ingreso, id_proveedor, mostrar)
+$sql_producto = "INSERT INTO productos (imagen, nombre, descripcion, precio, stock_cantidad, marca, unidad, fecha_ingreso, id_proveedor, mostrar)
                  VALUES ('$imagen', '$nombre', '$descripcion', $precio, $stock_cantidad, '$marca', '$unidad', CURDATE(), $id_proveedor, $mostrar)";
 
 if ($conn->query($sql_producto) === TRUE) {
@@ -66,14 +66,14 @@ if ($conn->query($sql_producto) === TRUE) {
     if ($tipo_producto === 'Accesorio') {
         $medidas = $conn->real_escape_string($_POST['medidas']);
         $tipo = $conn->real_escape_string($_POST['tipo']);
-        $sql_accesorio = "INSERT INTO Accesorios (id_producto, medidas, tipo) VALUES ($id_producto, '$medidas', '$tipo')";
+        $sql_accesorio = "INSERT INTO accesorios (id_producto, medidas, tipo) VALUES ($id_producto, '$medidas', '$tipo')";
         if (!$conn->query($sql_accesorio)) {
             echo "<script>alert('Error al insertar accesorio: " . $conn->error . "'); window.location.href = '../products.php';</script>";
             exit();
         }
     } elseif ($tipo_producto === 'MiniFerreteria') {
         $garantia = $conn->real_escape_string($_POST['garantia']);
-        $sql_mini_ferreteria = "INSERT INTO MiniFerreteria (id_producto, garantia) VALUES ($id_producto, '$garantia')";
+        $sql_mini_ferreteria = "INSERT INTO miniferreteria (id_producto, garantia) VALUES ($id_producto, '$garantia')";
         if (!$conn->query($sql_mini_ferreteria)) {
             echo "<script>alert('Error al insertar mini ferretería: " . $conn->error . "'); window.location.href = '../products.php';</script>";
             exit();
@@ -83,7 +83,7 @@ if ($conn->query($sql_producto) === TRUE) {
         $funcion_aplicacion = $conn->real_escape_string($_POST['funcion_aplicacion']);
         $id_paleta = intval($_POST['id_paleta']);
         $terminacion = $conn->real_escape_string($_POST['terminacion']);
-        $sql_pintura = "INSERT INTO Pinturas (id_producto, litros, funcion_aplicacion, id_paleta, terminacion) VALUES ($id_producto, $litros, '$funcion_aplicacion', $id_paleta, '$terminacion')";
+        $sql_pintura = "INSERT INTO pinturas (id_producto, litros, funcion_aplicacion, id_paleta, terminacion) VALUES ($id_producto, $litros, '$funcion_aplicacion', $id_paleta, '$terminacion')";
         if (!$conn->query($sql_pintura)) {
             echo "<script>alert('Error al insertar pintura: " . $conn->error . "'); window.location.href = '../products.php';</script>";
             exit();

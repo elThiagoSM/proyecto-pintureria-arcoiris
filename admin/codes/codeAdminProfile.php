@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         imagedestroy($srcImage);
 
         $photoPath = $webPath . $fileName;
-        $stmt = $conn->prepare("UPDATE Usuarios SET foto_perfil = ? WHERE id_usuario = ?");
+        $stmt = $conn->prepare("UPDATE usuarios SET foto_perfil = ? WHERE id_usuario = ?");
         $stmt->bind_param("si", $photoPath, $id_usuario);
 
         if ($stmt->execute()) {

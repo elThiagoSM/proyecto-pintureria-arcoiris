@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $nombre_color = $_POST['nombre_color'] ?? '';
   $tintes_utilizados = $_POST['tintes_utilizados'] ?? '';
 
-  $query = "INSERT INTO PaletaColor (codigo_de_color, nombre_color, tintes_utilizados) VALUES (?, ?, ?)";
+  $query = "INSERT INTO paletacolor (codigo_de_color, nombre_color, tintes_utilizados) VALUES (?, ?, ?)";
   $stmt = $conn->prepare($query);
   $stmt->bind_param("sss", $codigo_color, $nombre_color, $tintes_utilizados);
 

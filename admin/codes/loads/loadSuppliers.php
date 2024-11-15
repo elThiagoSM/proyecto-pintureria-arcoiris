@@ -11,7 +11,7 @@ function obtenerProveedores($tipo_busqueda = 'nombre', $busqueda = null, $offset
 {
     global $conn;
 
-    $query = "SELECT id_proveedor, nombre, telefono, correo, direccion FROM Proveedores";
+    $query = "SELECT id_proveedor, nombre, telefono, correo, direccion FROM proveedores";
     $params = [];
     $types = "";
     $filters = [];
@@ -66,7 +66,7 @@ function contarProveedores($tipo_busqueda = 'nombre', $busqueda = null)
 {
     global $conn;
 
-    $query = "SELECT COUNT(*) as total FROM Proveedores";
+    $query = "SELECT COUNT(*) as total FROM proveedores";
     $params = [];
     $types = "";
     $filters = [];

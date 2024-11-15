@@ -5,11 +5,11 @@ function obtenerVentasEnProceso($nombre_cliente = null, $id_venta = null, $offse
 {
     global $conn;
     $query = "
-        SELECT Ventas.id_venta, Clientes.id_cliente, Clientes.nombre_cliente, Productos.nombre AS nombre_producto, Ventas.valor_de_venta, Ventas.cantidad
-        FROM Ventas
-        JOIN Clientes ON Ventas.id_cliente = Clientes.id_cliente
-        JOIN Productos ON Ventas.id_producto = Productos.id_producto
-        WHERE Ventas.estado = 'en proceso'
+        SELECT ventas.id_venta, clientes.id_cliente, clientes.nombre_cliente, productos.nombre AS nombre_producto, ventas.valor_de_venta, ventas.cantidad
+        FROM ventas
+        JOIN clientes ON ventas.id_cliente = clientes.id_cliente
+        JOIN productos ON ventas.id_producto = productos.id_producto
+        WHERE ventas.estado = 'en proceso'
     ";
 
     $params = [];
@@ -49,9 +49,9 @@ function contarVentasEnProceso($nombre_cliente = null, $id_venta = null)
 {
     global $conn;
     $query = "
-        SELECT COUNT(*) as total FROM Ventas
-        JOIN Clientes ON Ventas.id_cliente = Clientes.id_cliente
-        WHERE Ventas.estado = 'en proceso'
+        SELECT COUNT(*) as total FROM ventas
+        JOIN clientes ON ventas.id_cliente = clientes.id_cliente
+        WHERE ventas.estado = 'en proceso'
     ";
 
     if ($nombre_cliente) {
