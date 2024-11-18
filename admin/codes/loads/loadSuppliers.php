@@ -136,7 +136,7 @@ $proveedores = obtenerProveedores($tipo_busqueda, $busqueda, $offset, $limit);
         <td><?= htmlspecialchars($proveedor['correo']) ?></td>
         <td><?= htmlspecialchars($proveedor['direccion']) ?></td>
         <td>
-            <button class="edit-btn" onclick="window.location.href='../../editSuppliers.php?id_proveedor=<?= $proveedor['id_proveedor'] ?>'">Editar</button>
+            <button class="edit-btn" onclick="window.location.href='./editSuppliers.php?id_proveedor=<?= $proveedor['id_proveedor'] ?>'">Editar</button>
             <?php if ($totalProductos === 0): ?>
                 <button class="delete-btn" onclick="confirmarBorrado(<?= $proveedor['id_proveedor'] ?>)">Borrar</button>
             <?php else: ?>

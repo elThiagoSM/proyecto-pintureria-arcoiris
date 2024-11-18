@@ -38,7 +38,7 @@ if ($result->num_rows > 0) {
 
     // Consulta para contar el número total de pinturas con `mostrar = 1`
     $countQuery = "SELECT COUNT(*) AS total FROM Productos p 
-                   INNER JOIN Pinturas pt ON p.id_producto = pt.id_producto 
+                   INNER JOIN pinturas pt ON p.id_producto = pt.id_producto 
                    WHERE p.mostrar = 1";
     $countResult = $conn->query($countQuery);
     $totalRows = $countResult->fetch_assoc()['total'];

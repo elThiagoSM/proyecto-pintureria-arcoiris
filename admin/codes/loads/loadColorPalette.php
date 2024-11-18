@@ -98,7 +98,7 @@ $paletas = obtenerPaletasColores($busqueda, $tipo_busqueda, $offset, $limit);
         <td><?= htmlspecialchars($paleta['nombre_color']) ?></td>
         <td><?= htmlspecialchars($paleta['tintes_utilizados']) ?></td>
         <td>
-            <button class="edit-btn" onclick="window.location.href='../../editColorPalette.php?id_paleta=<?= $paleta['id_paleta'] ?>'">Editar</button>
+            <button class="edit-btn" onclick="window.location.href='./editColorPalette.php?id_paleta=<?= $paleta['id_paleta'] ?>'">Editar</button>
             <?php if ($totalPinturas === 0): ?>
                 <button class="delete-btn" onclick="confirmarBorradoPaleta(<?= $paleta['id_paleta'] ?>)">Borrar</button>
             <?php else: ?>

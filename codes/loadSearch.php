@@ -1,29 +1,35 @@
 <?php
 include './database/database.php';
 
-if (isset($_GET['query'])) {
+try {
+    if (!isset($_GET['query'])) {
+        echo "<p>No se proporcionó un término de búsqueda.</p>";
+        exit;
+    }
+
+    // Recuperar parámetros de búsqueda
     $searchQuery = '%' . $_GET['query'] . '%';
     $tipoFiltro = $_GET['tipo-producto'] ?? '';
     $marcasFiltro = $_GET['marca'] ?? [];
-    $precioMin = (float)($_GET['precio_min'] ?? 1);
-    $precioMax = (float)($_GET['precio_max'] ?? 5000);
+    $precioMin = isset($_GET['precio_min']) && is_numeric($_GET['precio_min']) ? (float)$_GET['precio_min'] : 0;
+    $precioMax = isset($_GET['precio_max']) && is_numeric($_GET['precio_max']) ? (float)$_GET['precio_max'] : 999999;
     $unidadFiltro = $_GET['unidad'] ?? [];
-    $stockFiltro = isset($_GET['stock']) ? true : false;
+    $stockFiltro = isset($_GET['stock']);
     $terminacionFiltro = $_GET['terminacion'] ?? '';
     $funcionAplicacionFiltro = $_GET['funcion_aplicacion'] ?? '';
 
-    // Agregamos la condición `p.mostrar = 1` en la consulta principal
+    // Construir consulta base
     $query = "SELECT p.id_producto, p.imagen, p.nombre, p.descripcion, p.precio 
               FROM productos p
               LEFT JOIN pinturas pt ON p.id_producto = pt.id_producto
               LEFT JOIN accesorios a ON p.id_producto = a.id_producto
-              LEFT JOIN miniFerreteria mf ON p.id_producto = mf.id_producto
-              WHERE p.mostrar = 1 
-              AND p.nombre LIKE ? 
+              LEFT JOIN miniferreteria mf ON p.id_producto = mf.id_producto
+              WHERE (p.nombre LIKE ? OR p.descripcion LIKE ?)
               AND p.precio BETWEEN ? AND ?";
-    $bindTypes = 'sdd';
-    $bindParams = [$searchQuery, $precioMin, $precioMax];
+    $bindTypes = 'ssdd';
+    $bindParams = [$searchQuery, $searchQuery, $precioMin, $precioMax];
 
+    // Filtros adicionales
     if ($tipoFiltro) {
         switch ($tipoFiltro) {
             case 'Pinturas':
@@ -67,8 +73,14 @@ if (isset($_GET['query'])) {
     }
 
     $stmt = $conn->prepare($query);
+
+    if (!$stmt) {
+        throw new Exception("Error al preparar la consulta: " . $conn->error);
+    }
+
     $stmt->bind_param($bindTypes, ...$bindParams);
     $stmt->execute();
+
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
@@ -87,7 +99,8 @@ if (isset($_GET['query'])) {
     }
 
     $stmt->close();
-    $conn->close();
-} else {
-    echo "<p>No se proporcionó un término de búsqueda.</p>";
+} catch (Exception $e) {
+    echo "<p>Error: " . htmlspecialchars($e->getMessage()) . "</p>";
 }
+
+$conn->close();

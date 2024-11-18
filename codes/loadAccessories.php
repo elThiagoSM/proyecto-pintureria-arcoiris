@@ -9,7 +9,7 @@ $offset = ($page - 1) * $accessoriesPerPage;  // Calcular el desplazamiento
 // Consulta con LIMIT y OFFSET para la paginación, y filtrado por `mostrar = 1`
 $query = "SELECT p.id_producto, p.imagen, p.nombre, p.descripcion, p.precio 
           FROM productos p
-          INNER JOIN Accesorios a ON p.id_producto = a.id_producto
+          INNER JOIN accesorios a ON p.id_producto = a.id_producto
           WHERE p.mostrar = 1
           LIMIT ? OFFSET ?";
 

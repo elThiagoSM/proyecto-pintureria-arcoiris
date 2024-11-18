@@ -27,11 +27,11 @@ function obtenerProductos($categoria = null, $busqueda = null, $tipo_busqueda = 
 
     if ($busqueda) {
         if ($tipo_busqueda === 'id') {
-            $query .= " AND Productos.id_producto = ?";
+            $query .= " AND productos.id_producto = ?";
             $params[] = &$busqueda;
             $types .= "i";
         } else {
-            $query .= " AND Productos.nombre LIKE ?";
+            $query .= " AND productos.nombre LIKE ?";
             $busqueda_param = "%" . $busqueda . "%";
             $params[] = &$busqueda_param;
             $types .= "s";
@@ -67,13 +67,13 @@ function contarProductos($categoria = null, $busqueda = null, $tipo_busqueda = '
     if ($categoria) {
         switch ($categoria) {
             case 'Pinturas':
-                $query .= " INNER JOIN Pinturas ON Productos.id_producto = Pinturas.id_producto";
+                $query .= " INNER JOIN pinturas ON Productos.id_producto = pinturas.id_producto";
                 break;
             case 'Accesorios':
-                $query .= " INNER JOIN Accesorios ON Productos.id_producto = Accesorios.id_producto";
+                $query .= " INNER JOIN accesorios ON Productos.id_producto = accesorios.id_producto";
                 break;
             case 'Mini Ferretería':
-                $query .= " INNER JOIN MiniFerreteria ON Productos.id_producto = MiniFerreteria.id_producto";
+                $query .= " INNER JOIN miniferreteria ON Productos.id_producto = miniferreteria.id_producto";
                 break;
         }
     }
@@ -132,7 +132,7 @@ $productos = obtenerProductos($categoria, $busqueda, $tipo_busqueda, $offset, $l
         <td><?= number_format($producto['precio'], 2) ?></td>
         <td><?= htmlspecialchars($producto['stock_cantidad']) ?></td>
         <td>
-            <button class="edit-btn" onclick="window.location.href='../../editProduct.php?id_producto=<?= $producto['id_producto'] ?>'">Editar</button>
+            <button class="edit-btn" onclick="window.location.href='./editProduct.php?id_producto=<?= $producto['id_producto'] ?>'">Editar</button>
             <?php if ($totalVentas === 0): ?>
                 <button class="delete-btn" onclick="confirmarBorradoProducto(<?= $producto['id_producto'] ?>)">Borrar</button>
             <?php else: ?>

@@ -1,13 +1,13 @@
 <?php
 include '../database/database.php';
 
-
 $id_usuario = $_COOKIE['id_usuario'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] === UPLOAD_ERR_OK) {
-        $uploadsDir = $_SERVER['DOCUMENT_ROOT'] . '/uploads/admin_profile_pictures/';
-        $webPath = 'http://localhost/uploads/admin_profile_pictures/';
+        $projectPath = '/proyecto-pintureria-arcoiris';
+        $uploadsDir = $_SERVER['DOCUMENT_ROOT'] . $projectPath . '/uploads/admin_profile_pictures/';
+        $webPath = 'http://localhost' . $projectPath . '/uploads/admin_profile_pictures/';
 
         if (!is_dir($uploadsDir)) {
             mkdir($uploadsDir, 0755, true);

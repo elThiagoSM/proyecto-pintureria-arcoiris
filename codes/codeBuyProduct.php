@@ -9,7 +9,7 @@ if (isset($_GET['id_producto'])) {
               FROM productos p
               LEFT JOIN proveedores pr ON p.id_proveedor = pr.id_proveedor
               LEFT JOIN pinturas pt ON p.id_producto = pt.id_producto
-              LEFT JOIN paletaColor pc ON pt.id_paleta = pc.id_paleta
+              LEFT JOIN paletacolor pc ON pt.id_paleta = pc.id_paleta
               WHERE p.id_producto = ?";
 
     $stmt = $conn->prepare($query);

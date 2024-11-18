@@ -58,7 +58,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt_cliente->close();
 
             // Configuración y envío de correo de verificación
-            // Configuración y envío de correo de verificación
             $asunto = "Verificación de Cuenta - Pinturería Arcoiris";
             $verificacion_url = "http://localhost/proyecto-pintureria-arcoiris/verifyEmail.php?token=" . $token_verificacion . "&correo=" . urlencode($correo);
             $mensaje = "
@@ -107,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $checkUserStmt->close();
-    header("Location: ../register.php");
+    header("Location: ../login.php");
     exit;
 }
 $conn->close();

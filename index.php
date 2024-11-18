@@ -99,7 +99,7 @@ session_start();
 
   <?php include 'components/footer.php'; ?>
 
-  <script src="./java/slider.js"> </script>
+  <script src="./js/slider.js"> </script>
 </body>
 
 </html>

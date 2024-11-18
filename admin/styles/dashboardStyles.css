@@ -23,3 +23,100 @@ body {
   background-color: #f0f0f0;
   padding: 30px;
 }
+
+.stats-section {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+}
+
+.card {
+  flex: 1;
+  background-color: #536dfe;
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+}
+
+.card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  height: 100vh;
+}
+
+.dashboard-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 250px;
+  margin-top: 30px;
+}
+
+.dashboard-content {
+  flex: 1;
+  background-color: #f0f0f0;
+  padding: 30px;
+}
+
+.stats-section {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card {
+  flex: 1;
+  background-color: #4e7aff;
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.charts-section {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.charts-section canvas {
+  width: 400px;
+  height: 400px;
+  max-width: 50%;
+}
