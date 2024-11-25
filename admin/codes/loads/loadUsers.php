@@ -1,7 +1,7 @@
 <?php
-include './database/database.php'; // Conexión a la base de datos
+include './database/database.php'; // Conexin a la base de datos
 
-// Parámetros de paginación y filtros
+// Parmetros de paginacion y filtros
 $limit = 10;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
@@ -9,7 +9,7 @@ $clasificacion = $_GET['clasificacion'] ?? 'Cliente'; // Mostrar clientes por de
 $tipo_busqueda = $_GET['tipo_busqueda'] ?? 'nombre';
 $busqueda = $_GET['busqueda'] ?? null;
 
-// Función para obtener los usuarios con filtros y paginación
+// Funcion para obtener los usuarios con filtros y paginación
 function obtenerUsuarios($clasificacion = 'Cliente', $tipo_busqueda = 'nombre', $busqueda = null, $offset = 0, $limit = 10)
 {
     global $conn;
@@ -32,7 +32,7 @@ function obtenerUsuarios($clasificacion = 'Cliente', $tipo_busqueda = 'nombre', 
     $params = [&$clasificacion];
     $types = "s";
 
-    // Filtros adicionales según el tipo de búsqueda
+    // Filtros adicionales segun el tipo de busqueda
     if ($busqueda) {
         switch ($tipo_busqueda) {
             case 'id':
@@ -118,13 +118,12 @@ function contarUsuarios($clasificacion = 'Cliente', $tipo_busqueda = 'nombre', $
 }
 
 
-// Obtener los usuarios y el total para la paginación
+// Obtener los usuarios y el total para la paginacion
 $totalUsuarios = contarUsuarios($clasificacion, $tipo_busqueda, $busqueda);
 $totalPaginas = ceil($totalUsuarios / $limit);
 $usuarios = obtenerUsuarios($clasificacion, $tipo_busqueda, $busqueda, $offset, $limit);
 ?>
 
-<!-- Renderizado de usuarios -->
 <!-- Renderizado de usuarios -->
 <?php foreach ($usuarios as $usuario): ?>
     <tr>

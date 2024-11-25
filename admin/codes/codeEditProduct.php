@@ -56,7 +56,7 @@ if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] == UPLOAD_ERR_OK) {
 }
 
 // Actualizar los datos generales del producto
-// Solo actualizar la imagen si se subió una nueva
+// Solo actualizar la imagen si se subio una nueva
 if ($imagen) {
     $query = "UPDATE productos SET nombre = ?, descripcion = ?, precio = ?, stock_cantidad = ?, marca = ?, unidad = ?, id_proveedor = ?, imagen = ?, mostrar = ? WHERE id_producto = ?";
     $stmt = $conn->prepare($query);
@@ -70,7 +70,7 @@ if ($imagen) {
 $stmt->execute();
 $stmt->close();
 
-// Actualizar los datos específicos según el tipo de producto
+// Actualizar los datos específicos segun el tipo de producto
 if ($tipo_producto == 'Pintura') {
     $litros = floatval($_POST['litros']);
     $funcion_aplicacion = $conn->real_escape_string($_POST['funcion_aplicacion']);

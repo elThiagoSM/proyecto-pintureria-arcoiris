@@ -47,7 +47,7 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
             </div>
 
             <script>
-                // Alternar el campo de entrada según el tipo de búsqueda seleccionado
+                // Alternar el campo de entrada segun el tipo de busqueda seleccionado
                 function toggleSearchInput() {
                     const searchType = document.getElementById('search-type').value;
                     document.getElementById('search-date').style.display = searchType === 'fecha' ? 'inline' : 'none';
@@ -63,13 +63,13 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
                         const fechaVenta = document.getElementById('search-date').value;
                         if (fechaVenta) {
                             url.searchParams.set('fecha_venta', fechaVenta);
-                            url.searchParams.delete('id_venta'); // Eliminar parámetro de id si existe
+                            url.searchParams.delete('id_venta'); // Eliminar parametro de id si existe
                         }
                     } else if (searchType === 'id') {
                         const idVenta = document.getElementById('search-id').value;
                         if (idVenta) {
                             url.searchParams.set('id_venta', idVenta);
-                            url.searchParams.delete('fecha_venta'); // Eliminar parámetro de fecha si existe
+                            url.searchParams.delete('fecha_venta'); // Eliminar parametro de fecha si existe
                         }
                     }
                     window.location.href = url;

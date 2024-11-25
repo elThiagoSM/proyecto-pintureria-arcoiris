@@ -13,7 +13,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
-    // Mostrar los productos destacados con nombre, descripción y precio
+    // Mostrar los productos destacados con nombre, descripcion y precio
     while ($row = $result->fetch_assoc()) {
         echo '<a href="buyProduct.php?id_producto=' . htmlspecialchars($row['id_producto']) . '" class="featured-product-link">';
         echo '<div class="product">';

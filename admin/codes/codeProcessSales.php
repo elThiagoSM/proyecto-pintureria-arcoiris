@@ -7,7 +7,7 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
     exit();
 }
 
-// Validar los parámetros de la solicitud
+// Validar los parametros de la solicitud
 $action = $_GET['action'] ?? null;
 $id_venta = $_GET['id_venta'] ?? null;
 
@@ -17,7 +17,7 @@ if (!$action || !$id_venta) {
 }
 
 if ($action === 'confirm') {
-    // Lógica para completar la venta
+    // Logica para completar la venta
     $stmt = $conn->prepare("UPDATE ventas SET estado = 'completado' WHERE id_venta = ?");
     $stmt->bind_param("i", $id_venta);
     if ($stmt->execute()) {
@@ -40,7 +40,7 @@ if ($action === 'confirm') {
         $stmt = $conn->prepare("UPDATE productos SET stock_cantidad = stock_cantidad + ? WHERE id_producto = ?");
         $stmt->bind_param("ii", $cantidad, $id_producto);
         if ($stmt->execute()) {
-            // Eliminar la venta después de actualizar el stock
+            // Eliminar la venta despues de actualizar el stock
             $stmt = $conn->prepare("DELETE FROM ventas WHERE id_venta = ?");
             $stmt->bind_param("i", $id_venta);
             if ($stmt->execute()) {

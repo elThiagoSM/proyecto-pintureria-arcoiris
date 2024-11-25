@@ -66,7 +66,7 @@ session_start();
                     <div class="member">
                         <div class="member-photo">
                             <img
-                                src="https://cdnx.jumpseller.com/caralcl/image/19986444/Liso_Gris_Oscuro_-_Tela_Antimanchas.png?1653626990"
+                                src="assets/imgs/nosotros/may-foto.png"
                                 alt="Foto Feliciano May Moreira" />
                         </div>
                         <div class="member-info">
@@ -77,7 +77,7 @@ session_start();
                     <div class="member">
                         <div class="member-photo">
                             <img
-                                src="https://cdnx.jumpseller.com/caralcl/image/19986444/Liso_Gris_Oscuro_-_Tela_Antimanchas.png?1653626990"
+                                src="assets/imgs/nosotros/quintana-foto.png"
                                 alt="Foto Sebastián Tabaré Quintana Ribeiro" />
                         </div>
                         <div class="member-info">
@@ -88,12 +88,12 @@ session_start();
                     <div class="member">
                         <div class="member-photo">
                             <img
-                                src="https://cdnx.jumpseller.com/caralcl/image/19986444/Liso_Gris_Oscuro_-_Tela_Antimanchas.png?1653626990"
+                                src="assets/imgs/nosotros/silveira-foto.png"
                                 alt="Foto Thiago Silveira Machado" />
                         </div>
                         <div class="member-info">
                             <h3>Thiago Silveira Machado</h3>
-                            <h4>t89217993@gmail.com</h4>
+                            <h4>thiagosm2019@gmail.com</h4>
                         </div>
                     </div>
                 </div>

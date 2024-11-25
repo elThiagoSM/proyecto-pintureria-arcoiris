@@ -1,12 +1,12 @@
 <?php
 include './database/database.php';
 
-// Configuración de paginación
-$paintingsPerPage = 10;  // Número de pinturas por página
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;  // Página actual, por defecto es 1
+// Configuracion de paginacion
+$paintingsPerPage = 10;  // Número de pinturas por pagina
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;  // Pagina actual, por defecto es 1
 $offset = ($page - 1) * $paintingsPerPage;  // Calcular el desplazamiento
 
-// Consulta con LIMIT y OFFSET para la paginación, y filtrado por `mostrar = 1`
+// Consulta con LIMIT y OFFSET para la paginacion, y filtrado por mostrar = 1
 $query = "SELECT p.id_producto, p.imagen, p.nombre, p.descripcion, p.precio 
           FROM productos p
           INNER JOIN pinturas pt ON p.id_producto = pt.id_producto
@@ -22,7 +22,7 @@ $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     echo '<div class="gallery">';
 
-    // Mostrar las pinturas en la página actual
+    // Mostrar las pinturas en la pagina actual
     while ($row = $result->fetch_assoc()) {
         echo '<a href="buyProduct.php?id_producto=' . $row['id_producto'] . '" class="paint-type-link">';
         echo '<div class="paint-type">';
@@ -36,15 +36,15 @@ if ($result->num_rows > 0) {
 
     echo '</div>';
 
-    // Consulta para contar el número total de pinturas con `mostrar = 1`
+    // Consulta para contar el número total de pinturas con mostrar = 1
     $countQuery = "SELECT COUNT(*) AS total FROM Productos p 
                    INNER JOIN pinturas pt ON p.id_producto = pt.id_producto 
                    WHERE p.mostrar = 1";
     $countResult = $conn->query($countQuery);
     $totalRows = $countResult->fetch_assoc()['total'];
-    $totalPages = ceil($totalRows / $paintingsPerPage);  // Calcular el número total de páginas
+    $totalPages = ceil($totalRows / $paintingsPerPage);  // Calcular el numero total de paginas
 
-    // Mostrar enlaces de paginación con el número de página actual
+    // Mostrar enlaces de paginacion con el numero de pagina actual
     echo '<div class="pagination">';
     echo '<span>Página ' . $page . ' de ' . $totalPages . '</span><br>';
 
@@ -59,6 +59,6 @@ if ($result->num_rows > 0) {
     echo "No se encontraron pinturas.";
 }
 
-// Cierra la sentencia y la conexión
+// Cierra la sentencia y la conexin
 $stmt->close();
 $conn->close();

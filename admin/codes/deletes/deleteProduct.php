@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
         exit();
     }
 
-    // Verificar si el producto está relacionado con otras tablas (e.g., Ventas)
+    // Verificar si el producto esta relacionado con otras tablas
     $queryCheck = "SELECT COUNT(*) AS total FROM ventas WHERE id_producto = ?";
     $stmtCheck = $conn->prepare($queryCheck);
     $stmtCheck->bind_param('i', $idProducto);

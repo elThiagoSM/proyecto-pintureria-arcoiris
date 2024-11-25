@@ -1,7 +1,7 @@
 <?php
 include './database/database.php'; // Conexión a la base de datos
 
-// Parámetros de paginación y filtros
+// Parametros de paginación y filtros
 $limit = 10;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
@@ -9,7 +9,7 @@ $forma_de_pago = $_GET['forma_de_pago'] ?? null;
 $fecha_venta = $_GET['fecha_venta'] ?? null;
 $id_venta = $_GET['id_venta'] ?? null;
 
-// Función para obtener las ventas con filtros y paginación
+// Funcin para obtener las ventas con filtros y paginacion
 function obtenerVentas($forma_de_pago = null, $fecha_venta = null, $id_venta = null, $offset = 0, $limit = 10)
 {
     global $conn;
@@ -27,7 +27,7 @@ function obtenerVentas($forma_de_pago = null, $fecha_venta = null, $id_venta = n
     $types = "";
     $filters = [];
 
-    // Aplicar filtros según los parámetros recibidos
+    // Aplicar filtros segun los parametros recibidos
     if ($forma_de_pago) {
         $filters[] = "v.forma_de_pago = ?";
         $params[] = &$forma_de_pago;
@@ -51,7 +51,7 @@ function obtenerVentas($forma_de_pago = null, $fecha_venta = null, $id_venta = n
         $query .= " WHERE " . implode(" AND ", $filters);
     }
 
-    // Agregar paginación
+    // Agregar paginacion
     $query .= " LIMIT ? OFFSET ?";
     $params[] = &$limit;
     $params[] = &$offset;
@@ -67,7 +67,7 @@ function obtenerVentas($forma_de_pago = null, $fecha_venta = null, $id_venta = n
     return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 }
 
-// Función para contar las ventas (para la paginación)
+// Funcion para contar las ventas (para la paginacion)
 function contarVentas($forma_de_pago = null, $fecha_venta = null, $id_venta = null)
 {
     global $conn;
@@ -118,7 +118,7 @@ function contarVentas($forma_de_pago = null, $fecha_venta = null, $id_venta = nu
     return $row['total'];
 }
 
-// Obtener las ventas y el total para la paginación
+// Obtener las ventas y el total para la paginacion
 $totalVentas = contarVentas($forma_de_pago, $fecha_venta, $id_venta);
 $totalPaginas = ceil($totalVentas / $limit);
 $ventas = obtenerVentas($forma_de_pago, $fecha_venta, $id_venta, $offset, $limit);

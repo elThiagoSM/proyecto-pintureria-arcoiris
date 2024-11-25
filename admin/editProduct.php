@@ -14,7 +14,7 @@ if (!$id_producto) {
     exit();
 }
 
-// Consultar los datos básicos del producto
+// Consultar los datos basicos del producto
 $queryProducto = "SELECT * FROM productos WHERE id_producto = ?";
 $stmtProducto = $conn->prepare($queryProducto);
 $stmtProducto->bind_param("i", $id_producto);
@@ -22,7 +22,7 @@ $stmtProducto->execute();
 $producto = $stmtProducto->get_result()->fetch_assoc();
 $stmtProducto->close();
 
-// Consultar el tipo específico del producto y cargar los datos según su tipo
+// Consultar el tipo especifico del producto y cargar los datos segun su tipo
 $tipoProducto = null;
 $atributosEspecificos = [];
 
@@ -128,7 +128,7 @@ $resultadoPaletas = $conn->query($sqlPaletas);
                     </div>
                 </div>
 
-                <!-- Opciones Específicas por Tipo de Producto -->
+                <!-- Opciones Especificas por Tipo de Producto -->
                 <?php if ($tipoProducto == 'Accesorio'): ?>
                     <h3>Opciones de Accesorio</h3>
                     <div class="form-row">
@@ -183,7 +183,7 @@ $resultadoPaletas = $conn->query($sqlPaletas);
                     </div>
                 <?php endif; ?>
 
-                <!-- Botones de Acción -->
+                <!-- Botones de Accion -->
                 <div class="action-buttons">
                     <a href="./products.php" class="cancel-button">Cancelar</a>
                     <button type="submit" class="save-button">Guardar Cambios</button>

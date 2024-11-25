@@ -1,7 +1,7 @@
 <?php
 include './database/database.php';
 
-// Función para obtener las ventas en proceso con relación entre id_usuario e id_cliente
+// Funcion para obtener las ventas en proceso con relacin entre id_usuario e id_cliente
 function obtenerVentasEnProceso($nombre_cliente = null, $id_venta = null, $offset = 0, $limit = 10)
 {
     global $conn;
@@ -53,7 +53,7 @@ function obtenerVentasEnProceso($nombre_cliente = null, $id_venta = null, $offse
     return $ventas;
 }
 
-// Función para contar las ventas en proceso
+// Funcion para contar las ventas en proceso
 function contarVentasEnProceso($nombre_cliente = null, $id_venta = null)
 {
     global $conn;
@@ -84,7 +84,7 @@ function contarVentasEnProceso($nombre_cliente = null, $id_venta = null)
     return $row['total'];
 }
 
-// Parámetros de paginación y filtros
+// Parametros de paginaciin y filtros
 $limit = 10;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;

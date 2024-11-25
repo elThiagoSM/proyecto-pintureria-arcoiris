@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
         exit();
     }
 
-    // Verificar si la paleta está relacionada con pinturas
+    // Verificar si la paleta esta relacionada con pinturas
     $queryCheck = "SELECT COUNT(*) AS total FROM pinturas WHERE id_paleta = ?";
     $stmtCheck = $conn->prepare($queryCheck);
     $stmtCheck->bind_param('i', $idPaleta);

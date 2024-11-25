@@ -36,7 +36,7 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
                         const fechas = data.map(venta => venta.fecha);
                         const valores = data.map(venta => venta.valor);
 
-                        // Configuración del gráfico
+                        // Configuracion del grafico
                         const ctx = document.getElementById('ventasChart').getContext('2d');
                         new Chart(ctx, {
                             type: 'line',

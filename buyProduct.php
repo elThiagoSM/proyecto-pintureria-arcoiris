@@ -17,7 +17,7 @@ include './codes/codeBuyProduct.php';
     include 'components/header.php';
 
     if ($producto) {
-        // Check if stock is 0 to apply styling
+        // Comprueba si el stock es 0 para cambiar el estilo
         $stockClass = $producto['stock_cantidad'] == 0 ? 'out-of-stock' : '';
     ?>
 

@@ -32,8 +32,8 @@
             <h1>CONFIRMAR DATOS COMPRA</h1>
 
             <form action="./codes/codeCheckout.php" method="POST">
-                <fieldset>
-                    <legend>Forma de pago</legend>
+                <div>
+                    <p>Forma de pago</p>
                     <label>
                         <input type="radio" name="payment" value="transferencia" checked>
                         Transferencia
@@ -42,28 +42,28 @@
                         <input type="radio" name="payment" value="efectivo">
                         Efectivo
                     </label>
-                </fieldset>
+                </div>
 
-                <fieldset>
-                    <legend>Forma de envío</legend>
+                <div>
+                    <p>Forma de envío</p>
                     <label>
                         <input type="radio" name="shipping" value="local" checked>
                         Retira en local
                     </label>
-                </fieldset>
+                </div>
 
-                <fieldset>
-                    <legend>Tus datos</legend>
+                <div>
+                    <p>Tus datos</p>
                     <input type='text' name='nombre' value='<?php echo $_SESSION['nombre_cliente']; ?>' placeholder='Nombre y apellido' disabled><br>
                     <input type='email' name='correo' value='<?php echo $_SESSION['correo']; ?>' placeholder='Dirección de email' disabled><br>
                     <input type='tel' name='telefono' value='<?php echo $_SESSION['datos_contacto']; ?>' placeholder='Número de teléfono' disabled><br>
                     <input type='text' name='cedula' value='<?php echo $_SESSION['cedula']; ?>' placeholder='Número de cedula' disabled>
-                </fieldset>
+                </div>
 
-                <fieldset>
-                    <legend>Dejanos un mensaje</legend>
+                <div>
+                    <p>Dejanos un mensaje</p>
                     <input type="text" name="mensaje" placeholder="Mensaje"><br>
-                </fieldset>
+                </div>
 
                 <p>Producto: <?php echo isset($_GET['nombre_producto']) ? htmlspecialchars($_GET['nombre_producto']) : 'N/A'; ?></p>
                 <p>Monto total: $<?php echo isset($_GET['monto_total']) ? htmlspecialchars($_GET['monto_total']) : 'N/A'; ?></p>

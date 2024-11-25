@@ -1,12 +1,12 @@
 <?php
 include './database/database.php';
 
-// Configuración de paginación
-$accessoriesPerPage = 10;  // Número de accesorios por página
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;  // Página actual, por defecto es 1
+// Configuracion de paginación
+$accessoriesPerPage = 10;  // Numero de accesorios por pagina
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;  // Pagina actual, por defecto es 1
 $offset = ($page - 1) * $accessoriesPerPage;  // Calcular el desplazamiento
 
-// Consulta con LIMIT y OFFSET para la paginación, y filtrado por `mostrar = 1`
+// Consulta con LIMIT y OFFSET para la paginacion, y filtrado por mostrar = 1
 $query = "SELECT p.id_producto, p.imagen, p.nombre, p.descripcion, p.precio 
           FROM productos p
           INNER JOIN accesorios a ON p.id_producto = a.id_producto
@@ -22,7 +22,7 @@ $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     echo '<div class="gallery">';
 
-    // Mostrar los accesorios en la página actual
+    // Mostrar los accesorios en la pagina actual
     while ($row = $result->fetch_assoc()) {
         echo '<a href="buyProduct.php?id_producto=' . $row['id_producto'] . '" class="accessory-type-link">';
         echo '<div class="accessory">';
@@ -36,15 +36,15 @@ if ($result->num_rows > 0) {
 
     echo '</div>';
 
-    // Consulta para contar el número total de accesorios con `mostrar = 1`
+    // Consulta para contar el nmero total de accesorios con mostrar = 1
     $countQuery = "SELECT COUNT(*) AS total FROM productos p 
                    INNER JOIN accesorios a ON p.id_producto = a.id_producto 
                    WHERE p.mostrar = 1";
     $countResult = $conn->query($countQuery);
     $totalRows = $countResult->fetch_assoc()['total'];
-    $totalPages = ceil($totalRows / $accessoriesPerPage);  // Calcular el número total de páginas
+    $totalPages = ceil($totalRows / $accessoriesPerPage);  // Calcular el nmero total de paginas
 
-    // Mostrar enlaces de paginación con el número de página actual
+    // Mostrar enlaces de paginacion con el numero de pagina actual
     echo '<div class="pagination">';
     echo '<span>Página ' . $page . ' de ' . $totalPages . '</span><br>';
 
@@ -59,6 +59,6 @@ if ($result->num_rows > 0) {
     echo "No se encontraron accesorios.";
 }
 
-// Cierra la sentencia y la conexión
+// Cierra la sentencia y la conexion
 $stmt->close();
 $conn->close();

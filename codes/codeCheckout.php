@@ -12,7 +12,7 @@ $id_producto = isset($_POST['id_producto']) ? (int)$_POST['id_producto'] : null;
 $valor_venta = isset($_POST['monto_total']) ? (float)$_POST['monto_total'] : null;
 $cantidad = isset($_POST['cantidad']) ? (int)$_POST['cantidad'] : 1;
 
-// Datos del cliente en sesión
+// Datos del cliente en sesion
 $id_cliente = isset($_SESSION['id_cliente']) ? (int)$_SESSION['id_cliente'] : null;
 $nombre_cliente = isset($_SESSION['nombre_cliente']) ? $_SESSION['nombre_cliente'] : "Cliente";
 $correo_cliente = isset($_SESSION['correo']) ? $_SESSION['correo'] : null;
@@ -96,12 +96,14 @@ if ($forma_pago && $id_producto && $valor_venta && $id_cliente && $cantidad) {
             $cabeceras .= "MIME-Version: 1.0\r\n";
             $cabeceras .= "Content-Type: text/html; charset=UTF-8\r\n";
 
-            if (!mail($correo_cliente, $asunto, $mensaje_html, $cabeceras)) {
+            if (mail($correo_cliente, $asunto, $mensaje_html, $cabeceras)) {
+                $_SESSION['success'] = "La compra fue exitosa, revisa tu correo para ver los detalles de la compra.";
+            } else {
                 $_SESSION['error'] = "La compra fue exitosa, pero no se pudo enviar el correo de confirmación.";
             }
         }
 
-        // Redirigir a thanks.php con mensaje de éxito
+        // Redirigir a thanks.php con mensaje de exito
         $_SESSION['success'] = "Compra realizada con éxito. Gracias por tu compra.";
         header("Location: ../thanks.php?nombre_cliente=" . urlencode($nombre_cliente) . "&id_venta=" . $id_venta . "&total=" . $valor_venta);
         exit();

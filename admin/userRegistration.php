@@ -32,12 +32,12 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
                 fetch('./codes/loads/loadUserRegistration.php')
                     .then(response => response.json())
                     .then(data => {
-                        // Extraer fechas y conteos de usuarios por clasificación
+                        // Extraer fechas y conteos de usuarios por clasificacion
                         const fechas = data.map(usuario => usuario.fecha);
                         const conteoClientes = data.map(usuario => usuario.cliente);
                         const conteoAdministradores = data.map(usuario => usuario.administrador);
 
-                        // Configuración del gráfico
+                        // Configuración del grafico
                         const ctx = document.getElementById('usuariosChart').getContext('2d');
                         new Chart(ctx, {
                             type: 'bar',

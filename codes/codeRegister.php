@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
-    // Sanitización de entrada
+    // Sanitizacin de entrada
     $nombre_cliente = mysqli_real_escape_string($conn, $nombre_cliente);
     $nombre_usuario = mysqli_real_escape_string($conn, $nombre_usuario);
     $contraseña = mysqli_real_escape_string($conn, $contraseña);
@@ -86,13 +86,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $cabeceras .= "Content-Type: text/html; charset=UTF-8\r\n";
 
             // Enviar el correo
-            if (mail($correo, $asunto, $mensaje, $cabeceras)) {
-                $_SESSION['success'] = "Registro exitoso. Revisa tu correo para confirmar tu cuenta.";
-            } else {
-                $_SESSION['error'] = "No se pudo enviar el correo de verificación.";
-            }
-
-
             if (mail($correo, $asunto, $mensaje, $cabeceras)) {
                 $_SESSION['success'] = "Registro exitoso. Revisa tu correo para confirmar tu cuenta.";
             } else {

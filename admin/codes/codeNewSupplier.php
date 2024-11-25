@@ -1,5 +1,5 @@
 <?php
-include '../database/database.php'; // Conexión a la base de datos
+include '../database/database.php'; // Conexin a la base de datos
 
 // Obtener y validar los datos del formulario
 $nombre = $conn->real_escape_string($_POST['nombre']);
@@ -12,7 +12,7 @@ $sql_proveedor = "INSERT INTO proveedores (nombre, telefono, correo, direccion)
                   VALUES ('$nombre', '$telefono', '$correo', '$direccion')";
 
 if ($conn->query($sql_proveedor) === TRUE) {
-  // Mostrar mensaje de éxito en un alert y redirigir
+  // Mostrar mensaje de exito en un alert y redirigir
   echo "<script>
             alert('Proveedor agregado exitosamente.');
             window.location.href = '../suppliers.php';
@@ -26,5 +26,5 @@ if ($conn->query($sql_proveedor) === TRUE) {
           </script>";
 }
 
-// Cerrar la conexión
+// Cerrar la conexin
 $conn->close();

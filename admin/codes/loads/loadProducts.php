@@ -21,7 +21,6 @@ function obtenerProductos($categoria = null, $busqueda = null, $tipo_busqueda = 
         }
     }
 
-    $query .= " WHERE 1=1";
     $params = [];
     $types = "";
 

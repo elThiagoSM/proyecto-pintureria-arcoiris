@@ -25,7 +25,7 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
             <div class="profile-info">
                 <div class="profile-pic-wrapper">
                     <?php if (!empty($_COOKIE['foto_perfil'])): ?>
-                        <img src="<?php echo htmlspecialchars($_COOKIE['foto_perfil']); ?>" alt="Foto de Perfil" class="profile-picture" id="profile-pic-preview">
+                        <img src="<?php echo htmlspecialchars($_COOKIE['foto_perfil']); ?>" alt="<?php echo htmlspecialchars($_COOKIE['nombre_usuario']); ?>" class="profile-picture" id="profile-pic-preview">
                     <?php else: ?>
                         <p>No disponible</p>
                     <?php endif; ?>

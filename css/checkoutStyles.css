@@ -33,13 +33,13 @@ body {
   gap: 15px;
 }
 
-.checkout-container fieldset {
+.checkout-container div {
   border: none;
   margin: 0;
   padding: 0;
 }
 
-.checkout-container legend {
+.checkout-container p {
   font-weight: bold;
   color: #68092b;
   margin-bottom: 5px;

@@ -5,7 +5,7 @@ function obtenerPaletasColores($busqueda = null, $tipo_busqueda = 'nombre_color'
 {
     global $conn;
 
-    $query = "SELECT id_paleta, codigo_de_color, nombre_color, tintes_utilizados FROM paletacolor WHERE 1=1";
+    $query = "SELECT id_paleta, codigo_de_color, nombre_color, tintes_utilizados FROM paletacolor";
     $params = [];
     $types = "";
 
@@ -82,7 +82,7 @@ $paletas = obtenerPaletasColores($busqueda, $tipo_busqueda, $offset, $limit);
 <!-- Renderizado de paletas de colores -->
 <?php foreach ($paletas as $paleta): ?>
     <?php
-    // Verificar si la paleta está relacionada con pinturas
+    // Verificar si la paleta esta relacionada con pinturas
     $queryPinturas = "SELECT COUNT(*) AS total FROM pinturas WHERE id_paleta = ?";
     $stmtPinturas = $conn->prepare($queryPinturas);
     $stmtPinturas->bind_param('i', $paleta['id_paleta']);

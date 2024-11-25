@@ -20,7 +20,6 @@ session_start();
             <p class="subtext">Seleccione una pintura que desea comprar.</p>
 
             <?php include 'codes/loadPaintings.php'; ?>
-
         </div>
     </section>
 

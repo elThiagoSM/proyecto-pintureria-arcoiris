@@ -1,3 +1,16 @@
+<?php
+session_start();
+
+if (isset($_SESSION['error'])) {
+  echo "<script>alert('" . $_SESSION['error'] . "');</script>";
+  unset($_SESSION['error']);
+}
+if (isset($_SESSION['success'])) {
+  echo "<script>alert('" . $_SESSION['success'] . "');</script>";
+  unset($_SESSION['success']);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -9,19 +22,6 @@
 </head>
 
 <body>
-  <?php
-  session_start();
-
-  if (isset($_SESSION['error'])) {
-    echo "<script>alert('" . $_SESSION['error'] . "');</script>";
-    unset($_SESSION['error']);
-  }
-  if (isset($_SESSION['success'])) {
-    echo "<script>alert('" . $_SESSION['success'] . "');</script>";
-    unset($_SESSION['success']);
-  }
-  ?>
-
   <div class="login">
     <div class="login-container">
       <h2>Registrarse</h2>
@@ -36,7 +36,7 @@
           <input placeholder="Correo electrónico" type="email" id="correo" name="correo" required>
         </div>
         <div class="form-group">
-          <input placeholder="Cédula" type="text" id="cedula" name="cedula" required>
+          <input placeholder="Cédula" type="text" id="cedula" pattern="\d{8}" name="cedula" required>
         </div>
         <div class="form-group">
           <label for="fecha_nacimiento">Fecha de Nacimiento</label>
@@ -61,9 +61,9 @@
     </div>
   </div>
 
-  <!-- Incluye la librería ci_js -->
-  <script src="js/ci_js-gh-pages/ci.js"></script>
-
+  <!-- Incluye los archivos JavaScript -->
+  <script src="./js/ci_js-gh-pages/ci.js"></script>
+  <script src="./js/ci_js-gh-pages/app.js"></script>
   <script>
     function validarFormulario() {
       // Validación de contraseñas
@@ -74,10 +74,10 @@
         return false;
       }
 
-      // Validación de cédula
+      // Validación de la cédula
       const cedula = document.getElementById("cedula").value;
-      if (!CI.validar(cedula)) {
-        alert("La cédula ingresada no es válida para Uruguay.");
+      if (!validate_ci(cedula)) {
+        alert("La cédula ingresada no es válida o no es uruguaya.");
         return false;
       }
 

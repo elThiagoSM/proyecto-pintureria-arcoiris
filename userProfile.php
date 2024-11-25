@@ -25,7 +25,7 @@ include 'auth.php';
       <section class="user-details">
         <div class="profile-pic-wrapper">
           <?php if (!empty($_SESSION['foto_perfil'])): ?>
-            <img src="<?php echo $_SESSION['foto_perfil']; ?>" alt="Foto de perfil" class="profile-pic" id="profile-pic-preview">
+            <img src="<?php echo $_SESSION['foto_perfil']; ?>" alt="<?php echo $_SESSION['nombre_cliente']; ?>" class="profile-pic" id="profile-pic-preview">
           <?php else: ?>
             <p>No disponible</p>
           <?php endif; ?>

@@ -1,5 +1,5 @@
 <?php
-include '../../database/database.php'; // Conexión a la base de datos
+include '../../database/database.php'; // Conexin a la base de datos
 
 header('Content-Type: application/json');
 

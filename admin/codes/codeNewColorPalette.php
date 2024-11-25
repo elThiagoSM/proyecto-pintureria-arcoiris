@@ -1,5 +1,5 @@
 <?php
-include '../database/database.php'; // Conexión a la base de datos
+include '../database/database.php'; // Conexin a la base de datos
 
 // Procesar el formulario de nueva paleta de colores
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

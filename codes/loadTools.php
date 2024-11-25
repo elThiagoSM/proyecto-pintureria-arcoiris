@@ -1,12 +1,12 @@
 <?php
 include './database/database.php';
 
-// Configuración de paginación
+// Configuracion de paginacion
 $toolsPerPage = 10;  // Número de herramientas por página
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;  // Página actual, por defecto es 1
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;  // Pagina actual, por defecto es 1
 $offset = ($page - 1) * $toolsPerPage;  // Calcular el desplazamiento
 
-// Consulta con LIMIT y OFFSET para la paginación, y filtrado por `mostrar = 1`
+// Consulta con LIMIT y OFFSET para la paginación, y filtrado por mostrar = 1
 $query = "SELECT p.id_producto, p.imagen, p.nombre, p.descripcion, p.precio 
           FROM productos p
           INNER JOIN miniferreteria mf ON p.id_producto = mf.id_producto
@@ -36,15 +36,15 @@ if ($result->num_rows > 0) {
 
     echo '</div>';
 
-    // Consulta para contar el número total de herramientas con `mostrar = 1`
+    // Consulta para contar el numero total de herramientas con mostrar = 1
     $countQuery = "SELECT COUNT(*) AS total FROM productos p 
                    INNER JOIN miniferreteria mf ON p.id_producto = mf.id_producto 
                    WHERE p.mostrar = 1";
     $countResult = $conn->query($countQuery);
     $totalRows = $countResult->fetch_assoc()['total'];
-    $totalPages = ceil($totalRows / $toolsPerPage);  // Calcular el número total de páginas
+    $totalPages = ceil($totalRows / $toolsPerPage);  // Calcular el numero total de paginas
 
-    // Mostrar enlaces de paginación con el número de página actual
+    // Mostrar enlaces de paginación con el numero de pagina actual
     echo '<div class="pagination">';
     echo '<span>Página ' . $page . ' de ' . $totalPages . '</span><br>';
 
@@ -59,6 +59,6 @@ if ($result->num_rows > 0) {
     echo "No se encontraron herramientas.";
 }
 
-// Cierra la sentencia y la conexión
+// Cierra la sentencia y la conexin
 $stmt->close();
 $conn->close();

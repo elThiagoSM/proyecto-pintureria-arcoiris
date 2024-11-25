@@ -1,15 +1,12 @@
 <?php
-include '../database/database.php'; // Conexión a la base de datos
-
-// Iniciar la sesión
-session_start();
+include '../database/database.php'; // Conexin a la base de datos
 
 // Obtener y validar los datos del formulario
 $nombre_usuario = $conn->real_escape_string($_POST['nombre_usuario']);
 $correo = $conn->real_escape_string($_POST['correo']);
 $contraseña = password_hash($conn->real_escape_string($_POST['contraseña']), PASSWORD_BCRYPT); // Encriptar la contraseña
 $clasificacion = $conn->real_escape_string($_POST['clasificacion']);
-$token_verificacion = bin2hex(random_bytes(3)); // Generar un token de verificación
+$token_verificacion = bin2hex(random_bytes(3)); // Generar un token de verificacion
 
 // Insertar datos en la tabla Usuarios
 $sql_usuario = "INSERT INTO usuarios (nombre_usuario, correo, contraseña, clasificacion, fecha_ingreso, correo_verificado, token_verificacion)
@@ -54,7 +51,7 @@ if ($conn->query($sql_usuario) === TRUE) {
   $alert_message = "Error al insertar administrador: " . $conn->error;
 }
 
-// Cerrar la conexión
+// Cerrar la conexin
 $conn->close();
 
 // Mostrar el alert y redirigir a users.php

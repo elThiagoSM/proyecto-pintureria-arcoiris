@@ -71,7 +71,7 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
                                 },
                                 body: JSON.stringify({
                                     id_proveedor: idProveedor
-                                }), // Envía los datos como JSON
+                                }), // Envia los datos como JSON
                             })
                             .then(response => response.json())
                             .then(data => {

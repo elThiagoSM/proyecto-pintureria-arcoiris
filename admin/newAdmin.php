@@ -48,7 +48,7 @@ if (!isset($_COOKIE['id_usuario']) || $_COOKIE['clasificacion'] !== 'Administrad
     </div>
 
     <script>
-        // Validación simple para verificar que las contraseñas coincidan
+        // Validacin para verificar que las contraseñas son iguales
         document.querySelector('form').addEventListener('submit', function(e) {
             const password = document.getElementById('contraseña').value;
             const confirmPassword = document.getElementById('confirmar_contraseña').value;

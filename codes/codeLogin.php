@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Verificar contraseña
         if (password_verify($contraseña, $user_data['contraseña'])) {
-            // Guardar datos en sesión
+            // Guardar datos en sesion
             $_SESSION['id_usuario'] = $user_data['id_usuario'];
             $_SESSION['nombre_usuario'] = $user_data['nombre_usuario'];
             $_SESSION['correo'] = $user_data['correo'];
@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['cedula'] = $user_data['cedula'] ?? '';
             }
 
-            // Redirigir según la clasificación del usuario
+            // Redirigir segun la clasificación del usuario
             if ($user_data['clasificacion'] === 'Administrador') {
                 header("Location: ../admin/loginAdmin.php");
             } else {

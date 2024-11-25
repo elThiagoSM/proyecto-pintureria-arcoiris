@@ -7,7 +7,7 @@ try {
         exit;
     }
 
-    // Recuperar parámetros de búsqueda
+    // Recuperar parametros de busqueda
     $searchQuery = '%' . $_GET['query'] . '%';
     $tipoFiltro = $_GET['tipo-producto'] ?? '';
     $marcasFiltro = $_GET['marca'] ?? [];

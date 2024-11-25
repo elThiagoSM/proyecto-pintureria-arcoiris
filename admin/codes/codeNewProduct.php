@@ -55,14 +55,14 @@ if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] == UPLOAD_ERR_OK) {
     $imagen = $projectPath . '/uploads/product_images/' . $fileName;
 }
 
-// Inserción en la tabla Productos
+// Insertar en la tabla Productos
 $sql_producto = "INSERT INTO productos (imagen, nombre, descripcion, precio, stock_cantidad, marca, unidad, fecha_ingreso, id_proveedor, mostrar)
                  VALUES ('$imagen', '$nombre', '$descripcion', $precio, $stock_cantidad, '$marca', '$unidad', CURDATE(), $id_proveedor, $mostrar)";
 
 if ($conn->query($sql_producto) === TRUE) {
     $id_producto = $conn->insert_id;
 
-    // Inserción según tipo de producto
+    // Insertar según tipo de producto
     if ($tipo_producto === 'Accesorio') {
         $medidas = $conn->real_escape_string($_POST['medidas']);
         $tipo = $conn->real_escape_string($_POST['tipo']);

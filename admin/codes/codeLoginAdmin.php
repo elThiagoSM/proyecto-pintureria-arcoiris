@@ -1,5 +1,5 @@
 <?php
-include '../database/database.php'; // Conexión a la base de datos
+include '../database/database.php'; // Conexin a la base de datos
 
 // Obtener los datos del formulario
 $nombre_usuario = $_POST['nombre_usuario'];
@@ -17,7 +17,7 @@ if ($result->num_rows > 0) {
 
     // Verificar contraseña usando el hash almacenado
     if (password_verify($contraseña, $user['contraseña'])) {
-        // Configurar cookies de sesión
+        // Configurar cookies de sesion
         setcookie("id_usuario", $user['id_usuario'], 0, "/");
         setcookie("nombre_usuario", $user['nombre_usuario'], 0, "/");
         setcookie("correo", $user['correo'], 0, "/");

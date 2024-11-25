@@ -179,14 +179,14 @@ $resultado_paletas = $conn->query($sql_paletas);
     </div>
 
     <script>
-        // Función para mostrar/ocultar opciones específicas
+        // Funcion para mostrar/ocultar opciones especificas
         function mostrarOpcionesEspecificas() {
             // Ocultar todas las opciones específicas
             document.getElementById('opcionesAccesorio').style.display = 'none';
             document.getElementById('opcionesMiniFerreteria').style.display = 'none';
             document.getElementById('opcionesPintura').style.display = 'none';
 
-            // Mostrar opciones según el tipo de producto seleccionado
+            // Mostrar opciones segun el tipo de producto seleccionado
             const tipoProducto = document.getElementById('tipo_producto').value;
             if (tipoProducto === 'Accesorio') {
                 document.getElementById('opcionesAccesorio').style.display = 'block';
